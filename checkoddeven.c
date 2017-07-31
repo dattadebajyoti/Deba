@@ -4,6 +4,7 @@ int main()
 {
  int b;
  printf("this is an artificial world made to serve for humans..................../n");
+ printf("hiiii....this is a program to find whether a number is odd or even/n");
  printf("enter any integer:");
  scanf("%d",&a);
  printf("doing it");
