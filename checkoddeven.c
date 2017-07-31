@@ -6,9 +6,9 @@ int main()
  printf("enter any integer:");
  scanf("%d",&a);
  if(a%2==0)
- printf("even");
+ printf("even integer");
  else
- printf("odd");
+ printf("odd integer");
  getch();
  return 0;
 }
