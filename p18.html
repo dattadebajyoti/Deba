@@ -1,0 +1,111 @@
+<html>
+  <head>
+      <style>
+         .square{
+           width:40px;
+           height:40px;
+           font-size:18pt;
+           text-align:center;
+         }
+      </style>
+  </head>
+     <script>
+        function startGame()
+        {
+          for(var i=1;i<=9;i++)
+          {
+            startOver(i);
+          }
+          document.turn="X";
+          if(Math.random()>0.5)
+          {
+            document.turn="O";
+          }
+          document.winner=null;
+          setMessage(document.turn+"_gets to start");
+        }
+        function setMessage(msg)
+        {
+          document.getElementById("message").innerText=msg;
+        }
+        function nextMove(square)
+        {
+          if(document.winner!=null){
+            setMessage(document.turn+"_alerady won");
+          }
+          else{
+            if(square.innerText==""){
+              square.innerText=document.turn;
+              switchTurn();
+            }
+            else {
+              setMessage("This square is already filled");
+            }
+          }
+        }
+        function switchTurn()
+        {
+          if(checkForWinner(document.turn)){
+            setMessage("congrats!! "+document.turn+"_won the game");
+            document.winner=document.turn;
+          }
+          else if(document.turn=="X"){
+             document.turn="O";
+             setMessage("It's "+document.turn+" Turn");
+             }
+          else
+            {
+             document.turn="X";
+             setMessage("It's "+document.turn+" Turn");
+            }
+        }
+        function checkForWinner(move)
+        {
+          var result=false;
+          if(checkBox(1,2,3,move)==true || checkBox(4,5,6,move)==true || checkBox(7,8,9,move)==true ||
+             checkBox(1,4,7,move)==true || checkBox(2,5,8,move)==true || checkBox(3,6,9,move)==true ||
+             checkBox(1,5,9,move)==true || checkBox(3,5,7,move)==true){
+             result =true;
+          }
+             return result;
+        }
+        function checkBox(a,b,c,move)
+        {
+          var result=false;
+          if(getBox(a)==move && getBox(b)==move && getBox(c)==move){
+            result=true;
+          }
+          return result;
+        }
+        function getBox(number)
+        {
+          return document.getElementById("s"+number).innerText;
+        }
+        function startOver(number)
+        {
+          return document.getElementById("s"+number).innerText="";
+        }
+     </script>
+    <body onload="startGame();">
+     <h1>WELCOME TO PLAY TIC TAC TOE</h1>
+     <div id="message"></div>
+     <table border="1">
+         <tr>
+            <td id="s1" class="square" onClick="nextMove(this);"></td>
+            <td id="s2" class="square" onClick="nextMove(this);"></td>
+            <td id="s3" class="square" onClick="nextMove(this);"></td>
+         </tr>
+         <tr>
+            <td id="s4" class="square" onClick="nextMove(this);"></td>
+            <td id="s5" class="square" onClick="nextMove(this);"></td>
+            <td id="s6" class="square" onClick="nextMove(this);"></td>
+         </tr>
+         <tr>
+            <td id="s7" class="square" onClick="nextMove(this);"></td>
+            <td id="s8" class="square" onClick="nextMove(this);"></td>
+            <td id="s9" class="square" onClick="nextMove(this);"></td>
+         </tr>
+     </table>
+     <a href="javascript:startGame();">Play Again</a>
+   </body>
+</html>

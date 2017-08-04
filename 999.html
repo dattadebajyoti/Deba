@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<TITLE> username and password</TITLE>
+</HEAD>
+
+<BODY>
+<H1> username</H1>
+<FORM name=”ff”>
+User Name :
+<INPUT Type=”Text” name=”TxtUser” id=”TxtUserName”><br>
+Password :
+<INPUT Type=”Password” name=”TxtPass” id=”TxtUserName”><br>
+
+<INPUT Type=”Button” name=”check” value=”check” onClick=”Check(TxtUser.value,TxtPass.value)”><br>
+</FORM>
+
+<SCRIPT>
+function Check(x,y)
+{
+//alert(“Leave from userName”);
+var user=x;
+var pass=y;
+if(user==””)
+alert(“Blank is not allowed”);
+else
+{
+if(user>=’A’ && user<=’Z’)
+alert(“Right userName”);
+else if(user>=’a’ && user<=’z’)
+alert(“Right userName”);
+else
+alert(“Wrong userName”);
+}
+
+if(pass==””)
+alert(“Blank is not allowed”);
+else
+{
+alert(“correct password”);
+}
+}
+</SCRIPT>
+</BODY>
+</HTML>

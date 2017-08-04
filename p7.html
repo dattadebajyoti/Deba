@@ -1,0 +1,36 @@
+<head>
+<body>
+<input id="numb">
+<button type="button" onclick="myFunction()">Submit</button>
+<p id="demo"></p>
+<script>
+function myFunction() {
+    var N;
+    N = document.getElementById("numb").value;
+    var i;
+    var j;
+    var isprime;
+    for(i=1;i<=(N/2);i++)
+    {
+       if(N%i==0)
+        {
+          isprime=1;
+          for(j=2;j*j<=i;j++)
+          {   
+            if(i%j==0)
+            {
+              isprime=0;
+              break;
+            }
+           }
+          if(isprime==1)
+            {
+                alert(i);
+            }
+        }
+      }
+}
+</script>
+</body>
+</html>
+    

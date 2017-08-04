@@ -1,0 +1,29 @@
+if(checkSpace(1,3,"X")==true){square.innerText=document.myArray["s"+2]="O";}
+if(checkSpace(4,6,"X")==true){square.innerText=document.myArray["s"+5]="O";}
+if(checkSpace(7,8,"X")==true){square.innerText=document.myArray["s"+9]="O";}
+if(checkSpace(3,2,"X")==true){square.innerText=document.myArray["s"+1]="O";}
+if(checkSpace(6,5,"X")==true){square.innerText=document.myArray["s"+4]="O";}
+if(checkSpace(8,9,"X")==true){square.innerText=document.myArray["s"+7]="O";}
+if(checkSpace(1,2,"X")==true){square.innerText=document.myArray["s"+3]="O";}
+if(checkSpace(4,5,"X")==true){square.innerText=document.myArray["s"+6]="O";}
+if(checkSpace(7,8,"X")==true){square.innerText=document.myArray["s"+9]="O";}
+if(checkSpace(1,4,"X")==true){square.innerText=document.myArray["s"+7]="O";}
+if(checkSpace(2,5,"X")==true){square.innerText=document.myArray["s"+8]="O";}
+if(checkSpace(3,6,"X")==true){square.innerText=document.myArray["s"+9]="O";}
+if(checkSpace(4,7,"X")==true){square.innerText=document.myArray["s"+1]="O";}
+if(checkSpace(5,8,"X")==true){square.innerText=document.myArray["s"+2]="O";}
+if(checkSpace(6,9,"X")==true){square.innerText=document.myArray["s"+3]="O";}
+if(checkSpace(1,9,"X")==true){square.innerText=document.myArray["s"+5]="O";}
+if(checkSpace(3,7,"X")==true){square.innerText=document.myArray["s"+5]="O";}
+if(checkSpace(1,7,"X")==true){square.innerText=document.myArray["s"+4]="O";}
+if(checkSpace(2,8,"X")==true){square.innerText=document.myArray["s"+5]="O";}
+if(checkSpace(3,9,"X")==true){square.innerText=document.myArray["s"+6]="O";}
+
+function checkBox(a,b,c,move)
+{
+  var result=false;
+  if(getBox(a)==move && getBox(b)==move && getBox(c)==move){
+    result=true;
+  }
+  return result;
+}
