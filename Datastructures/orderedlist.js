@@ -1,9 +1,28 @@
-var search=process.argv.slice(2);
-//console.log(search);
+var search=+process.argv[2];
+console.log("the number to be searched is: "+search);
 var fs=require("fs");
-var text =fs.readFileSync("binarysearchfile.txt").toString("UTF8");
-var myarray=text.split(",");
+var text=fs.readFileSync("file1.txt").toString("UTF8");
+var myarray1=text.split(",");
+var myarray=[];
+for(var i=0;i<myarray1.length;i++)
+{
+  myarray[i]=parseInt(myarray1[i]);
+}
 console.log(myarray);
+for(i=0;i<myarray.length-1;i++)
+{
+  for(var j=0;j<myarray.length-i-1;j++)
+  {
+    if(myarray[j]>myarray[j+1])
+    {
+      var temp=myarray[j];
+      myarray[j]=myarray[j+1];
+      myarray[j+1]=temp;
+    }
+  }
+}
+console.log("the sorted list is: "+myarray);
+
 function Node(data)
 {
   this.data=data;
@@ -54,7 +73,6 @@ SinglyList.display=function()
 }
 SinglyList.display();
 var count=0;
-//console.log(i);
 SinglyList.search=function( value)
 {
 
