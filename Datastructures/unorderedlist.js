@@ -37,6 +37,7 @@ SinglyList.add=function(value)
     this._length++;
     return node;
 }
+//console.log("the length is: "+this._length);
 for(var i=0;i<myarray.length;i++)
 {
   SinglyList.add(myarray[i]);
