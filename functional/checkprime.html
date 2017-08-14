@@ -1,0 +1,37 @@
+<head>
+<body>
+<input id="numb">
+<button type="button" onclick="primeFactors()">Submit</button>
+<p id="demo"></p>
+<script>
+var check_num;
+var isprime;
+/*finds the prime factors for a given number*/
+function primeFactors() {
+    //take user input for a number and store it in N
+    check_num = document.getElementById("numb").value;
+    //isprime is a variable to store the multiples of i a number is odd if it's isprime is 1
+    for( var i=1;i<=(check_num/2);i++)
+    {
+       if(check_num%i==0)
+        {
+          isprime=1;
+          //check till j*j<=1 according to brute force theory
+          for(var j=2;j*j<=i;j++)
+          {
+            if(i%j==0)
+            {
+              isprime=0;
+              break;
+            }
+           }
+          if(isprime==1)
+            {
+                alert(i);
+            }
+        }
+      }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+<body>
+
+<input type="Text" id="stake">enter stake value.</input><br>
+<input type="Text" id="goal">enter goal value.</input><br>
+<input type="Text" id="trails">enter trail value.</input><br>
+<button onclick="gambling()">play</button>
+<script>
+//take input for stake goal and trails
+ var wins=0;
+  var random_no=0;
+function gambling()
+ {
+
+   var cash=stake;
+   //set the stake goal and trails in the variables stake goal trails
+    stake=document.getElementById("stake").value;
+    goal=document.getElementById("goal").value;
+    trails=document.getElementById("trails").value;
+    var bets=trails;
+      while(trails>0)
+      {
+        //set the stake value into a variable cash so that we can update stake amount
+        //without effecting stake
+        cash=stake;
+        //check if the cash available is small than the goal
+        while(cash<=goal && cash>0)
+        {
+          random_no=Math.random();
+          //using random() check guess a winn or loss
+          //if it is win increment cash available by 1 else decrease the same by -1
+           if(random_no>0.49){cash++;}
+           else{cash--;}
+           if(cash>=goal){wins++;break;}
+        }
+        //decrement the total trails still to happen
+        trails--;
+      }
+      document.write("number of wins is:"+wins+".\n % of win is"+Math.round((wins/bets)*100)+"%");
+}
+</script>
+</body>
+</html>

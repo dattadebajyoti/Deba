@@ -1,0 +1,33 @@
+<html>
+<head>
+<body>
+<input id="numb">
+<button type="button" onclick="myFunction()">Submit</button>
+<p id="demo"></p>
+<script>
+function myFunction() {
+  //take a user input year and store it in the variable year
+    var year;
+    year = document.getElementById("numb").value;
+    //logic for determining leap year
+    if(year%4 == 0)
+    {
+        if( year%100 == 0)
+        {
+            if ( year%400 == 0)
+                alert("is a leap year.");
+            else
+                alert("is not a leap year.");
+        }
+        else
+            alert("leap year.");
+    }
+    else
+        alert("is not a leap year.");
+
+}
+
+</script>
+</body>
+</head>
+</html>

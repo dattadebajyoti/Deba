@@ -1,0 +1,27 @@
+<html>
+<body>
+<p id="demo"></p>
+<script>
+  var head=0;
+  var tail=0;
+  //h and t is used to store the number of heads and tails
+  //take the total number of flips from user
+  var flip= prompt("Please let us know how many times you want to flip the coin");
+  alert("Flipping the coins " + flip + " times for you");
+  //generate a random function for getting the head or a tail
+  for(var i=0;i<flip;i++)
+  {
+    var b=Math.random();
+    if(b<0.5)
+    tail=tail+1;
+    else
+    head=head+1;
+  }
+  //p1 and p2 stores the % of heads and tails
+  var head_percentage=head/flip*100;
+  var tail_percentage=tail/flip*100;
+  alert("head % is "+head_percentage);
+  alert("tail % is "+tail_percentage);
+</script>
+</body>
+</html>

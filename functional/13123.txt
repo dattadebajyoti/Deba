@@ -1,0 +1,31 @@
+<head>
+<body>
+<input id="numb">
+<button type="button" onclick="myFunction()">Submit</button>
+<p id="demo"></p>
+<script>
+function myFunction() {
+    var x, text;
+
+    x = document.getElementById("numb").value;
+    if(year%4 == 0)
+    {
+        if( year%100 == 0)
+        {
+            // year is divisible by 400, hence the year is a leap year
+            if ( year%400 == 0)
+                text= "is a leap year.";
+            else
+                text= "is not a leap year.";
+        }
+        else
+            text= "leap year.");
+    }
+    else
+        text= "is not a leap year.";
+    document.getElementById("demo").innerHTML = text;
+}
+
+</script>
+</body>
+</head>

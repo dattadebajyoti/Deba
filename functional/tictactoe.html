@@ -1,0 +1,265 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: arial; font-size: 1.2em; background-color:#f7f7f7;}
+    #board {
+      width: 306px;
+      height: 306px;
+      border: 1px solid #ccc;
+    }
+    #board div {
+      float: left;
+      height: 100px;
+      width: 100px;
+      border: 1px solid #aaa;
+      text-align: center;
+    }
+    #board div span {
+      font-family: arial;
+      font-size: 70px;
+      margin-top: 10px;
+      display: block;
+    }
+    .winner { background-color: lightgreen; }
+    #status { font-size: 1.2em; font-weight: bold; }
+  </style>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script>
+    var computer = 'X'; 
+    var player = 'O';
+    var turn = player;
+    var xwins = 0, owins = 0;
+
+
+    function iterateCols(func) {
+      return findInGrid(true, func);
+    }
+    function iterateRows(func) {
+      return findInGrid(false, func);
+    }
+    function findInGrid(isRow, func) {
+      for (var i=0; i<3; i++) {
+        var a = isRow ? val(i,0) : val(0,i);
+        var b = isRow ? val(i,1) : val(1,i);
+        var c = isRow ? val(i,2) : val(2,i);
+        if (func(a,b,c,i)) return i;
+      }
+      return -1;
+    }
+    function findInGrid(isRow, func) {
+      for (var i=0; i<3; i++) {
+        var a = isRow ? val(i,0) : val(0,i);
+        var b = isRow ? val(i,1) : val(1,i);
+        var c = isRow ? val(i,2) : val(2,i);
+        if (func(a,b,c,i)) return i;
+      }
+      return -1;
+    }
+    function iterateDiags(func) {
+      if (func(val(0,0), val(1,1), val(2,2),0)) return 0;
+      else if (func(val(2,0), val(1,1), val(0,2),2)) return 2;
+      else return -1;
+    }
+
+    function convertDiag(iterateVal, ix) {
+
+      if (iterateVal==0) {
+        if (ix==0) return [0,0];
+        if (ix==1) return [1,1];
+        if (ix==2) return [2,2];
+      }
+      else {
+        if (ix==0) return [2,0];
+        if (ix==1) return [1,1];
+        if (ix==2) return [0,2];
+      }
+    }
+
+
+    function val(x,y,newVal) {
+      if (typeof newVal == 'undefined') {
+        return $("#s"+x+""+y+" span").text();
+      }
+      else {
+        $("#s"+x+""+y).html("<span>"+newVal+"</span>");
+      }
+    }
+
+
+
+
+    function init() {
+
+      $(document).ready(function() {
+        $("#board div").click(function() {
+          if (turn==player) {
+            if (!$(this).find("span").length>0) {
+              $(this).html("<span>"+player+"</span>");
+              processTurn();
+            }
+          }
+        });
+      });
+    }
+
+
+    function processTurn() {
+
+      var winnerTest = function(a,b,c) {
+        return a==b & a==c && a!='';
+      };
+
+      var y = iterateCols(winnerTest);
+      if (y > -1) {
+        finish(val(y,0), [[y,0],[y,1],[y,2]]);
+        return;
+      }
+
+      var x = iterateRows(winnerTest);
+      if (x > -1) {
+        finish(val(0,x), [[0,x],[1,x],[2,x]]);
+        return;
+      }
+
+      var d = iterateDiags(winnerTest);
+      if (d == 0) {
+        finish(val(0,0), [[0,0],[1,1],[2,2]]);
+        return;
+      }
+      else if (d == 2) {
+        finish(val(2,0), [[2,0],[1,1],[0,2]]);
+        return;
+      }
+
+      if (iterateCols(function(a,b,c) { return a=='' || b=='' || c==''; }) == -1) {
+        finish();
+      }
+
+      else {
+        if (turn==computer) {
+          turn = player;
+        }
+        else if (turn==player) {
+          turn = computer;
+          computerTurn();
+          processTurn();
+        }
+
+      }
+    }
+
+    function strategyRandom() {
+
+      var blanks = [];
+      for (var x=0; x<3; x++) {
+        for (var y=0; y<3; y++) {
+          if (val(x,y)=='') blanks.push([x,y]);
+        }
+      }
+
+      if (blanks.length>0) {
+        var r = Math.floor((Math.random()*blanks.length));
+        return blanks[r];
+      }
+      else return false;
+    }
+
+    function computerTurn() {
+      var strategies = [];
+      if (option('random')) strategies.push(strategyRandom);
+      for (var i=0; i<strategies.length; i++) {
+        var turn = strategies[i]();
+        if (!turn) continue;
+        val(turn[0], turn[1], computer);
+        break;
+      }
+    }
+
+    function highlightWinner(a) {
+      for (var i=0; i<a.length; i++) {
+        var coord = a[i];
+        var x = coord[0], y = coord[1];
+        var sel = "#s"+''+x+''+y;
+        $(sel).addClass('winner');
+      }
+    }
+
+    function finish(p, highlight) {
+      if (typeof p != 'undefined') {
+        $("#status").text(p + ' is the winner!');
+
+      }
+      else {
+        $("#status").text('The game ended with a draw.');
+      }
+      turn = '';
+      if (typeof highlight != 'undefined') {
+        highlightWinner(highlight);
+      }
+      if (p=='X') xwins++;
+      else if (p=='O') owins++;
+      $("#xwins").text(xwins);
+      $("#owins").text(owins);
+    }
+
+
+    function newGame() {
+      $("#board div").find("span").remove();
+      $(".winner").removeClass("winner");
+      turn = player;
+      $("#status").empty();
+    }
+
+
+
+
+    // gets checkbox option true/false status
+    function option(name) {
+      return $("input[name='"+name+"']")[0].checked;
+    }
+
+    function matches(a, func) {
+      var c = 0;
+      for (var i=0; i<a.length; i++) {
+        if (func(a[i])) c++;
+      }
+      return c;
+    }
+
+
+    function findInArray(a, func) {
+      for (var i=0; i<a.length; i++) {
+        if (func(a[i])) return i;
+      }
+      return -1;
+    }
+
+
+    init();
+
+  </script>
+</head>
+<body>
+<h1>Tic Tac Toe</h1>
+<div id="board">
+  <div id="s00"></div>
+  <div id="s10"></div>
+  <div id="s20"></div>
+  <div id="s01"></div>
+  <div id="s11"></div>
+  <div id="s21"></div>
+  <div id="s02"></div>
+  <div id="s12"></div>
+  <div id="s22"></div>
+</div>
+<p id="status"></p>
+<p>X wins: <span id="xwins">0</span><br/>
+Y wins: <span id="owins">0</span></p>
+<p><button onclick="newGame()">New Game</button></p>
+<p>
+  Strategies:<br/>
+  <label><input disabled type="checkbox" name="random" value="1" checked/> Random</label><br/>
+</p>
+</body>
+</html>

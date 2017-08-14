@@ -1,0 +1,24 @@
+<head>
+<body>
+<input id="numb">
+<button type="button" onclick="findPower()">Submit</button>
+<p id="demo"></p>
+<script>
+var exponent;
+function findPower() {
+    //take user input for the exponent and store it in the variable exponent
+    //initialize a variable x and check <31
+    var n = document.getElementById("numb").value;
+     if(n<31)
+     {
+      for(var i=1;i<=n;i++){
+      exponent= Math.pow(2,i);
+      alert(exponent);
+      }
+     }
+    else
+     alert("insert a number between 1 and 30");
+}
+</script>
+</body>
+</head>
