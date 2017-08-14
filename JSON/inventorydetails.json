@@ -1,0 +1,18 @@
+
+[
+  {
+    "Inventory" : "rice",
+    "Weight" : "100kg",
+     "Cost" : "40"
+  },
+  {
+    "Inventory" : "pulses",
+    "Weight" : "50kg",
+    "Cost" : "40"
+  },
+  {
+    "Inventory" : "wheat",
+    "Weight" : "70kg",
+    "Cost" : "30"
+    }
+]
