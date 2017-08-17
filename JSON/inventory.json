@@ -1,0 +1,19 @@
+{"Inventory_DB":[
+  {
+    "name": "Rice",
+    "weight": "100",
+    "price_per_kg": "15"
+
+  },
+  {
+    "name": "Pulses",
+    "weight": "50",
+    "price_per_kg": "20"
+  },
+  {
+    "name": "Wheat",
+    "weight": "70",
+    "price_per_kg": "7"
+  }
+]
+}
