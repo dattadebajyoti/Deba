@@ -7,7 +7,7 @@ var readFile='inventory.json';
 inventoryDetails();
 function inventoryDetails()
 {
-   store=JSON.parse(fs.readFileSync(readFile));
+   store=JSON.parse(readFileSync(readFile));
    addtoStore(name,weight,price);
 }
 
@@ -18,16 +18,17 @@ function addtoStore(name,weight,price)
       {
          "name":name,
          "weight":weight,
-         "price_per_kg":price
+         "price":price
       }
    );
    for(var i=0;i<store.inventory.length;i++)
    {
        console.log("name: "+store.inventory[i].name);
-       console.log("Weight "+store.inventory[i].weight);
-       console.log("Price: "+store.inventory[i].price_per_kg);
-       var totPrice=store.inventory[i].weight*store.inventory[i].price_per_kg;
+       console.log("name: "+store.inventory[i].weight);
+       console.log("name: "+store.inventory[i].price);
+       var totPrice=store.inventory[i].weight*store.inventory[i].price;
        console.log("total price for "+store.inventory[i].name+" is "+totPrice);
        console.log("------------------");
    }
 }
+       

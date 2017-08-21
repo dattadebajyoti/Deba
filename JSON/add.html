@@ -7,7 +7,7 @@
 <body>
   <div class="container-fluid">
   <h2 class="text-center">Address Book</h2>
-  <p>Please click what you want</p>
+  <p class="text-center">Please click what you want</p>
   <div class="row">
     <div class="col-sm-2" style="background-color:lavender;">
 
@@ -60,20 +60,30 @@
         <label for="zip">Zip:</label>
         <input type="zip" class="form-control" id="zi" placeholder="Enter Zip code" name="zip">
       </div>
-       <button type="button" class="btn btn-primary" onclick="delete()">Delete</button>
+       <button type="button" class="btn btn-primary" onclick="del()">Delete</button>
     </div>
 
 
+     <!-- edit -->
 
-    
     <div class="col-sm-2" style="background-color:lavender;">
+      <h5>Edit details in address book</h5>
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="phone" class="form-control" id="pno" placeholder="enter your phone number to verify" name="phone">
+      </div>
        <button type="button" class="btn btn-success" onclick="edit()">Edit</button>
     </div>
+
+
+
+
+
     <div class="col-sm-2" style="background-color:lavender;">
-       <button type="button" class="btn btn-info" onclick="sort_by_name()">Sort by name</button>
+       <button type="button" class="btn btn-info" onclick="sortByName()">Sort by name</button>
     </div>
     <div class="col-sm-2" style="background-color:lavender;">
-       <button type="button" class="btn btn-warning" onclick="sort_by_zip()">Sort by Zip</button>
+       <button type="button" class="btn btn-warning" onclick="sortByZip()">Sort by Zip</button>
     </div>
     <div class="col-sm-2" style="background-color:lavender;">
        <button type="button" class="btn btn-danger" onclick="print()">Print</button>
