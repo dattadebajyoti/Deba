@@ -19,7 +19,10 @@ function cardShuffle()
        }
    }
    document.write("shuffling........................."+"<br>");
+<<<<<<< HEAD
    //shuffle the deck using random funtion
+=======
+>>>>>>> b6bc4047dd3c8b6428acecf1ae529a5b7625f98f
    for(i=0;i<deckLen;i++)
    {
      var randIndex=i+Math.round(Math.random()*(deckLen-i));
@@ -43,7 +46,10 @@ function cardShuffle()
        deckIterate++;
      }
    }
+<<<<<<< HEAD
    //printing the deck from a 2D array
+=======
+>>>>>>> b6bc4047dd3c8b6428acecf1ae529a5b7625f98f
    for(i=0;i<4;i++)
    {
      document.write("cards for player"+(i+1)+" is: "+"<br>");
