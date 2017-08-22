@@ -1,0 +1,104 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container-fluid">
+  <h2 class="text-center">Address Book</h2>
+  <p class="text-center">Please click what you want</p>
+  <div class="row">
+    <div class="col-sm-2" style="background-color:lavender;">
+
+      <!-- add to address book -->
+      <h5>Add to Address Book</h5>
+      <div class="form-group">
+      <label for="First Name">First Name:</label>
+      <input type="First Name" class="form-control" id="fname" placeholder="Enter First name" name="First Name">
+    </div>
+    <div class="form-group">
+      <label for="lname">Last Name:</label>
+      <input type="lname" class="form-control" id="lname" placeholder="Enter Last name" name="lname">
+    </div>
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <input type="address" class="form-control" id="add" placeholder="Enter Address" name="add">
+    </div>
+    <div class="form-group">
+      <label for="city">City:</label>
+      <input type="city" class="form-control" id="cit" placeholder="Enter City" name="city">
+    </div>
+    <div class="form-group">
+      <label for="state">State:</label>
+      <input type="state" class="form-control" id="sta" placeholder="Enter State" name="state">
+    </div>
+    <div class="form-group">
+      <label for="zip">Zip:</label>
+      <input type="zip" class="form-control" id="zi" placeholder="Enter Zip code" name="zip">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number:</label>
+      <input type="phone" class="form-control" id="pno" placeholder="Enter Phone Number" name="phone">
+    </div>
+
+       <button type="button" class="btn btn-default" onclick="add()">Add</button>
+    </div>
+
+
+
+
+
+     <!-- delete from address book -->
+    <div class="col-sm-2" style="background-color:lavenderblush;">
+      <h5>Delete from address book</h5>
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="phone" class="form-control" id="pno" placeholder="Enter Phone Number" name="phone">
+      </div>
+      <div class="form-group">
+        <label for="zip">Zip:</label>
+        <input type="zip" class="form-control" id="zi" placeholder="Enter Zip code" name="zip">
+      </div>
+       <button type="button" class="btn btn-primary" onclick="del()">Delete</button>
+    </div>
+
+
+     <!-- edit -->
+
+    <div class="col-sm-2" style="background-color:lavender;">
+      <h5>Edit details in address book</h5>
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="phone" class="form-control" id="pno" placeholder="enter your phone number to verify" name="phone">
+      </div>
+       <button type="button" class="btn btn-success" onclick="edit()">Edit</button>
+    </div>
+
+
+
+
+
+    <div class="col-sm-2" style="background-color:lavender;">
+       <button type="button" class="btn btn-info" onclick="sortByName()">Sort by name</button>
+    </div>
+    <div class="col-sm-2" style="background-color:lavender;">
+       <button type="button" class="btn btn-warning" onclick="sortByZip()">Sort by Zip</button>
+    </div>
+    <div class="col-sm-2" style="background-color:lavender;">
+       <button type="button" class="btn btn-danger" onclick="print()">Print</button>
+    </div>
+  </div>
+</div>
+  <!-- <div class="container">
+    <h2 class="text-center">Address Book</h2>
+    <button type="button" class="btn btn-default" onclick="add()">Add</button>
+    <button type="button" class="btn btn-primary" onclick="delete()">Delete</button>
+    <button type="button" class="btn btn-success" onclick="edit()">Edit</button>
+    <button type="button" class="btn btn-info" onclick="sort_by_name()">Sort by name</button>
+    <button type="button" class="btn btn-warning" onclick="sort_by_zip()">Sort by zip</button>
+    <button type="button" class="btn btn-danger" onclick="print()">Print</button>
+  </div> -->
+<script src="example.js"></script>
+</body>
+</html>

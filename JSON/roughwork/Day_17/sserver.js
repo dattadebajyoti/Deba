@@ -10,9 +10,10 @@ app.use("/",express.static('./sample'));
 
 app.post('/saving',function(req, res)
 {
-
+res.setHeader('Content-Type', 'application/json');
 var d=JSON.stringify([req.body]);
-console.log(JSON.stringify([req.body],0,4));
+console.log(d);
+//console.log(JSON.stringify([req.body]),0,4);
 //console.log('you posted: First Name: ' + req.body.firstName);
 // res.setHeader('Content-Type', 'application/json');
 // res.send({firstName: req.body.firstName || null});
@@ -30,7 +31,6 @@ fs.writeFile( "filename.json", d, "utf8", function (err) {
     res.send({err: "error writing file: "+e});
   }
 });
-// res.setHeader('Content-Type', 'application/json');
 
 });
 

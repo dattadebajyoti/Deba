@@ -20,5 +20,5 @@ function submithandler(evt)
     }
   });
   }
-  //$(document).ready(init);
+  $(document).ready(init);
 })();

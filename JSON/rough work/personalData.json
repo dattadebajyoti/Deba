@@ -1,0 +1,21 @@
+{"items":[
+  {
+    "firstName": "Debajyoti",
+    "lastName":"Datta",
+    "address": "North Banamalipur",
+    "city": "Agartala",
+    "state":"Tripura",
+    "zip":"899001",
+    "phoneNumber":"9436331967"
+  },
+  {
+    "firstName": "Mridul",
+    "lastName":"Datta",
+    "address":"North Banamalipur",
+    "city": "Agartala",
+    "state":"Tripura",
+    "zip":"799001",
+    "phoneNumber":"9436331967"
+  }
+]
+}
