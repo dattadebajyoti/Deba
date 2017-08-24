@@ -1,3 +1,4 @@
+//function to read in all the inputs
 function task_scheduler()
 {
   var task=document.getElementById("i1").value;
@@ -7,15 +8,7 @@ function task_scheduler()
     var a=prompt("enter task "+(i+1));
     task_arr.push(a);
   }
-  document.write("tasks: "+task_arr+"<br>");
-
-  var deadline=[];
-  for(i=0;i<task;i++)
-  {
-    var b=parseInt(prompt("enter deadline in minutes for task "+(i+1)));
-    deadline.push(b);
-  }
-  document.write("deadline for completion in minutes: "+deadline+"<br>");
+  document.write("--------------------Task Scheduler--------------------"+"<br>"+"tasks: "+task_arr+"<br>");
 
   var time_required=[];
   for(i=0;i<task;i++)
@@ -38,61 +31,52 @@ function task_scheduler()
         var temp2=task_arr[j];
         task_arr[j]=task_arr[j+1];
         task_arr[j+1]=temp2;
-
-
-        var temp3=deadline[j];
-        deadline[j]=deadline[j+1];
-        deadline[j+1]=temp3;
       }
     }
   }
-  document.write("time required in sorted order: "+time_required+"<br>"+"tasks in sorted order: "+task_arr+"<br>"+"deadline in sorted order: "+deadline+"<br>");
   var time_alot=2;
-  document.write("optimised time for completion is: "+optimisation(time_alot,time_required,deadline,task_arr));
+  document.write("time allotted for a task at a given instant is assumed to be 2 minutes"+"<br>");
+  document.write("the sorted order of task with respect to time is: "+task_arr+"<br>");
+  document.write("<br>"+"optimised extra time for "+task_arr+" is: "+optimisation(time_alot,time_required,task_arr)+"<br>");
 }
 
-function optimisation(time_alot,time_required,deadline,task_arr)
+//function to optimise the tasks
+function optimisation(time_alot,time_required,task_arr)
 {
 
   var optimised=[];
-  var opt;
-  for(var i=0;i<time_required.length;i++)
+  //var opt;
+  var arrayInitialise=[];
+  for(var j=0;j<time_required.length;j++)
+     optimised[j]=0;
+  document.write("initial value for optimised time for all process is assumed as :"+optimised+"<br>");
+  document.write("**************Processing**************"+"<br>");
+  for(j=0;j<time_required.length;j++)
   {
-    //document.write(time_required[i]+"<br>"+deadline+"<br>");
-    if(time_required[i]<=time_alot && time_required[i]<=deadline[i])
-    {
-      var t=0;
-      optimised.push(t);
-      //time_alot=time_alot+(time_alot-time_required[i]);
-      //break;
-      //return time_alot;
-    }
-    // else if(time_required[i]>time_alot && time_required[i]<=deadline[i])
-    // {
-    //   opt=deadline-time_required[i];
-      //time_required[i]=time_required[i]-time_alot;
-      // optimised.push(time_required[i]);
-      //return optimisation(time_alot,time_required,deadline,task_arr);
-    //}
-    else {
-      opt=time_required[i]-deadline[i];
-      optimised.push(opt);
 
-      //return optimisation(time_alot,time_required,deadline,task_arr);
-      time_required[i]=time_required[i]-time_alot;
-      // while(time_required[i]>deadline[i])
-      // {
-      //   for(var j=i+1;j<deadline.length;j++)
-      //   {
-      //     if(time_required[j]<=time_alot)
-      //     {
-      //       document.write("switching to task "+task_arr[j]);
-      //       optimised.push(0);
-      //     }
-      //   }
-      // }
+        for(var i=0;i<time_required.length;i++)
+        {
+          if(arrayInitialise[i]!=0)
+          {
+           document.write("Scheduling task for: "+task_arr[i]+"<br>");
+           if(time_required[i]<=time_alot)
+           {
+             document.write("Task completed for "+task_arr[i]+"<br>"+"<br>");
+             document.write("___________________________________"+"<br>");
+             arrayInitialise[i]=0;
+            // break;
+           }
+           else {
+             time_required[i]=time_required[i]-time_alot;
+             document.write("Time require for task: "+task_arr[i]+" to finish is "+time_required[i]+"<br>");
+             arrayInitialise[i]=1;
+             optimised[i]=optimised[i]+2;
+           }
+          }
 
-    }
-   }
+         }
+
+         //document.write(optimised[i]);
+  }
    return optimised;
 }

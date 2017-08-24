@@ -17,20 +17,20 @@ var middle = parseInt(result.length / 2);
 var left   = result.slice(0, middle);
 var right  = result.slice(middle, result.length);
 
-var result1=[];
+var nibble=[];
 while (right.length)
-    result1.push(right.shift());
+    nibble.push(right.shift());
 
 while (left.length)
-    result1.push(left.shift());
+    nibble.push(left.shift());
 
-console.log(result1);
+console.log("the whole nibble after swaping right and left parts is: "+nibble);
 var total=0;
 var j=0;
-for(var i=result1.length-1;i>=0;i--)
+for(var i=nibble.length-1;i>=0;i--)
 {
-  total=total+result1[j]*Math.pow(2,i);
+  total=total+nibble[j]*Math.pow(2,i);
   j++;
-  console.log(total);
+  //console.log(total);
 }
-console.log(total);
+console.log("decimal value of the sorted nibble is "+total);

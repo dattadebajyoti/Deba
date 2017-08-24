@@ -6,10 +6,10 @@ while(number >= 1 )
   result.unshift(Math.floor(number%2));
   number = number/2;
 }
-console.log(result);
+console.log("the binary representation of "+num+" is "+result);
 var first=0;
-var arr=[3,4,5];
-var last=arr.length;
-console.log(last);
-var middle = Math.round(first+(last-first)/2);
-console.log(middle);
+// var arr=[3,4,5];
+// var last=arr.length;
+// console.log(last);
+// var middle = Math.round(first+(last-first)/2);
+// console.log(middle);

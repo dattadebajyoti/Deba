@@ -40,7 +40,7 @@
     }
     debugger;
   }
-  if (first > last)
-  {
-    console.log("string not found in the list");
-  }
+  // if (first > last)
+  // {
+  //   console.log("string not found in the list");
+  // }
