@@ -1,5 +1,6 @@
-var temp=1;
+var temp=0;
 //var getData=[];
+//function to add entry
 $('#add').click(submithandler);
 function submithandler()
 {
@@ -23,8 +24,8 @@ function submithandler()
     }
   });
 }
-
-function read()
+//function to print entry
+function printEntries()
 {
   var getData=[];
   var promise = $.ajax({
@@ -37,21 +38,42 @@ function read()
     var items=data.forEach(function(item)
   {
     getData.push(items);
-    document.write("Reading data for person "+temp+"<br>");
-    document.write("First Name: "+item.firstName+"<br>");
-    // document.write("hiii");
-    document.write("Last Name: "+item.lastName+"<br>");
-    document.write("Address: "+item.address+"<br>");
-    document.write("City: "+item.city+"<br>");
-    document.write("State: "+item.state+"<br>");
-    document.write("Zip Code: "+item.zip+"<br>");
-    document.write("Phone Number: "+item.phoneNumber+"<br>"+"<br>");
-    temp++;
+    if(item!=null)
+    {
+      temp=temp+1;
+      document.write("Reading data for person "+temp+"<br>");
+      document.write("First Name: "+item.firstName+"<br>");
+      // document.write("hiii");
+      document.write("Last Name: "+item.lastName+"<br>");
+      document.write("Address: "+item.address+"<br>");
+      document.write("City: "+item.city+"<br>");
+      document.write("State: "+item.state+"<br>");
+      document.write("Zip Code: "+item.zip+"<br>");
+      document.write("Phone Number: "+item.phoneNumber+"<br>"+"<br>");
+      //temp++;
+    }
+
   });
     alert("sucess");
     //document.write(getData);
     // document.write(getData);
-    document.write(getData.length);
+    // for(var i=0;i<getData.length;i++)
+    // {
+    //   if(items!=null)
+    //   {
+    //     document.write("Reading data for person "+temp+"<br>");
+    //     document.write("First Name: "+item.firstName+"<br>");
+    //     // document.write("hiii");
+    //     document.write("Last Name: "+item.lastName+"<br>");
+    //     document.write("Address: "+item.address+"<br>");
+    //     document.write("City: "+item.city+"<br>");
+    //     document.write("State: "+item.state+"<br>");
+    //     document.write("Zip Code: "+item.zip+"<br>");
+    //     document.write("Phone Number: "+item.phoneNumber+"<br>"+"<br>");
+    //     temp++;
+    //   }
+    // }
+    document.write("total number of entries are: "+temp);
   })
 console.log(promise);
 print();
@@ -134,7 +156,7 @@ console.log(promise);
 
 
 //function to delete
-function del()
+function deleteEntry()
 {
   var phone=prompt("enter the number to delete");
   $.ajax({
@@ -159,7 +181,7 @@ function del()
 
 
 
-
+//function to search
 function search()
 {
   var getData=[];
@@ -193,42 +215,46 @@ function search()
 
 
 
+//function to edit
+function edit()
+{
+  //var update=prompt("Enter your phone number");
+  var doUpdate1=prompt("enter your first name");
+  var doUpdate2=prompt("enter your last name");
+  var doUpdate3=prompt("enter your address");
+  var doUpdate4=prompt("enter your city");
+  var doUpdate5=prompt("enter your state");
+  var doUpdate6=prompt("enter your zip code");
+  var doUpdate7=prompt("enter your phone number");
+  $.ajax({
+    url:'/editing',
+    type:'POST',
+    data: {
+           //verifyPhone:update,
 
-// function search()
-// {
-//   var update=prompt("Enter your phone number");
-//   var noOfUpdates=prompt("how many updates you want?");
-//   for(var i=0;i<noOfUpdates;i++)
-//   {
-//     var toUpdate=prompt("what you want to update 1.firstName 2.lastName 3.address 4.city 5.state 6.zip 7.phoneNumber? 1/2/3/4/5/6/7");
-//     var doUpdate=prompt("enter your update");
-//     if(toUpdate==1)
-//     {
-//       getData[i].firstName=doUpdate;
-//     }
-//     if(toUpdate==2)
-//     {
-//       getData[i].lastName=doUpdate;
-//     }
-//     if(toUpdate==3)
-//     {
-//       getData[i].address=doUpdate;
-//     }
-//     if(toUpdate==4)
-//     {
-//       getData.city=doUpdate;
-//     }
-//     if(toUpdate==5)
-//     {
-//       getData[i].state=doUpdate;
-//     }
-//     if(toUpdate==6)
-//     {
-//       getData[i].zip=doUpdate;
-//     }
-//     if(toUpdate==7)
-//     {
-//       getData[i].phoneNumber=doUpdate;
-//     }
-//   }
-// }
+           firstName:doUpdate1,
+
+
+           lastName:doUpdate2,
+
+
+           address:doUpdate3,
+
+
+           city:doUpdate4,
+
+
+           state:doUpdate5,
+
+
+           zip:doUpdate6,
+
+
+           phoneNumber:doUpdate7
+    },
+    sucess: function(data)
+    {
+      alert("sucess");
+    }
+  });
+}
