@@ -10,6 +10,7 @@ var isprime;
 function primeFactors() {
     //take user input for a number and store it in N
     check_num = document.getElementById("numb").value;
+    var primeArr=[];
     //isprime is a variable to store the multiples of i a number is odd if it's isprime is 1
     for( var i=1;i<=(check_num/2);i++)
     {
@@ -27,9 +28,15 @@ function primeFactors() {
            }
           if(isprime==1)
             {
-                alert(i);
+                primeArr.push(i);
             }
         }
+      }
+      document.write("The prime factors of the entered number is as follows: "+"<br>");
+      for(i=0;i<primeArr.length;i++)
+      {
+
+        document.write(primeArr[i]+"<br>");
       }
 }
 </script>

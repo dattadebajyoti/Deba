@@ -2,8 +2,9 @@ function readArray()
 {
   //read the string from user input into a variable string
   var string=document.getElementById("i1").value;
-  document.write(permut(string));
+  document.write("All the possible permutations are: "+"<br>"+permut(string));
 }
+//function to permutate the string
 function permut(string) {
   //check whether thee sting contains only 1 character or not
   if (string.length < 2) return string;
