@@ -2,13 +2,14 @@ function cardShuffle()
 {
   //initialize suit
   var suit=["clubs","diamonds","hearts","spades"];
-  document.write(suit+"<br>");
+  document.write("the suit contains: "+suit+"<br>");
   //initialize rank
   var rank=["2","3","4","5","6","7","8","9","10","jack","queen","king","ace"];
-  document.write(rank+"<br>");
+  document.write("the ranks for a given suit is: "+rank+"<br>");
   var deckLen=suit.length*rank.length;
-  document.write(deckLen+"<br>");
+  document.write("total number of cards are: "+deckLen+"<br>");
   //initialize deck
+  document.write("displaying the cards"+"<br>")
   var deck=new Array(deckLen);
   for (var i = 0; i < rank.length; i++)
    {
@@ -18,11 +19,11 @@ function cardShuffle()
           document.write(deck[suit.length*i+j]+"<br>");
        }
    }
-   document.write("shuffling........................."+"<br>");
-<<<<<<< HEAD
+   document.write("..................................shuffling........................."+"<br>");
+   document.write("CARDS AFTER SHUFFLING:"+"<br>");
+
    //shuffle the deck using random funtion
-=======
->>>>>>> b6bc4047dd3c8b6428acecf1ae529a5b7625f98f
+
    for(i=0;i<deckLen;i++)
    {
      var randIndex=i+Math.round(Math.random()*(deckLen-i));
@@ -31,7 +32,9 @@ function cardShuffle()
      deck[i]=temp;
      document.write(deck[i]+"<br>");
    }
-   //document.write(deck);
+
+   document.write("CARDS ALLOTTED TO EACH PLAYER IS SHOWN:"+"<br>");
+   //assinging the cards to 4 players
    var deckIterate=0;
    var player=new Array(4);
    for(i=0;i<4;i++)
@@ -46,12 +49,11 @@ function cardShuffle()
        deckIterate++;
      }
    }
-<<<<<<< HEAD
    //printing the deck from a 2D array
-=======
->>>>>>> b6bc4047dd3c8b6428acecf1ae529a5b7625f98f
+
    for(i=0;i<4;i++)
    {
+     document.write("--------------------------------------"+"<br>");
      document.write("cards for player"+(i+1)+" is: "+"<br>");
      for(j=0;j<9;j++)
      {
