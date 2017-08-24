@@ -3,7 +3,7 @@ var search=process.argv.slice(2);
 var fs=require("fs");
 var text =fs.readFileSync("binarysearchfile.txt").toString("UTF8");
 var myarray=text.split(",");
-console.log(myarray);
+//console.log(myarray);
 function Node(data)
 {
   this.data=data;
