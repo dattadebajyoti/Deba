@@ -31,6 +31,7 @@ function deleteAccount()
     url:'/deleting',
     type:'POST',
     data: {
+      name:getUserName,
       pwd: getPwd
     },
     sucess: function(data)
@@ -66,4 +67,36 @@ function edit()
       alert("sucess");
     }
   });
+}
+
+
+
+
+
+
+
+
+//function to search
+function login()
+{
+  var username = prompt("enter username");
+  var password=prompt("enter passwrod");
+  $.ajax({
+    url: '/signingin',
+    type: 'POST',
+    data: {
+      name: username,
+      pwd:password
+    }
+  }).done(function(result)
+  {
+    console.log(result);
+    if(result.data=="false")
+    {
+      alert("Login Successfully");
+    }
+    else {
+      alert("Sorry!! please create your account first");
+    }
+  })
 }
