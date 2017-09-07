@@ -2,16 +2,18 @@ var express =require("express");
 var bodyParser=require("body-parser");
 var path = require("path");
 var app=express();
+var fs=require('fs');
 var http=require('http').Server(app);
 var io=require('socket.io')(http);
 var PORT = process.env.PORT || 3004;
 //app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/",express.static('./sample'));
+app.use("/",express.static('./sample/'));
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/mydb";
 
+var user;
 MongoClient.connect(url,function(err,db)
 {
   if (err) throw err;
@@ -25,23 +27,23 @@ MongoClient.connect(url,function(err,db)
     var result = {status:true,message:"Successfully added"};
     res.setHeader('Content-Type', 'application/json');
     //console.log(req.body.name+" "+req.body.pwd);
-     MongoClient.connect(url, function(err,db) {
+    //  MongoClient.connect(url, function(err,db) {
     //   if (err) throw err;
       var myObj=[
       { name : req.body.name, pwd : req.body.pwd}
       ];
-      db.collection("logInDetails").insertMany(myObj, function(err, res) {
+      db.collection("userDetails").insertOne(myObj, function(err, res) {
         if (err) throw err;
         console.log("Account Created");
         //console.log("Account details: "+res.result);
-        db.close();
+        // db.close();
       })
-      db.collection("logInDetails").find({}, { _id: false }).toArray(function(err, result) {
+      db.collection("userDetails").find({}, { _id: false }).toArray(function(err, result) {
         if (err) throw err;
         console.log(result);
-        db.close();
+        // db.close();
       });
-   });
+  //  });
   });
 
 
@@ -51,11 +53,12 @@ MongoClient.connect(url,function(err,db)
     var result = {status: true,message: "Successfully added"};
   // MongoClient.connect(url,function(err,db) {
   //   if (err) throw err;
-      db.collection("logInDetails").find({name:req.body.name,pwd:req.body.pwd}).toArray(function(err,data)
+      db.collection("userDetails").find({name:req.body.name,pwd:req.body.pwd}).toArray(function(err,data)
       {
         if(!err)
         if(data.length!=0)
         {
+          user=req.body.name;
           console.log("hiii");
           res.json({data:"false"});
         }
@@ -70,26 +73,53 @@ MongoClient.connect(url,function(err,db)
 });
 
 
-//
-app.get('/',function(req,res)
-{
-  res.sendFile(__dirname + '/chatapp.html');
-  // res.redirect(__dirname + '/test.html');
-  //res.send('<h1>Hellow World</h1>');
-});
+
+
 io.on('connection',function(socket)
 {
   socket.on('chat message', function(msg){
+    console.log(msg);
+    //console.log(user);
+    MongoClient.connect(url, function(err,db) {
+     myObj=[{ message : msg, userName: user}];
+     db.collection("storeMessage").insertMany(myObj, function(err, res) {
+       if (err) throw err;
+       console.log(user);
+       console.log("Message Stored");
+      //  db.close();
+     })
+     db.collection("storeMessage").find({},+ { _id: false }).toArray(function(err, result) {
+       if (err) throw err;
+       console.log(result);
+      //  db.close();
+     });
+  });
     // if(err) throw err;
-    io.emit('chat message', msg);
-    console.log("message: " + msg);
+    io.sockets.emit('chat message', msg);
+    //io.emit('username',user);
+    //console.log("message: " + msg);
   });
 });
 //
 
 
+app.get('/get', function(req, res)
+{
+  console.log(url);
+  MongoClient.connect(url, function(err,db) {
+    // console.log(db);
+    db.collection("storeMessage").find({}, {_id:false, message:true, userName:true}).toArray(function(err,data){
+      if(err)throw err;
+      // console.log(data);
+      res.send(data);
+    });
+    // db.close();
+   })
+});
 
-app.listen(PORT,function()
+
+
+http.listen(PORT,function()
 {
   console.log("server is listening to %s port",PORT);
 });

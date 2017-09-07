@@ -36,6 +36,7 @@ function login()
     console.log(result);
     if(result.data=="false")
     {
+      //socket.emit('user name',username);
       alert("Login Successfully");
       window.location.href = "chatApp.html";
     }
@@ -49,3 +50,20 @@ function logout()
 {
   window.location.href="index.html";
 }
+
+
+
+// function chatHistory() {
+//   var promise = $.ajax({
+//     url: '/get',
+//     type: 'GET'
+//   }).done(function(data) {
+//     for (i = 0; i < data.length; i++) {
+//       //document.getElementById('messages').innerHTML += data[i].msg;
+//       $('#messages').append($('<li>').text(data[i].msg));
+//     }
+//   })
+//   console.log(promise);
+//   return true;
+//
+// }
