@@ -3,6 +3,7 @@ function task_scheduler()
 {
   var task=document.getElementById("i1").value;
   var task_arr=[];
+  //taking the task name from user
   for(var i=0;i<task;i++)
   {
     var a=prompt("enter task "+(i+1));
@@ -11,6 +12,7 @@ function task_scheduler()
   document.write("--------------------Task Scheduler--------------------"+"<br>"+"tasks: "+task_arr+"<br>");
 
   var time_required=[];
+  //taking input for total time to complete from the user
   for(i=0;i<task;i++)
   {
     var c=parseInt(prompt("enter total time required in minutes for task: "+(i+1)));
@@ -34,6 +36,7 @@ function task_scheduler()
       }
     }
   }
+  //assumed the time quantum to be 2
   var time_alot=2;
   document.write("time allotted for a task at a given instant is assumed to be 2 minutes"+"<br>");
   document.write("the sorted order of task with respect to time is: "+task_arr+"<br>");
@@ -59,6 +62,7 @@ function optimisation(time_alot,time_required,task_arr)
           if(arrayInitialise[i]!=0)
           {
            document.write("Scheduling task for: "+task_arr[i]+"<br>");
+           //checking if the time to complete is < time quantum
            if(time_required[i]<=time_alot)
            {
              document.write("Task completed for "+task_arr[i]+"<br>"+"<br>");
@@ -66,6 +70,7 @@ function optimisation(time_alot,time_required,task_arr)
              arrayInitialise[i]=0;
             // break;
            }
+           //finding the total time more for completion
            else {
              time_required[i]=time_required[i]-time_alot;
              document.write("Time require for task: "+task_arr[i]+" to finish is "+time_required[i]+"<br>");

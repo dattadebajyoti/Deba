@@ -1,6 +1,7 @@
 <html>
    <head>
-      <h1>Hellow</h1>
+      <h1 align='center'>Chat App</h1>
+      <div id="status"></div>
       <script src="/socket.io.js"></script>
       <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
    </head>
@@ -13,11 +14,12 @@
        var currentdate = new Date();
        function sessionStart()
        {
-         var name=session().done(function (data) {
-         console.log(data);
-         }).catch(function (error) {
-              console.log(error);
-              });
+         var name=session();
+        //  .done(function (data) {
+        //  console.log(data);
+        //  }).catch(function (error) {
+        //       console.log(error);
+        //       });
        }
        $(function () {
          var socket = io();

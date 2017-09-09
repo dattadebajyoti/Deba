@@ -1,7 +1,7 @@
 function primeNumber()
 {
   var i,j;
-  document.write("1<br>");
+  //document.write("1<br>");
   for(i=2;i<1000;i++)
   {
     var count=0;

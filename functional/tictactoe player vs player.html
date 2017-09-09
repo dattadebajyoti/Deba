@@ -37,10 +37,13 @@
         //function to check the moves
         function nextMove(square)
         {
+          console.log(square);
+          // var nonEmpty=0;
           //checks if the player has already won
           if(document.winner!=null){
             setMessage(document.turn+"_alerady won");
           }
+
           //check whether a box is empty and fill the box with the player's input and set the next turn
           else{
             if(square.innerText==""){
@@ -51,7 +54,32 @@
               setMessage("This square is already filled");
             }
           }
+
+            // for(var k=0;k<9;k++)
+            // {
+            //   if(getBox[k].square.innertext!="")
+            //   nonEmpty++;
+            // }
+            // if(nonEmpty==9)
+            // setMessage("Match Drawn");
+
         }
+        function checkEmpty(){
+          if(document.getElementById('1').innerHTML!=''
+             && document.getElementById('2').innerHTML!=''
+             && document.getElementById('3').innerHTML!=''
+             && document.getElementById('4').innerHTML!=''
+             && document.getElementById('5').innerHTML!=''
+             && document.getElementById('6').innerHTML!=''
+             && document.getElementById('7').innerHTML!=''
+             && document.getElementById('8').innerHTML!=''
+             && document.getElementById('9').innerHTML!='')
+             {
+               return true;
+             }
+          return false;
+        }
+
         //function for switiching the turn
         function switchTurn()
         {
@@ -61,7 +89,12 @@
             document.winner=document.turn;
           }
           //sets the turn is X has already filled one of the boxes and vice versa
-          else if(document.turn=="X"){
+          else{
+            console.log(document.getElementById('1').innerHTML);
+          if(checkEmpty()){
+            setMessage("The game is drawn");
+          }else
+           if(document.turn=="X"){
              document.turn="O";
              setMessage("It's "+document.turn+" Turn");
              }
@@ -70,6 +103,7 @@
              document.turn="X";
              setMessage("It's "+document.turn+" Turn");
             }
+           }
         }
         // checks for a match vertically horizontally and diagonally and returns the result
         function checkForWinner(move)

@@ -52,19 +52,22 @@ function session() {
         "Content-Type": "application/json"
       }
     }).done(function(data) {
-      debugger;
+      //debugger;
       var name = data.name;
+      console.log(name);
       localStorage.setItem("username", name);
       if (data.isLogin) {
-
-        //document.getElementById("status").innerHTML = name + "<br>Online";
-        database();
-      } else {
-        document.write("Already Login");
-        logout();
-        // if (window.location.href !== "index.html") {
-        //   window.location.href = "index.html";
-        // }
+        //alert("logged in");
+        document.getElementById("status").innerHTML = name + "<br>Online";
+        //window.location.href = "chatApp.html";
+        //database();
+      }
+      else {
+      //  console.log("hellow");
+        //logout();
+        if(window.location.href !== "index.html") {
+          window.location.href = "index.html";
+        }
       }
       resolve(data);
     });
@@ -73,5 +76,21 @@ function session() {
 }
 
 function logout() {
-  window.location.href = "index.html";
+  console.log("ok doing log out");
+  $.ajax({
+    url : '/endSession',
+    type : 'GET',
+    headers : {
+      "Content-Type" : "Application/Json"
+    }
+  }).done(function(result)
+        {
+          console.log(result.data);
+          if(result.data == "false")
+          {
+            alert("Logging out");
+            console.log(result.data);
+            window.location.href = "index.html";
+          }
+        });
 }

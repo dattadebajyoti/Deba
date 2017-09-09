@@ -1,3 +1,4 @@
+//initialising the string
 var message="Hello <<name>>, We have your full name  as <<full name>> in our system. your contact number is 91­-xxxxxxxxxx Please,let us know in case of any clarification Thank you BridgeLabz XX-XX-XXXX";
 var pattern1=message.replace(/<<full name>>/i, "Debajyoti Datta");
 var pattern2=pattern1.replace(/<<name>>/i, "Debajyoti Datta");

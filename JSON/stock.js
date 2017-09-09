@@ -1,3 +1,4 @@
+//function to print stock details
 function stockValue(stockArray)
 {
    for(var i=0;i<stockArray.length;i++)
@@ -6,12 +7,12 @@ function stockValue(stockArray)
        document.write("No of Shares:"+stockArray[i][1]+"<br>");
        document.write("Share Price:"+stockArray[i][2]+"<br>");
        var stockValue=stockArray[i][1]*stockArray[i][2];
-       document.write("Stock value   :"+stockValue);
-       document.write("----------------------------------");
+       document.write("Stock value   :"+stockValue+"<br>");
+       document.write("----------------------------------"+"<br>");
    }
 }
 
-
+//function to calculate the total stock value
 function totstockValue(stockArray)
 {
    var total=0;
@@ -22,7 +23,7 @@ function totstockValue(stockArray)
    }
 }
 
-
+//function to take user input of share name, share number, share price
 function stock()
 {
    noOfStocks=document.getElementById("n").value;
@@ -41,5 +42,3 @@ function stock()
    stockValue(stockArray);
    totstockValue(stockArray);
 }
-
-

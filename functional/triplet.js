@@ -27,12 +27,13 @@ for(i=0;i<i1-2;i++)
         res.push(arr[i]);
         res.push(arr[j]);
         res.push(arr[k]);
-        document.write(arr[i]);
-        document.write(arr[j]);
+        document.write(arr[i],",");
+        document.write(arr[j],",");
         document.write(arr[k]);
+        document.write("<br>");
       }
     }
   }
 }
-document.write("\n"+count);
+document.write("Number of triplets are: "+count);
 }

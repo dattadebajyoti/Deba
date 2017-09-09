@@ -273,7 +273,7 @@ function maintainSymbol()
 
 //maintaining date of transaction using queue implemented using linked list
 
-function dateQueue();
+function dateQueue()
 {
   function Node(data)
   {

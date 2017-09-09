@@ -1,13 +1,21 @@
+//requiring the express module
 var express =require("express");
+//requiring body parser to
 var bodyParser=require("body-parser");
+//setting the path
 var path = require("path");
+//creating an object for express
 var app=express();
+//requiring the fs module
 var fs=require('fs');
+//requiring the http module to connect to the server
 var http=require('http').Server(app);
+//requiring the socket module
 var io=require('socket.io')(http);
+//setting the port to listen
 var PORT = process.env.PORT || 3004;
 //app.use(bodyParser.json());
-
+//requiring the sesion module
 var session = require('express-session');
 app.use(session({
   secret: 'ssshhhhh',
@@ -118,12 +126,23 @@ app.get('/checkUserLogin', function(req, res)
    var session=req.session;
    if(session.name)
    {
+     //console.log("++++++++++ :"+session.name);
      res.json({name:session.name,isLogin:true});
    }
    else
    {
      res.json({name:session.name,isLogin:false});
    }
+});
+
+app.get('/endSession', function(req,res)
+{
+  console.log("this is logout");
+  req.session.destroy(function()
+   {
+     res.json({data:"false"})
+      console.log("session ended Successfully");
+   })
 });
 
 

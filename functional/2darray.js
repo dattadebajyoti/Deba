@@ -15,5 +15,6 @@ function readArray()
       myarray.push(t);
       document.write(t+"\n");
     }
+    document.write("<br>");
   }
 }

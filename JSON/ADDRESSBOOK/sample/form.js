@@ -1,5 +1,4 @@
 var temp=0;
-//var getData=[];
 //function to add entry
 $('#add').click(submithandler);
 function submithandler()

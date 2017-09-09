@@ -4,23 +4,33 @@
       <script src="/socket.io.js"></script>
       <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
    </head>
-   <body>
+   <body onload="sessionStart()">
      <ul id="messages"></ul>
      <form action="">
        <input id="m" autocomplete="off" /><button>Send</button>
      </form>
      <script>
        var currentdate = new Date();
+       function sessionStart()
+       {
+         var name=session();
+        // .done(function (data) {
+        //  console.log(data);
+        //  }).catch(function (error) {
+        //       console.log(error);
+        //       });
+       }
        $(function () {
          var socket = io();
-         var Time
+         //var Time
          var promise = $.ajax({
            url: '/get',
            type: 'GET'
          }).done(function(data) {
            for (var i = 0; i < data.length; i++) {
+             //console.log("doing"+data[i].timeOfMessage);
              //document.getElementById('messages').innerHTML += data[i].msg;
-             $('#messages').append($('<li>').text(data[i].userName+":"+data[i].message));
+             $('#messages').append($('<li>').text(data[i].userName+":"+data[i].message+"                    "+data[i].timeOfMessage));
            }
          })
          console.log(promise);
@@ -34,15 +44,17 @@
            hours = hours ? hours : 12;
            minutes = minutes < 10 ? '0' + minutes : minutes;
            Time = hours + ':' + minutes + ' ' + ampm;
-           socket.emit('chat message', $('#m').val());
+           var username = localStorage.getItem("username") || "anonymous"
+           //var time = localStorage.getItem("Time") || "anonymous"
+           socket.emit('chat message', {msg:$('#m').val(),username:username, time:Time});
            $('#m').val('');
            return false;
            });
-           socket.on('chat message', function(msg){
+           socket.on('chat message', function(obj){
              // console.log("here");
              //$('<br>')
             //  socket.on('username', function(msg2){
-               $('#messages').append($('<li>').text(msg+" "+Time));
+               $('#messages').append($('<li>').text(obj.username+": "+obj.msg+"  "+obj.time));
             //  });
            });
        });

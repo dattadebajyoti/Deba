@@ -6,6 +6,8 @@
   "version": "",
   "dependencies": {
     "express-session": "^1.15.5",
-    "mongoose": "^4.11.10"
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^4.11.10",
+    "promise": "^8.0.1"
   }
 }

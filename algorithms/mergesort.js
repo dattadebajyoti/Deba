@@ -10,9 +10,6 @@ function mergesort()
   document.write(mergeSort(myarray));
 }
 
-
-
-
 function mergeSort(arr)
 {
 

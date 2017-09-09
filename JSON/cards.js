@@ -1,3 +1,4 @@
+//function to shuffle the cards and give it to each and every player
 function cardShuffle()
 {
   //initialize suit

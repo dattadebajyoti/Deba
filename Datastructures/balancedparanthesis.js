@@ -1,64 +1,56 @@
-var str=[];
-var items=[];
-str="(5+6)∗(7+8)/(4+3)(5+6)∗(7+8)/(4+3)";
-function stack()
-{
-  this.push=function(element)
-  {
-    items.push(element);
-  };
-  this.pop=function()
-  {
-    return items.pop();
-  };
-  this.peek=function()
-  {
-    return items.length-1;
-  };
-  this.top=function()
-  {
-    return items.length;
-  };
-  this.clear=function()
-  {
-    items=[];
-    return items;
-  };
-  this.isEmpty=function()
-  {
-    return items.length==0;
-  };
-  this.print=function()
-  {
-    console.log(items.toString());
-  };
-}
+//function to check balanced expression
+function checkBalanced() {
+  //creating a stack array so that the characters are pushed and popped
+  var stack = new Array();
+  var input = document.getElementById('exp').value;
+  var inputStr = input.toString();
+  var top = 0;
 
-var stack=new stack();
+  //pushing the character in stack
+  function pushing(top, exp) {
+    if (exp != null) {
+      stack[top] = exp;
+    }
+  }
 
-for(var i=0;i<str.length;i++)
-{
-  stack.push(str[i]);
-}
-stack.print();
-
-for(i=0;i<str.length;i++)
-{
-  if(str[i]=='(')
-  {
-    for(var j=1;j<str.length;j++)
-    {
-      if(str[j]==')')
-      {
-        for(var k=0;k<=j;k++)
-        stack.pop();
+  //deleting the last element from the stack
+  function popping(top, exp) {
+    if (stack[top] == exp) {
+      stack.splice(top, 1);
+      return true;
+    } else return false
+  }
+  for (i = 0; i < inputStr.length; i++) {
+    //checking for opening paranthesis
+    if (inputStr[i] == "{" || inputStr[i] == "[" || inputStr[i] == "(") {
+      top++;
+      pushing(top, inputStr[i]);
+    }
+    //checking for closing paranthesis
+    else if (inputStr[i] == "}") {
+      var check = "{";
+      if (popping(top, check) == true) {
+        top--;
+      }
+    } else if (inputStr[i] == "]") {
+      var check = "[";
+      if (popping(top, check) == true) {
+        top--;
+      }
+    } else if (inputStr[i] == ")") {
+      var check = "(";
+      if (popping(top, check) == true) {
+        top--;
       }
     }
   }
-}
+  if (top != 0) {
+    document.write("user input:" + inputStr + "<br>");
+    document.write("the given arithmetic expression is not balanced");
 
-var t=stack.isEmpty();
-if(t==1)
-console.log("the given expression is balanced");
-else
-console.log("the given expression is not balanced");
+  }
+  if (top == 0) {
+    document.write("user input:" + inputStr + "<br>");
+    document.write("the given arithmetic expression is balanced");
+  }
+}

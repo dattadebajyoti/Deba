@@ -1,4 +1,6 @@
 //function to insert into database
+
+
 $('#insert').click(submithandler);
 function submithandler()
 {
@@ -76,7 +78,7 @@ function edit()
 
 
 
-//function to search
+//function to login
 function login()
 {
   var username = prompt("enter username");
@@ -94,7 +96,6 @@ function login()
     if(result.data=="false")
     {
       alert("Login Successfully");
-    }
     else {
       alert("Sorry!! please create your account first");
     }

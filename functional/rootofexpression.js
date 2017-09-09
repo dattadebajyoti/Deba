@@ -27,9 +27,9 @@ function findroot()
   else
     {
         real_part=-b/(2*a);
-        imaginary_part=-Math.sqrt(determinant)/2*a;
-        document.write("real_part: "+real_part);
-        document.write("imaginary_part: "+imaginary_part);
+        imaginary_part=Math.sqrt(-determinant)/2*a;
+        document.write("real_part: "+real_part+"<br>");
+        document.write("imaginary_part: -i"+imaginary_part);
     }
 
 }

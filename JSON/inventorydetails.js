@@ -1,3 +1,4 @@
+//requirinng the fs module
 var fs = require('fs');
 //read the jason file
 fs.readFile('inventorydetails.json', 'utf8', function (err, data) {

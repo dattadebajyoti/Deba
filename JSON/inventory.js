@@ -1,16 +1,20 @@
+//taking nsme weight price from the user
 var name=process.argv[2];
 var weight=+process.argv[3];
 var price=+process.argv[4];
+//requiring the fs module
 var fs=require('fs');
 var store=" ";
 var readFile='inventory.json';
 inventoryDetails();
+//function to find the json file to store
 function inventoryDetails()
 {
    store=JSON.parse(readFileSync(readFile));
    addtoStore(name,weight,price);
 }
 
+//function to store into file
 function addtoStore(name,weight,price)
 {
    //var totPrice=0;
@@ -31,4 +35,3 @@ function addtoStore(name,weight,price)
        console.log("------------------");
    }
 }
-       
