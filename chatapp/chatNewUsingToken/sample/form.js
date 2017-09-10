@@ -20,33 +20,37 @@ function submithandler() {
 
 //function to login
 function login() {
-  var username = prompt("enter username");
-  var password = prompt("enter password");
+  // var username = prompt("enter username");
+  // var password = prompt("enter password");
+  var username=form2.username.value;
+  var password=form2.password.value;
+  console.log("name sent from client is: "+username);
   $.ajax({
-    url: '/signingin',
+    url: '/checkUserLogin',
     type: 'POST',
     data: {
       name: username,
       pwd: password,
-      token:localStorage.getItem('token')
+      token: localStorage.getItem('token')
     }
   }).done(function(result) {
-    console.log(result);
-    token=result.token;
+    console.log("hiiiiiiiiiiiiiiiiiiiiiii");
+    console.log("token found is: "+result.token);
+    var token=result.token;
+    localStorage.setItem("username", username);
     localStorage.setItem("token",token);
     if (token!=null) {
-      if(result.status=="signedin")
+      //socket.emit('user name',username);
+      if(result.status=="newLogin")
       {
-        alert("Login Successfully");
+        alert("Logged in Successfully");
       }
-      else
-        {
-          alert("Already signed in");
-        }
+      else{
+        alert("Already Logged in");
+      }
       window.location.href = "chatApp.html";
-    }
-    else if(result.status=="notsigned"){
-      alert("Sorry!! please create your account first");
+    } else if(result.status=="invalid"){
+      alert("Sorry!! invalid username or password");
     }
   })
 }
@@ -87,7 +91,7 @@ function login() {
 function logout() {
   console.log("ok doing log out");
   $.ajax({
-    url : '/endSession',
+    url : '/endToken',
     type : 'GET',
     headers : {
       "Content-Type" : "Application/Json"
@@ -97,6 +101,7 @@ function logout() {
           console.log(result.data);
           if(result.data == "false")
           {
+            localStorage.clear();
             alert("Logging out");
             console.log(result.data);
             window.location.href = "index.html";

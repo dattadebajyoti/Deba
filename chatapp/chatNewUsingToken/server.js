@@ -13,21 +13,21 @@ var http=require('http').Server(app);
 //requiring the socket module
 var io=require('socket.io')(http);
 //setting the port to listen
+var PORT = process.env.PORT || 3006;
 var jwt=require('jsonwebtoken');
 var uuid=require('uuid');
-
+//var expressJwt = require('express-jwt');
+var jwtDecode = require('jwt-decode');
 var key=uuid.v4();
 var token;
-
-var PORT = process.env.PORT || 3005;
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 //requiring the sesion module
-var session = require('express-session');
-app.use(session({
-  secret: 'ssshhhhh',
-  saveUninitialized: true,
-  resave: true
-}));
+// var session = require('express-session');
+// app.use(session({
+//   secret: 'ssshhhhh',
+//   saveUninitialized: true,
+//   resave: true
+// }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/",express.static('./sample/'));
 
@@ -67,37 +67,98 @@ MongoClient.connect(url,function(err,db)
   });
 
 
-  app.post('/signingin', function(req, res)
-  {
-    res.setHeader("Content-Type","application/json");
-    var result = {status: true,message: "Successfully added"};
-  // MongoClient.connect(url,function(err,db) {
-  //   if (err) throw err;
-      db.collection("userDetails").find({name:req.body.name,pwd:req.body.pwd}).toArray(function(err,data)
-      {
-        if(!err)
-        if(data.length!=0)
-        {
-          //req.session.name = req.body.name;
-          //user=req.body.name;
-          console.log("hiii");
-          var decode=jwt.verify(req.body.token,secretKey,function(err,info){
-            if(err) console.log(err);
-            console.log(info);
-            if(info.name==req.body.name)
-            {
-              res.json({"token":req.body.token,
-                status:"alreadylogged"});
-            }
-            else {
-              res.redirect('/login?name='+req.body.name+'&password='+req.body.pwd);
-            }
-        else
-        {
-          res.json({"token": null, "status": "notsigned"});
-        }
-      });
+  // app.post('/signingin', function(req, res)
+  // {
+  //   res.setHeader("Content-Type","application/json");
+  //   var result = {status: true,message: "Successfully added"};
+  // // MongoClient.connect(url,function(err,db) {
+  // //   if (err) throw err;
+  //     db.collection("userDetails").find({name:req.body.name,pwd:req.body.pwd}).toArray(function(err,data)
+  //     {
+  //       if(!err)
+  //       if(data.length!=0)
+  //       {
+  //         //req.session.name = req.body.name;
+  //         token= jwt.sign({name:req.body.name,
+  //                        pwd:req.body.pwd,
+  //                        expiresIn:60*60},key);
+  //         res.json({"token":token, "status": "newLogin"});
+  //       }
+  //       else
+  //       {
+  //         res.json({"token":null,"status":"invalid"});
+  //       }
+  //     });
+  // // });
   // });
+
+  app.post('/checkUserLogin', function(req, res)
+   {
+     console.log(req.body.name);
+     if((req.body.token)==null || (req.body.token)=='undefined' || (req.body.token)=='')
+     {
+       console.log("no token");
+       //res.redirect('/signingin?name='+req.body.name+'&pwd='+req.body.pwd);
+       res.setHeader("Content-Type","application/json");
+       var result = {status: true,message: "Successfully added"};
+     // MongoClient.connect(url,function(err,db) {
+     //   if (err) throw err;
+         db.collection("userDetails").find({name:req.body.name,pwd:req.body.pwd}).toArray(function(err,data)
+         {
+           if(!err)
+           if(data.length!=0)
+           {
+             //req.session.name = req.body.name;
+             token= jwt.sign({name:req.body.name,
+                            pwd:req.body.pwd,
+                            expiresIn:30*30},key);
+             res.json({"token":token, "status": "newLogin"});
+             console.log("Token sent is: "+token);
+           }
+           else
+           {
+             res.json({"token":null,"status":"invalid"});
+           }
+         });
+     }
+     else {
+       console.log("token recieved is: "+req.body.token);
+       console.log("token is there");
+       var decode=jwtDecode(req.body.token)
+       {
+         //if(err) console.log("error is: "+err);
+         console.log("done");
+         //console.log("information is: "+info.name);
+        //  if(info.name==req.body.name)
+        //  {
+        //    console.log("uname and pwd is true");
+        //    res.json=({"token": req.body.token,
+        //             "status": "alreadyLogged"});
+        //  }
+        //  else{
+          //  console.log("uname or pwd not true")
+          //  res.setHeader("Content-Type","application/json");
+          //  var result = {status: true,message: "Successfully added"};
+         // MongoClient.connect(url,function(err,db) {
+         //   if (err) throw err;
+             db.collection("userDetails").find({name:req.body.name,pwd:req.body.pwd}).toArray(function(err,data)
+             {
+               if(!err)
+               if(data.length!=0)
+               {
+                //  token= jwt.sign({name:req.body.name,
+                //                 pwd:req.body.pwd,
+                //                 expiresIn:60*60},key);
+                 res.json({"token":token, "status": "alreadylogged"});
+               }
+              //  else
+              //  {
+              //    res.json({"token":null,"status":"invalid"});
+              //  }
+             });
+          // }
+       }
+     }
   });
   //db.close();
 });
@@ -129,27 +190,25 @@ io.on('connection',function(socket)
   });
     // if(err) throw err;
     io.sockets.emit('chat message', obj);
-    console.log("this is "+obj.time);
+    console.log("/////////////////////////////this is "+obj.time);
     //io.emit('username',user);
     //console.log("message: " + msg);
   });
 });
 //
 
-app.get('/checkUserLogin', function(req, res)
- {
 
+
+app.get('/endToken', function(req,res)
+{
+  console.log("this is logout");
+  //req.token.destroy(function()
+  //{
+     res.json({data:"false"})
+      console.log("session ended Successfully");
+  //});
 });
 
-// app.get('/endSession', function(req,res)
-// {
-//   console.log("this is logout");
-//   req.session.destroy(function()
-//    {
-//      res.json({data:"false"})
-//       console.log("session ended Successfully");
-//    })
-// });
 
 
 
