@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "",
+  "version": "",
+  "dependencies": {
+    "express-session": "^1.15.5",
+    "jsonwebtoken": "^8.0.0",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^4.11.10",
+    "promise": "^8.0.1"
+  }
+}
