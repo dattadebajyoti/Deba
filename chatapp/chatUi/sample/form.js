@@ -20,8 +20,8 @@ function submithandler() {
 
 //function to login
 function login() {
-  var username = prompt("enter username");
-  var password = prompt("enter password");
+  var username=form2.username.value;
+  var password=form2.password.value;
   $.ajax({
     url: '/signingin',
     type: 'POST',

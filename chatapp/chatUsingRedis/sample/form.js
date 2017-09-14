@@ -22,9 +22,9 @@ function submithandler() {
 function login() {
   // var username = prompt("enter username");
   // var password = prompt("enter password");
-  var username=form2.username.value;
-  var password=form2.password.value;
-  console.log("name sent from client is: "+username);
+  var username = form2.username.value;
+  var password = form2.password.value;
+  console.log("name sent from client is: " + username);
   $.ajax({
     url: '/checkUserLogin',
     type: 'POST',
@@ -35,21 +35,23 @@ function login() {
     }
   }).done(function(result) {
     console.log("hiiiiiiiiiiiiiiiiiiiiiii");
-    console.log("token found is: "+result.token);
-    var token=result.token;
-    localStorage.setItem("username", username);
-    localStorage.setItem("token",token);
-    if (token!=null) {
+    console.log("token found is: " + result.token);
+    var token = result.token;
+    // localStorage.setItem("username", username);
+    // localStorage.setItem("token",token);
+    if (token != null) {
       //socket.emit('user name',username);
-      if(result.status=="newLogin")
-      {
+      if (result.status == "newLogin") {
+        localStorage.setItem("username", username);
+        localStorage.setItem("token", token);
         alert("Logged in Successfully");
+        window.location.href = "chatApp.html";
+      } else if (result.status == "alreadylogged") {
+        alert("an user is already Logged in");
+        window.location.href = "chatApp.html";
       }
-      else{
-        alert("Already Logged in");
-      }
-      window.location.href = "chatApp.html";
-    } else if(result.status=="invalid"){
+      //window.location.href = "chatApp.html";
+    } else if (result.status == "invalid") {
       alert("Sorry!! invalid username or password");
     }
   })
@@ -91,20 +93,18 @@ function login() {
 function logout() {
   console.log("ok doing log out");
   $.ajax({
-    url : '/endToken',
-    type : 'GET',
-    headers : {
-      "Content-Type" : "Application/Json"
+    url: '/endToken',
+    type: 'GET',
+    headers: {
+      "Content-Type": "Application/Json"
     }
-  }).done(function(result)
-        {
-          console.log(result.data);
-          if(result.data == "false")
-          {
-            localStorage.clear();
-            alert("Logging out");
-            console.log(result.data);
-            window.location.href = "index.html";
-          }
-        });
+  }).done(function(result) {
+    console.log(result.data);
+    if (result.data == "false") {
+      localStorage.clear();
+      alert("Logging out");
+      console.log(result.data);
+      window.location.href = "index.html";
+    }
+  });
 }
