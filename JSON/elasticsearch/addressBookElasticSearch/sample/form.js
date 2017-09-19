@@ -238,7 +238,29 @@ function search()
     });
 }
 
-
+//elasticsearchbyname
+function searchByName()
+{
+  var searchValue=form2.q.value;
+  var promise = $.ajax({
+      url:'/elasticSearchByName',
+      type:'POST',
+      data: {
+        search: searchValue
+      }
+    }).done(function(result){
+      //console.log(result.details);
+      //document.write(result.details[0]);
+      for(var i=0;i<result.details.length;i++)
+      {
+        console.log(i);
+        if(result.details!=null)
+        {
+          document.write(result.details[i]+"    "+"<br>");
+        }
+      }
+    });
+}
 
 
 //function to edit

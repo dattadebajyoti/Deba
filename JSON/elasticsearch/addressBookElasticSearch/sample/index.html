@@ -1,9 +1,12 @@
 <html>
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="autocomplete.js"></script>
 </head>
 <body>
   <div class="container-fluid">
@@ -103,6 +106,14 @@
 
     <div class="col-sm-2" style="background-color:lavender;">
        <button type="button" class="btn btn-danger" onclick="search()">Search By City</button>
+    </div>
+
+
+    <div class="col-sm-2" style="background-color:lavender;">
+      <form class="navbar-search pull-left" id="form2">
+         <input type="text" name="q" placeholder="search by name" id="search-query" autocomplete="off">
+         <button type="button" class="btn btn-danger" onclick="searchByName()">Search By Name</button>
+     </form>
     </div>
   </div>
 </div>

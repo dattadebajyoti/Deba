@@ -168,14 +168,14 @@ app.post('/editing', function(req, res) {
 });
 
 
-//api to POST
+//api to elasticSearch
 app.post('/elasticSearch', function(req, res) {
   console.log("city is: " + req.body.search);
   var result = {
     status: true,
     message: "Successfully added"
   };
-
+  //setting the header
   res.setHeader('Content-Type', 'application/json');
   const search = function search(index, body) {
     return esClient.search({
@@ -184,7 +184,7 @@ app.post('/elasticSearch', function(req, res) {
     });
   };
   // all calls should be initiated through the module
-  const test = function test() {
+  const elasticSearch = function elasticSearch() {
     let body = {
       size: 20,
       from: 0,
@@ -197,6 +197,7 @@ app.post('/elasticSearch', function(req, res) {
         }
       }
     };
+    //printing the matched values
     console.log(`retrieving documents whose city  match '${body.query.multi_match.query}' `);
     search('library', body)
       .then(results => {
@@ -208,15 +209,99 @@ app.post('/elasticSearch', function(req, res) {
       })
       .catch(console.error);
   };
-  test();
+  //calling the elasticSearch function
+  elasticSearch();
+  //exporting the module
   module.exports = {
     search
   };
 });
 
+//autocomplete
+app.get('/autocomplete', function (req, res) {
+    console.log("deba");
+    esClient.search({
+        index: "library",
+        type: "article",
+        body: {
+            "query": {
 
+                  match: {
+                    firstName: req.query.term
+                  }
+            }
+        }
+    }).then(function (resp) {
 
+      // "filtered": {
+      //   "query": {
+      //       "multi_match": {
+      //           "query": req.query.term,
+      //           "fields": ["first_name.autocomplete"]
+      //       }
+      //   }
+      // }
+        var results = resp.hits.hits.map(function(hit){
+            return hit._source.firstName + " " + hit._source.lastName;
+        });
 
+        res.send(results);
+        console.log(results);
+    }, function (err) {
+        console.trace(err);
+        res.send({response: err.message});
+    });
+});
+
+//api to elasticSearchByname
+app.post('/elasticSearchByName', function(req, res) {
+  var nameDetails=[];
+  console.log("Name is: " + req.body.search);
+  var result = {
+    status: true,
+    message: "Successfully added"
+  };
+  //setting the header
+  res.setHeader('Content-Type', 'application/json');
+  const search = function search(index, body) {
+    return esClient.search({
+      index: index,
+      body: body
+    });
+  };
+  // all calls should be initiated through the module
+  const elasticSearch = function elasticSearch() {
+    let body = {
+      size: 20,
+      from: 0,
+      query: {
+        multi_match: {
+          query: req.body.search,
+          fields: ['firstName'],
+          //minimum_should_match: 3,
+          //fuzziness: 2
+        }
+      }
+    };
+    //printing the matched values
+    console.log(`retrieving documents whose city  match '${body.query.multi_match.query}' `);
+    search('library', body)
+      .then(results => {
+        //console.log(`found ${results.hits.total} items in ${results.took}ms`);
+        if (results.hits.total > 0) console.log(`returned city names:`);
+        results.hits.hits.forEach((hit, index) => console.log(`\t ${hit._source.city} `));
+        results.hits.hits.forEach((hit, index) => nameDetails.push("First name is: "+hit._source.firstName+", Last name: "+hit._source.lastName+", Address: "+hit._source.address+", City: "+hit._source.city+", State "+hit._source.state+", Zip: "+hit._source.zip+", Phone Number: "+hit._source.phoneNumber));
+        res.json({"details": nameDetails, "status": "true"});
+      })
+      .catch(console.error);
+  };
+  //calling the elasticSearch function
+  elasticSearch();
+  //exporting the module
+  module.exports = {
+    search
+  };
+});
 
 
 //get function to read
