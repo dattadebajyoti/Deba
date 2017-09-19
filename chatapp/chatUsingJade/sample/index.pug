@@ -1,0 +1,34 @@
+html
+  head
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='http://code.jquery.com/jquery-1.9.1.min.js')
+  body
+    .container-fluid
+      h2.text-center LOGIN PAGE
+      p.text-center Please select what you want
+      .row
+        .col-sm-6(style='background-color:lavender;')
+          // add to address book
+          h5 Sign up
+          form#form1
+            .form-group
+              label(for='First Name') Name:
+              input#name.form-control(type='First Name', placeholder='create your username', name='Name')
+            .form-group
+              label(for='lname') Password:
+              input#pwd.form-control(type='lname', placeholder='create your password', name='password')
+            button#insert.btn.btn-default(type='button') Create Account
+        // search
+        .col-sm-6(style='background-color:lavender;')
+          h5 Sign in
+          form#form2
+            .form-group
+              label(for='First Name') Name:
+              input#username.form-control(type='First Name', placeholder='Enter your name', name='Name')
+            .form-group
+              label(for='lname') Password:
+              input#password.form-control(type='lname', placeholder='Enter your password', name='password')
+            button.btn.btn-danger(type='button', onclick='login()') Login
+    script(src='form.js')

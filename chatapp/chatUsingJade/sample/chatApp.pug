@@ -1,0 +1,136 @@
+html
+  head
+    h1(align='center', style='color:#0000FF') Chat App
+    #status(align='center', style='color:#0000FF; background-color:#cccccc')
+    script(src='/socket.io.js')
+    script(src='https://code.jquery.com/jquery-1.11.1.js')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    //
+      <script src="jquery.min.js"></script>
+      <script src="bootstrap.min.js"></script>
+      <script src="chat.css"></script>
+    style.
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 18.5%; width: 46.1%;left:27% }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; right:50}
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      #status{
+      position: fixed;
+      right:70%;
+      /*left:10;*/
+      bottom: 76%;
+      }
+      #text-container {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 798px
+      }
+      #message-container {
+      position: fixed;
+      top: 10;
+      right: 10%;
+      word-wrap: break-word;
+      }
+      #container1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600;
+      height: 350;
+      transform: translateX(-50%) translateY(-50%);
+      overflow-y: auto;
+      }
+      #container2 {
+      position: fixed;
+      right:50;
+      left: 50;
+      width: 600;
+      height: 30;
+      bottom: 20%;
+      }
+      #history {
+      overflow: scroll;
+      }
+      #chat-name {
+      position: fixed;
+      top: 20;
+      left: 20%;
+      font-size: 200%;
+      }
+      #button1 {
+      position: fixed;
+      right:27%;
+      /*left:10;*/
+      bottom: 76%;
+      }
+  body(onload='sessionStart()')
+    #container1.container(style='border: 4px solid green')
+      .row
+        .col-lg-12
+          ul#messages
+          // <input id="m" autocomplete="off" placeholder="Type your message" /><button>Send</button>
+    // <div id="container2" class="container" style="border:4px solid green">
+    form(action='')
+      input#m(autocomplete='off', placeholder='Type your message', style='width:525')
+      button(style='color:white; background-color:blue') Send
+    // </div>
+    //
+      <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+      </form>
+    script.
+      var currentdate = new Date();
+      function sessionStart()
+      {
+      var name=session();
+      //  .done(function (data) {
+      //  console.log(data);
+      //  }).catch(function (error) {
+      //       console.log(error);
+      //       });
+      }
+      $(function () {
+      var socket = io();
+      //var Time
+      var promise = $.ajax({
+      url: '/get',
+      type: 'GET'
+      }).done(function(data) {
+      for (var i = 0; i < data.length; i++) {
+      //console.log("doing"+data[i].timeOfMessage);
+      //document.getElementById('messages').innerHTML += data[i].msg;
+      $('#messages').append($('<li>').text(data[i].userName+":"+data[i].message+"                    "+data[i].timeOfMessage));
+      }
+      })
+      console.log(promise);
+      //return true;
+      //
+      $('form').submit(function(){
+      var hours = currentdate.getHours();
+      var minutes = currentdate.getMinutes();
+      var ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      Time = hours + ':' + minutes + ' ' + ampm;
+      var username = localStorage.getItem("username") || "anonymous"
+      //var time = localStorage.getItem("Time") || "anonymous"
+      socket.emit('chat message', {msg:$('#m').val(),username:username, time:Time});
+      $('#m').val('');
+      return false;
+      });
+      socket.on('chat message', function(obj){
+      // console.log("here");
+      //$('<br>')
+      //  socket.on('username', function(msg2){
+      $('#messages').append($('<li>').text(obj.username+": "+obj.msg+"  "+obj.time));
+      //  });
+      });
+      });
+    button#button1.btn.btn-danger(type='button', onclick='logout()') Logout
+    script(src='form.js')
