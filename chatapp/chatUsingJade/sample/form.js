@@ -35,7 +35,9 @@ function login() {
       //socket.emit('user name',username);
       alert("Login Successfully");
       localStorage.setItem("username", username);
-      window.location.href = "chatApp.html";
+      // window.location.href = "chatApp.pug";
+      //giving a call to chat api 
+      window.location.href="/chat";
     } else {
       alert("Sorry!! please create your account first");
     }
@@ -65,8 +67,9 @@ function session() {
       else {
       //  console.log("hellow");
         //logout();
-        if(window.location.href !== "index.html") {
-          window.location.href = "index.html";
+        if(window.location.href !== "/") {
+          // window.location.href = "index.pug";
+          window.location.href="/chat";
         }
       }
       resolve(data);
@@ -90,7 +93,8 @@ function logout() {
           {
             alert("Logging out");
             console.log(result.data);
-            window.location.href = "index.html";
+            // window.location.href = "index.pug";
+            window.location.href="/logBack";
           }
         });
 }

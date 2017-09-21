@@ -27,6 +27,22 @@ app.use(session({
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+//converting to html once the root is hit and redirecting to root url
+app.get('/', function (req, res) {
+    res.render('index', {"result": ""})
+});
+//converting to html and redirecting to chat page once the chatApp api is hit
+app.get('/chat',function (req,res) {
+    res.render('chatApp', {"result": ""})
+});
+//converting to html and redirecting to login page once the logBack api is hit
+app.get('/logBack',function (req,res) {
+    res.render('index', {"result": ""})
+});
+
 app.use("/", express.static('./sample/'));
 
 var MongoClient = require('mongodb').MongoClient;
