@@ -8,17 +8,14 @@ var schema = buildSchema(`
     address: String
     name: String
   }
-
   type Message {
     id: ID!
     address: String
     name: String
   }
-
   type Query {
     getMessage(id: ID!): Message
   }
-
   type Mutation {
     createMessage(input: MessageInput): Message
     updateMessage(id: ID!, input: MessageInput): Message
@@ -42,6 +39,7 @@ var root = {
     if (!fakeDatabase[id]) {
       throw new Error('no message exists with id ' + id);
     }
+    console.log(fakeDatabase[id]);
     return new Message(id, fakeDatabase[id]);
   },
   createMessage: function ({input}) {
