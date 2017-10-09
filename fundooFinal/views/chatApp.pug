@@ -24,10 +24,13 @@ html
       /**/
   body(onload='sessionStart()')
     ul#cardId
-    form(action='')
+    form#form3(action='')
       input#m(autocomplete='off')
       button Send
     
     button.btn.btn-danger(type='button', onclick='logout()') Logout
     script(src='form.js')
-    script(src='chat.js')
+    script(src='card.js')
+    script(src='deleteNote.js')
+    script(src='trashNote.js')
+    script(src='editNote.js')

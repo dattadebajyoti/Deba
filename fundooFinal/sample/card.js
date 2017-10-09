@@ -44,28 +44,35 @@ $(function() {
     return false;
   });
   socket.on('chat message', function(obj) {
-    var note = obj.msg;
+    var cardUid=obj.cardId;
+    var note = obj.note;
     console.log(note);
+    var userid=obj.userId;
+    console.log(userid);
     //$('<br>')
     //  socket.on('username', function(msg2){
     // $('#cardId').append($('<li>'));
-    document.getElementById("cardId").innerHTML += '<div class="w3-container">\
-                       <div style="width:20%" class="w3-card-4 w3-dark-grey">\
+    document.getElementById("cardId").innerHTML += '<div class="w3-container" id=divId>\
+                       <div style="width:25%" class="w3-card-4 w3-yellow">\
                           <div class="w3-container w3-center">\
-                             <h5 id="message">' + note + '</h5>\
+                             <h6 id="id">'+userid+'</h6>\
+                             <h2 id ="message">' + note + '</h2>\
                                 <div class="w3-section">\
                                 <ul class="nav navbar-nav">\
                                  <li class="dropdown">\
                                    <button type="button" class="btn btn-default btn-sm" style="float: left;">\
                                       <a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a> \
                                       <ul class="dropdown-menu">\
-                                         <li><a href="#">Edit<span class="glyphicon glyphicon-edit"></span></a></li>\
+                                         <li><a href="#" onclick="editNote(\'' +cardUid+ '\',\'' +note+ '\')">Edit<span class="glyphicon glyphicon-edit"></span></a></li>\
                                          <li class="divider"></li>\
-                                         <li><a href="#" onclick="deleteNote()">Delete <span class="glyphicon glyphicon-trash"></span></a></li>\
+                                         <li><a href="#" onclick="deleteNote(\'' +cardUid+ '\')">Delete forever <span class="glyphicon glyphicon-trash"></span></a></li>\
+                                         <li class="divider"></li>\
+                                         <li><a href="#" onclick="trashNote()" >Move to trash <span class="glyphicon glyphicon-trash"></span></a></li>\
                                          <li class="divider"></li>\
                                          <li><a href="#">Archive <i class="material-icons">archive</i></a></li>\
                                          <li class="divider"></li>\
-                                         <li><a href="#">Remainder <span class="glyphicon glyphicon-hand-up"></a></li>\
+                                         <li><a href="#">Remainder<span class="glyphicon glyphicon-hand-up"></a>\
+                                         </li>\
                                          <li class="divider"></li>\
                                          <li><a href="#" onclick="changeColour()">change color <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>\
                                       </ul>\

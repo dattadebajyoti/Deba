@@ -17,6 +17,8 @@ var PORT = process.env.PORT || 3011;
 //require pug
 var pug = require('pug');
 //app.use(bodyParser.json());
+var ObjectId = require('mongodb').ObjectID;
+var uniqid = require('uniqid');
 //requiring the sesion module
 
 var session = require('express-session');
@@ -31,6 +33,7 @@ app.use(bodyParser.urlencoded({
 
 var validators = require("mongoose-validators");
 var mongoose = require('mongoose');
+mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 mongoose.connect("mongodb://localhost:27017/mydb");
 var db=mongoose.connection;
@@ -62,6 +65,25 @@ var userData = Schema({
 });
 //model creation
 var userData = mongoose.model('userRegisterSchema', userData);
+
+var cardData= Schema({
+  cardId:{
+    type: String
+  },
+  userId:{
+    type: String
+  },
+  timeOfCreation:{
+    type:String
+  },
+  note:{
+    type: String
+  },
+}, {
+  collection: "userCardSchema"
+});
+//model creation
+var cardData = mongoose.model('userCardSchema',cardData);
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -141,33 +163,53 @@ app.post('/signingin', function(req, res) {
 // var url = "mongodb://localhost:27017/mydb";
 io.on('connection', function(socket) {
   socket.on('chat message', function(obj) {
-    var msg = obj.msg;
+    // var msg = obj.msg;
+    var note=obj.msg;
     var username = obj.username;
     var time = obj.time;
-    console.log(msg);
+    console.log(note);
     //console.log(user);
     // mongoose.connect(url, function(err, db) {
-      myObj = [{
-        message: msg,
-        userName: username,
-        timeOfMessage: time
-      }];
-      db.collection("storeMessage").insertMany(myObj, function(err, res) {
-        if (err) throw err;
-        // console.log(user);
-        console.log("Message Stored");
-        //  db.close();
-      })
-      db.collection("storeMessage").find({}, {
-        _id: false
-      }).toArray(function(err, result) {
-        if (err) throw err;
-        console.log(result);
-        //  db.close();
+    //++++++++++++++++++++++++++++
+      // myObj = [{
+      //   message: msg,
+      //   userName: username,
+      //   timeOfMessage: time
+      // }];
+      // db.collection("storeMessage").insertMany(myObj, function(err, res) {
+      //   if (err) throw err;
+      //   // console.log(user);
+      //   console.log("Message Stored");
+      //   //  db.close();
+      // })
+      // db.collection("storeMessage").find({}, {
+      //   _id: false
+      // }).toArray(function(err, result) {
+      //   if (err) throw err;
+      //   console.log(result);
+      //   //  db.close();
+      // });
+      //-------------------------------
+      var id=uniqid();
+      var noteData = new cardData({
+        'cardId'        :id,
+        'userId'        :username,
+        'timeOfCreation':time,
+        'note'          :note
       });
+      console.log(noteData);
+      noteData.save(function(err){
+        if(err) console.log(err);
+        else {
+          console.log("item saved to the database");
+        }
+        });
+      //--------------------------------
+
+      //+++++++++++++++++++++++++++
     // });
     // if(err) throw err;
-    io.sockets.emit('chat message', obj);
+    io.sockets.emit('chat message', noteData);
     console.log("/////////////////////////////this is " + obj.time);
     //io.emit('username',user);
     //console.log("message: " + msg);
@@ -222,6 +264,26 @@ app.get('/get', function(req, res) {
     // db.close();
   // })
 });
+
+//api to delete a note
+app.post('/deleteCard',function(req,res) {
+  console.log("ok+++++++++++");
+  console.log("This is: "+req.body.deleteNote);
+  db.collection("cardData").deleteOne(req.body, function(err,res) {
+    if(err) throw err;
+    console.log("Note Deleted");
+  });
+});
+
+//api to editNote
+  app.post('/editNote',function(req,res) {
+    console.log(req.body);
+    var myquery={ cardId:req.body.noteId};
+    db.collection("cardData").updateOne(myquery,req.body, function(err,res) {
+      if(err) throw err;
+      console.log("note updated");
+    })
+  })
 
 
 //making to listen at port number 3004
