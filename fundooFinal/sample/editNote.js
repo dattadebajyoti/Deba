@@ -3,7 +3,13 @@ function editNote(noteid,note)
   console.log(noteid);
   editnote=prompt("Enter note");
   var strNote=document.getElementById("message");
-  strNote.innerHTML = strNote.innerHTML.replace(note,editnote);
+  if(editnote!=null)
+  {
+    strNote.innerHTML = strNote.innerHTML.replace(note,editnote);
+  }
+  else {
+    strNote.innerHTML = strNote.innerHTML.replace(note,note);
+  }
   $.ajax({
     url: '/editNote',
     type: 'POST',

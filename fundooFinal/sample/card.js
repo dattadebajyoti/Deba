@@ -63,16 +63,15 @@ $(function() {
                                    <button type="button" class="btn btn-default btn-sm" style="float: left;">\
                                       <a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a> \
                                       <ul class="dropdown-menu">\
-                                         <li><a href="#" onclick="editNote(\'' +cardUid+ '\',\'' +note+ '\')">Edit<span class="glyphicon glyphicon-edit"></span></a></li>\
+                                         <li><a href="#" id="editId" onclick="editNote(\'' +cardUid+ '\',\'' +note+ '\')">Edit<span class="glyphicon glyphicon-edit"></span></a></li>\
                                          <li class="divider"></li>\
                                          <li><a href="#" onclick="deleteNote(\'' +cardUid+ '\')">Delete forever <span class="glyphicon glyphicon-trash"></span></a></li>\
                                          <li class="divider"></li>\
-                                         <li><a href="#" onclick="trashNote()" >Move to trash <span class="glyphicon glyphicon-trash"></span></a></li>\
+                                         <li><a href="#" onclick="trashNote(\'' +cardUid+ '\')" >Move to trash <span class="glyphicon glyphicon-trash"></span></a></li>\
                                          <li class="divider"></li>\
                                          <li><a href="#">Archive <i class="material-icons">archive</i></a></li>\
                                          <li class="divider"></li>\
-                                         <li><a href="#">Remainder<span class="glyphicon glyphicon-hand-up"></a>\
-                                         </li>\
+                                         <li><a href="#" id="remainderId" onclick="remainder()">Remainder<span class="glyphicon glyphicon-hand-up"></a> </li>\
                                          <li class="divider"></li>\
                                          <li><a href="#" onclick="changeColour()">change color <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>\
                                       </ul>\
