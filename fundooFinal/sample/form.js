@@ -39,9 +39,11 @@ function login() {
       //socket.emit('user name',username);
       alert("Login Successfully");
       localStorage.setItem("username", name);
+      localStorage.setItem("uname",username);
       // window.location.href = "chatApp.pug";
       //giving a call to chat api
-      window.location.href="/chat";
+      // alert(localStorage.getItem("username"));
+      window.location.href="/fundoo";
     } else {
       alert("Sorry!! please create your account first");
     }

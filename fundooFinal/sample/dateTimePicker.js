@@ -1,5 +1,5 @@
 $(function() {
-    $('#datetimepicker1').datetimepicker({
+    $('#n').datetimepicker({
       language: 'pt-BR'
     });
   });

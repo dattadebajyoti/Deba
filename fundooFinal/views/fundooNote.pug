@@ -15,9 +15,9 @@ html
     style.
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form { background: #000; padding: 3px; position: fixed;left:25%; bottom: 0; width: 50%;}
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      form button { width: 9%; background: rgb(255, 150, 255); border: none; padding: 10px; }
       /*#messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }*/
@@ -25,14 +25,15 @@ html
   body(onload='sessionStart()')
     ul#cardId
     form#form3(action='')
-      input#m(autocomplete='off')
+      input#m(autocomplete='off',placeholder='create note')
+      //- input#n(autocomplete='off',placeholder='set remainder')
+      input#n(placeholder="Set Remainder", type='datetime-local')
       button Send
     
     button.btn.btn-danger(type='button', onclick='logout()') Logout
     script(src='form.js')
     script(src='card.js')
     script(src='deleteNote.js')
-    script(src='trashNote.js')
     script(src='editNote.js')
     script(src='remainder.js')
     script(src='trash.js')

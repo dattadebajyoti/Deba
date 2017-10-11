@@ -81,6 +81,9 @@ var cardData = Schema({
   note: {
     type: String
   },
+  remainder: {
+    type: String
+  }
 }, {
   collection: "userCardSchema"
 });
@@ -97,8 +100,8 @@ app.get('/', function(req, res) {
   })
 });
 //converting to html and redirecting to chat page once the chatApp api is hit
-app.get('/chat', function(req, res) {
-  res.render('chatApp', {
+app.get('/fundoo', function(req, res) {
+  res.render('fundooNote', {
     "result": ""
   })
 });
@@ -202,7 +205,8 @@ io.on('connection', function(socket) {
       'cardId': id,
       'userId': username,
       'timeOfCreation': time,
-      'note': note
+      'note': note,
+      'remainder': obj.remainder
     });
     console.log(noteData);
     noteData.save(function(err) {
@@ -254,15 +258,20 @@ app.get('/endSession', function(req, res) {
 //
 //
 //api to get the user details and chat history fromt the database
-app.get('/get', function(req, res) {
+app.post('/getdata', function(req, res) {
   // console.log(url);
   // MongoClient.connect(url, function(err, db) {
   // console.log(db);
-  db.collection("storeMessage").find({}, {
+  console.log("ingetdata:"+req.body.userid);
+  var myObj={ userId: req.body.userid };
+  console.log(myObj);
+  db.collection("userCardSchema").find(myObj, {
     _id: false,
-    message: true,
-    userName: true,
-    timeOfMessage: true
+    cardId: true,
+    userId: true,
+    timeOfCreation: true,
+    note:true,
+    remainder:true
   }).toArray(function(err, data) {
     if (err) throw err;
     // console.log(data);
@@ -296,20 +305,28 @@ app.post('/editNote', function(req, res) {
 
 //api for remainder
 app.post('/remainder', function(req, res) {
-// console.log(req.body);
+console.log("inside the remainder api:"+req.body.remainder);
 console.log("hi");
-var date = new Date(2017, 9, 10, 18, 58, 0);
-console.log(date);
+var date = new Date(req.body.remainder);
+var myquery={
+  cardId: req.body.noteId
+}
+db.collection("userCardSchema").updateOne(myquery, {remainder: date}, function(err, res) {
+  if (err) throw err;
+  console.log("note updated");
+})
+console.log("this is date in remainder:"+date);
 var j = schedule.scheduleJob(date, function() {
   console.log("schedule");
   var myObj = {
-    // cardId: req.body.noteId,
+    cardId: req.body.noteId
     // remainder: req.body.remainder
-    cardId: "8d2ej8lgpc7d"
+    // cardId: "8d2ej8lgpc7d"
   };
-  console.log(myObj)
+  console.log("myObj is:"+myObj)
   db.collection("userCardSchema").findOne(myObj, function(err, res) {
     if (err) throw err;
+    console.log(res.note);
     notifier.notify('Notifying');
     notifier.notify({
       'title': 'Notification',
