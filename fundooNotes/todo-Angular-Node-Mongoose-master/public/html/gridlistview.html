@@ -1,0 +1,51 @@
+<div class="row" ng-class="gridlist" style="margin-top:34px;">
+  <!-- <div class="col-sm-2 col-md-2 col-lg-2"> </div>
+  <div class="col-sm-10 col-xs-12 col-md-10 col-lg-10"> -->
+
+<div id="others">Others</div>
+  <div>
+  <div id="innote" ng-if="!x.isArchive && !x.isPinup && !x.isDeleted" ng-class="innote" ng-mouseover="icons=true" ng-mouseleave="icons=false" ng-repeat="x in message | filter:search as results track by $index" testpackery>
+
+      <div ng-class="showpreid" style="background-color:{{x.color}}">
+        <div style="padding:2%;">
+            <span class="glyphicon glyphicon-pushpin" ng-click="pinup(x,'true','false')" ng-show="icons" style="float:right;" uib-tooltip="Pin note"  tooltip-placement="bottom" tooltip-append-to-body="true"></span>
+          <div id="divtitle" class="titlecss" style="margin-left:2%;" ng-click="popup(x)" ng-bind-html = "x.title1"  ></div>
+            <!-- <i id="titlecss" ></i> -->
+
+          <div id="noteinner" ng-click="popup(x)"  ng-bind-html = "x.content"></div>
+
+          <div id="footer" >
+              <span ng-show="icons">
+
+                <!-- reminder set directive -->
+                <reminder></reminder>
+
+                <!-- collaborator icon -->
+                 <collaborator></collaborator>
+
+                 <!-- color  directive -->
+                <color></color>
+
+                <!-- archive directive -->
+                <archive></archive>
+
+                <!-- facebook share directive -->
+                <facebookshare></facebookshare>
+
+                <!-- more(make a copy and delete) icons directive -->
+                <more></more>
+
+        </span>
+    </div>
+
+    <!-- reminder footer directive -->
+    <reminderdisplay></reminderdisplay>
+
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- </div> -->
+<!-- <span class="glyphicon glyphicon-link" ng-click="pinup(x._id,'true')" ng-show="icons" style="float:top-right;"></span> -->

@@ -1,0 +1,42 @@
+{
+  "name": "public",
+  "homepage": "https://github.com/ananya-kundu/todo-Angular-Node-Mongoose",
+  "authors": [
+    "Ananya <ananyakundu.gnit@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "^1.6.4",
+    "angular-material": "^1.0.9",
+    "angular-file-upload": "^2.5.0",
+    "angular-sanitize": "^1.6.4",
+    "angular-bootstrap": "^2.5.0",
+    "angular-ui-bootstrap-datetimepicker": "^2.5.0",
+    "angular-route": "^1.5.6",
+    "angular-ui-bootstrap": "*",
+    "angular-toastr": "^2.1.1",
+    "draggabilly": "^2.1.1",
+    "angular-ui-router": "^0.3.1",
+    "handlebars": "~3.0.3",
+    "bootstrap": "^3.3.7",
+    "moment": "^2.18.1",
+    "firebase": "^4.0.0",
+    "ng-img-crop": "ngImgCrop#^0.3.2",
+    "packery": "^2.1.1",
+    "satellizer": "^0.15.5",
+    "mui": "^0.9.16",
+    "angular-bootstrap-datetimepicker": "^1.1.4"
+  },
+  "resolutions": {
+  "angular": "1.6.5"
+}
+}

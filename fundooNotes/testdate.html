@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+Date: <input type="datetime-local" id="myLocalDate">
+
+<p>Click the button to set a local date and time for the datetime field.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p><strong>Note:</strong> input elements with type="datetime-local" do not show as any datetime field/calendar in Firefox.</p>
+
+<script>
+function myFunction() {
+    var j=document.getElementById("myLocalDate").value
+    console.log(j)
+    document.getElementById("myLocalDate").value = "2014-01-02T11:42:13.510";
+}
+</script>
+</body>
+</html>

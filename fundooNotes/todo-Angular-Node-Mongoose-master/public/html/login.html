@@ -1,0 +1,68 @@
+<header>
+  <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #293a48;" role="navigation">
+      <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#home">My Keep</a>
+
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a ui-sref="login"><span class="fa fa-shield" aria-hidden="true"></span> Login</a></li>
+                <li><a ui-sref="signup"><span class="fa fa-comment" aria-hidden="true"></span> signup</a></li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+</header>
+
+
+ <div class = "container-fluid">
+<div class="login-page">
+  <div class="form">
+
+    <form name="loginform" ng-controller="loginController" style="margin-top:14%">
+
+      <div>
+          <div class="form-group has-feedback">
+            <input type="email" name="emailid" id="exampleInputEmaillog" placeholder="Email"  ng-model="emailid" required>
+            <span class="ion-at form-control-feedback"></span>
+            <span style="color:teal" ng-show="loginform.emailid.$dirty && loginform.emailid.$invalid">
+                <span ng-show="loginform.emailid.$error.required">Emailid is required.</span>
+                <span ng-show="loginform.emailid.$error.email">Invalid email address.</span>
+            </span>
+        </div>
+      </div>
+
+      <div>
+          <input type="password" name="user" id="loginPassword" placeholder="Password"  ng-model="password" required>
+          <span style="color:teal" ng-show="loginform.password.$dirty && loginform.user.$invalid">
+              <span ng-show="loginform.password.$error.required">Password is required.</span>
+              <span ng-show="loginform.password.$error.password">Invalid email address.</span>
+          </span>
+      </div>
+
+      <div>
+          <button id="fetchUser" ng-click ="login()"   ng-disabled="loginform.emailid.$dirty && loginform.emailid.$invalid || loginform.password.$dirty && loginform.password.$invalid">Login</button>
+      </div>
+
+      <hr>
+
+      <a class="btn btn-block btn-social btn-google waves-effect waves-light" id="fbBtn" ng-click="authenticate('facebook')"  style="background-color:#3b5998;white-space: nowrap;border-color: rgba(0,0,0,0.2);" >
+          <span class="fa fa-facebook" ></span> Sign in with Facebook
+      </a>
+
+      <a class="btn btn-block btn-social btn-facebook" ng-click="authenticate('google')" style="background-color:#dd4b39;white-space: nowrap;border-color: rgba(0,0,0,0.2);" >
+          <span class="fa fa-google" id="googleBtn"></span> Sign in with Google
+      </a>
+
+      <div class="message">Not registered? <a ui-sref="signup">Create an account</a></div>
+    </form>
+  </div>
+</div>
+</div>

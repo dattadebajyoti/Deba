@@ -1,0 +1,322 @@
+#a{
+  margin-left: 0px;
+
+}
+.navbar>.container-fluid .navbar-brand {
+    margin-left: 9px;
+}
+/*.navbar-inverse .navbar-brand {
+    color: grey;
+}*/
+
+.navbar-inverse .navbar-brand {
+    color: #d54d7b;;
+}
+
+.navbar-text {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: #060000;
+}
+
+#navbarColor{
+  background-color: rgb(255, 187, 0);
+}
+
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+    color: #fb0;
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+    color: #fff;
+    background-color: black;
+}
+
+.nav>li>a>img {
+  margin-top: -7px;
+    max-width: none;
+}
+
+#wrapper{
+    margin-top: 0;
+    padding-left: 0;
+
+    -webkit-transition: all .5s ease;     /*change the wrapper' with a smooth transition effect:*/
+       -moz-transition: all .5s ease;     /*That div will take 0.5 a second when the mouse is over it to turn from 1color to another color.*/
+         -o-transition: all .5s ease;   /*ease define a function that describes how a transition will proceed over its duration, allowing a transition to change speed during its course.*/
+            transition: all .5s ease;
+}
+
+
+.navbar-inverse
+{
+    border-color: #eee;
+    background-color: #eee;
+}
+
+#sidebar-wrapper
+{
+    position: fixed;
+    z-index: 1000;
+    left: 250px;
+
+    overflow-y: auto;
+
+    width: 0;
+    height: 120%;
+    margin-left: -250px;
+
+    -webkit-transition: all .5s ease;
+       -moz-transition: all .5s ease;
+         -o-transition: all .5s ease;
+            transition: all .5s ease;
+
+    background: rgba(255, 187, 0, .11);
+}
+
+.sidebar-nav > .sidebar-brand a
+{
+    color: grey;
+}
+
+#wrapper.toggled #sidebar-wrapper
+{
+    width: 170px;
+}
+
+#page-content-wrapper
+{
+    width: 100%;
+    /*padding: 15px;*/
+}
+
+#wrapper.toggled #page-content-wrapper{
+    position: relative;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+ol,
+ul{
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.sidebar-nav{
+    position: absolute;
+    top: 0;
+
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li
+{
+    line-height: 40px;
+    text-indent: 20px;
+}
+
+.sidebar-nav li a
+{
+    display: block;
+    text-decoration: none;
+    color: #080000;
+}
+
+.sidebar-nav li a
+{
+    display: block;
+    text-decoration: none;
+    color: #999;
+}
+
+.sidebar-nav li a:hover
+{
+    text-decoration: none;
+    color: teal;
+    background: rgba(255, 255, 255, .2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus
+{
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand
+{
+    font-size: 18px;
+    line-height: 60px;
+    height: 65px;
+}
+
+.sidebar-nav > .sidebar-brand a
+{
+    color: grey;
+}
+
+.sidebar-nav > .sidebar-brand a:hover
+{
+    color: #fff;
+    background: none;
+}
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+
+#login-dp .help-block{
+    font-size:12px
+}
+
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+
+#login-dp .social-buttons{
+    margin:12px 0
+}
+
+#login-dp .social-buttons a{
+    width: 49%;
+}
+
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+
+
+
+.container-fluid {
+  padding-right: 1%;
+  padding-left: 1%;
+  /*margin-left: auto;*/
+  margin-right: 1px;
+}
+
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+
+.btn-block
+{
+    position: relative;
+    color: #fff;
+    border-color: rgba(182, 189, 182, 0);
+    /*border-collapse: separate;*/
+    border-radius: 6px;
+    background-color: #fff;
+    display: block;
+    width: 100%;
+    /*background-color: #403232;*/
+}
+.btn-social {
+    position: relative;
+    padding-left: 44px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/*.btn-block {
+
+}*/
+.btn-social>:first-child {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    line-height: 34px;
+    font-size: 1.6em;
+    text-align: center;
+    border-right: 1px solid rgba(0,0,0,0.2);
+}
+
+/*.waves-effect {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 1;
+}
+
+#fbBtn:hover{
+  color:red;
+}*/
+
+
+/*.counter {
+    position: absolute;
+    margin-left: -23px;
+    margin-top: -1px;
+    background-color: red;
+    color: #fff;
+    padding: 1px 7px;
+    font-size: 11px;
+    z-index: 2;
+    border-radius: 10rem;
+}*/
+/*.btn-facebook:hover {
+    color: #fff;
+    background-color: rgba(59, 89, 152, 0.83);;
+    border-color: rgba(0,0,0,0.2);
+}*/
+
+/*.btn-facebook{
+    color: #fff;
+    background-color:#3b5998;
+    white-space: nowrap;
+    border-color: rgba(0,0,0,0.2);
+}*/
+
+
+
+/*.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}*/
+
+#googleBtn:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+
+
+/*#xy {
+    background: url(./images/header-bg1.jpg) repeat-y #ee7052;
+    /*min-height: 82px;*/
+/*}*/
+
+/*@media(max-width:600px){
+  .sidebar-nav{
+    background-color: white;
+  }
+}*/
+
+
+
+
+/*.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+    color: #fff;
+    background-color: #080808;
+}*/

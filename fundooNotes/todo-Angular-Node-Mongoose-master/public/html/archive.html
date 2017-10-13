@@ -1,0 +1,47 @@
+<!-- archive html -->
+
+<div class="row" ng-class="gridlist" style="margin-top:34px;">
+  <div style="margin:22px 16px;"></div>
+
+  <div>
+    <div id="innote" ng-if="x.isArchive && !x.isDeleted" ng-class="innote" ng-mouseover="icons=true" ng-mouseleave="icons=false" ng-repeat="x in message | filter:search as results track by $index" testpackery>
+
+      <div ng-class="showpreid" style="background-color:{{x.color}}">
+        <div style="padding:2%;">
+          <span class="glyphicon glyphicon-pushpin" ng-click="pinup(x,'true','false')" ng-show="icons" style="float:right;color:#767676;" uib-tooltip="Pin archived note" tooltip-placement="bottom" tooltip-append-to-body="true"></span>
+          <div id="divtitle" class="titlecss" style="margin-left:2%;" ng-click="popup(x)" ng-bind-html="x.title1"></div>
+          <div id="noteinner" ng-click="popup(x)" ng-bind-html="x.content"></div>
+
+          <!-- icons -->
+          <div id="footer">
+            <span ng-show="icons">
+                  <!-- reminder set directive -->
+                  <reminder></reminder>
+
+                  <!-- collaborator icon -->
+                   <collaborator></collaborator>
+
+                      <!-- color  directive -->
+                     <color></color>
+
+                    <!-- unarchive icon -->
+                    <i style="margin-left:8px" style="font-size:36px" aria-hidden="true">
+                          <img id='reminder1'  ng-click="archive(x,'false','false')" style="width:18px;height:18px" src="../images/unarchive.svg" uib-tooltip="Unarchive"  tooltip-placement="bottom" tooltip-append-to-body="true"/>
+                    </i>
+
+                    <!-- facebook share directive -->
+                    <facebookshare></facebookshare>
+
+                    <!-- more(make a copy and delete) icons directive -->
+                    <more></more>
+            </span>
+          </div>
+
+          <!-- reminder footer directive -->
+          <reminderdisplay></reminderdisplay>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

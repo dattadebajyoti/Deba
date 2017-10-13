@@ -1,0 +1,224 @@
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" ng-style="archivenav" style="background-color: rgba(6,6,6,1);" role="navigation">
+    <div class="container-fluid" >
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#menu-toggle" id="menu-toggle" style="display:inline-block;">
+            <span uib-tooltip="Main menu" tooltip-placement="bottom" tooltip-append-to-body="true">
+            <span class="glyphicon glyphicon-list tglid" ng-style="archivegly" id="tglid" aria-hidden="true"></span>
+          </span></a>
+
+          <a class="navbar-brand" href="#menu-toggle" id="menu-toggle" >
+              <span id="keepClass" ng-style="brandname" uib-tooltip="My keep"  tooltip-placement="bottom" tooltip-append-to-body="true">{{keep}}</span>
+          </a>
+
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" style="margin-right:12%;" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+          </button>
+      </div>
+
+
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+              <a  id="refresh" uib-tooltip="Refresh" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="refresh()" >
+                    <svg id="refreshicon" ng-style="archiverefresh" height="24px" width="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="grey">
+                        <path d="m9 13.5c-2.49 0-4.5-2.01-4.5-4.5s2.01-4.5 4.5-4.5c1.24 0 2.36 0.52 3.17 1.33l-2.17 2.17h5v-5l-1.76 1.76c-1.09-1.08-2.58-1.76-4.24-1.76-3.31 0-5.99 2.69-5.99 6s2.68 6 5.99 6c2.97 0 5.43-2.16 5.9-5h-1.52c-0.46 2-2.24 3.5-4.38 3.5z"/>
+                    </svg>
+                </a>
+          </li>
+
+          <li>
+            <p class="navbar-text" id="textColor">
+              <span class="list-style-buttons" id="textColor">
+                 <a id="gridview1" uib-tooltip="Grid view" tooltip-placement="bottom" tooltip-append-to-body="true">
+                    <span class="glyphicon glyphicon-th" id="gridgly" ng-style="gridstyle" style="margin-left:4%;margin-top:3px;" ng-click="gridview()">
+                   </a>
+                   <a id="listview1" uib-tooltip="List view" tooltip-placement="bottom" tooltip-append-to-body="true">
+                      <span class="glyphicon glyphicon-align-justify" id="listgly" ng-style="liststyle" style="display:none;margin-left:5%;margin-top:3px;" ng-click="listview()" >
+                   </a>
+                 </span>
+               </span>
+             </span>
+            </p>
+          </li>
+
+
+
+           <li class="dropdown" >
+                  <a class="dropdown-toggle" data-toggle="dropdown"  uib-tooltip="MyAccount" tooltip-placement="bottom" tooltip-append-to-body="true" >
+                    <img id="menu" class="circular--square1"  ng-src="{{userinfo.local.profileImage || userinfo.facebook.picture || userinfo.google.picture}}" alt="{{userinfo.local.userName.charAt(0) ||userinfo.facebook.displayName.charAt(0) || userinfo.google.displayName.charAt(0) | uppercase}}" style="align-self: center;font-weight: bold;"/>
+                  </a>
+                    <div  class="dropdown-menu" id="logoutdropdown">
+
+
+                     <div class="profile1 row" style="margin:2px;" >
+                        <div><img class="circular--square col-sm-6"  ng-src="{{userinfo.local.profileImage || userinfo.facebook.picture || userinfo.google.picture}}" alt="{{userinfo.local.userName.charAt(0) ||userinfo.facebook.displayName.charAt(0) || userinfo.google.displayName.charAt(0) | uppercase}}"  uib-tooltip="Profile" tooltip-placement="bottom" tooltip-append-to-body="true" style="padding-left: -2px;align-self: center;cursor:pointer;"/></span>
+                          <!-- <span class="gb_jb">Change</span> -->
+                        </div>
+                        <a ng-click="changeProfileImage()" style="margin-left:-1px;margin-top:16px;color:teal">change Profile Image</a><br/>
+                        <div style="margin:16px 20px 30px 128px;display:block;">
+                          <div style="font-weight: bold;margin: -4px 0 0 -2px;word-wrap:break-word;"><b>{{userinfo.local.userName || userinfo.facebook.displayName || userinfo.google.displayName}}</b></div>
+                          <div style="margin-left:18px;color: #666;display: block;margin: -4px 0 0 -2px;word-wrap:break-word;">{{userinfo.local.email || userinfo.facebook.facebookEmail || userinfo.google.googleEmail}}</div>
+                        </div>
+                     </div>
+
+                     <div class="profile2">
+                         <span style="position: absolute; padding: 50px 0px 0px 32px; font-size: 1.2em;"></span>
+                         <div class="profile3">  </div>
+                     </div>
+                     <hr style="margin-top:10px;">
+
+                       <div class="social-buttons" id="acbuttons" style="margin-left:6%;background: #E8E8E8;">
+                          <a><span style="margin-left:25%"></span></a>
+                          <a ui-sref="login" class="btn btn-tw" style="background: #E8E8E8;border: 1px solid #c6c6c6;" id="logOutId" ng-click="logOut()" aria-hidden="true" >
+                              <span class="glyphicon glyphicon-off"  style="color:teal;">Sign out</span>
+                         </a>
+                       </div>
+                  </div>
+               </li>
+
+        </ul>
+
+            <form class="navbar-form navbar-left">
+              <div class="input-group" id="inputid" ng-style="archivesearch" style="padding-right:3%;background-color:rgba(6,6,6,1);" uib-tooltip="Search" tooltip-placement="bottom" tooltip-append-to-body="true">
+                <input type="text" class="form-control" ng-model="search" placeholder="Search..." id="query" ng-style="archivequery" name="search" value="" />
+                </div>
+            </form>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <div id="wrapper" class="toggled">
+    <div class="container-fluid">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper" ng-style="archivesidebar" style="margin-top:-19px">
+        <ul class="sidebar-nav" >
+          <li class="sidebar-brand"><br> </li>
+          <li class="sidebar-brand">
+            <!-- <a href="#" class="navbar-brand" style="margin-top:8px;">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile
+            </a> -->
+          </li>
+
+          <li>
+            <a ui-sref="dashboard"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> Notes</a>
+          </li>
+
+          <li>
+            <a ui-sref="reminder" >
+              <svg width="20px" xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 24 24" height="20px" style="margin-left:14px;">
+                  <path d="m0 0h24v24h-24z" fill="none"></path>
+                  <path d="m20.78 13.16l-6.05-3.02c-0.23-0.09-0.47-0.14-0.73-0.14h-1v-2h1.75c1.66 0 3-1.34 3-3s-1.34-3-3-3c-0.75 0-1.14 0.22-1.75 0.75v-0.75c0-1.1-0.9-2-2-2s-2 0.9-2 2v0.75c-0.61-0.53-1-0.75-1.75-0.75-1.66 0-3 1.34-3 3s1.34 3 3 3h1.75v8.31l-4.57-0.95c-0.1-0.02-0.21-0.03-0.32-0.03-0.41 0-0.79 0.17-1.06 0.44l-1.05 1.06 6.59 6.59c0.36 0.36 0.86 0.58 1.41 0.58h9.06c1 0 1.77-0.74 1.92-1.7l1-7.03c0.01-0.09 0.02-0.18 0.02-0.27 0-0.83-0.5-1.54-1.22-1.84zm-11.53-6.16h-2c-1.1 0-2-0.9-2-2s0.9-2 2-2 2 0.9 2 2v2zm3.5-2c0-1.1 0.9-2 2-2s2 0.9 2 2-0.9 2-2 2h-2v-2z" fill="grey" > </path>
+              </svg>
+              <span aria-hidden="true" ui-sref="reminder" ng-click ="remainderData()"></span>Reminders
+            </a>
+          </li>
+
+          <li>
+            <a ui-sref="archive">
+              <img src="./images/sidebarArchive.svg" style="margin-left:14px"/>
+              <span aria-hidden="true" ui-sref="archive" ng-click ="archive()" ></span>Archive
+
+              <!-- <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true" ui-sref="archive" ng-click ="archive()"></span> Archive -->
+            </a>
+          </li>
+
+
+          <li>
+            <a ui-sref="trash" >
+              <img src="./images/sidebarTrash _new.svg" style="margin-left:14px"/>
+              <span aria-hidden="true" ui-sref="trash" ng-click ="deleteCardsData()" ></span>Trash
+            </a>
+          </li>
+
+          <li>
+            <a ui-sref="activity"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Activity Log</a>
+          </li>
+
+          <li>
+            <a ui-sref="login">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              <span ng-click="logOut()" ui-sref="login" style="margin-left:1px">Log-out</span>  </a>
+          </li>
+
+        </ul>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- for cards -->
+      <div id="page-content-wrapper" >
+
+        <div ng-show = "activenote" class="row" id="msgDivId">
+            <div class="col-md-3 col-lg-3 col-sm-3"></div>
+
+              <div class="col-md-6 col-lg-6 col-sm-6">
+
+                <div id="mainMsgBox">
+                  <div id="title" ng-show="mainNote" ng-click="takeclick()">
+                      <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12 " type="text" id="dummyTitle" ng-click="mainNote = !mainNote" placeholder="Take a note.." ></div>
+                  </div>
+                </div>
+
+                <div id="userMsgBox" ng-show="dummyNote" class="toggled">
+                  <div id="title1" newcontenteditable contenteditable="true" ng-model="title" class="userGivenTitle" placeholder="Title" size="50" style="border:none;outline:none;"></div>
+                  <div id="content" newcontenteditable contenteditable="true" ng-model="note" placeholder="Take a Note.." size="50" style="border:none;outline:none;"></div>
+
+                  <p id="writeMsg">
+                        <button class="btn btn-warning" type="button" id="done" ng-click="savemsgcard()">DONE</button>
+                  </p>
+               </div>
+
+            </div>
+
+            <div class="col-md-3 col-lg-3 col-sm-3"></div>
+        </div>
+
+          <div class="row">
+              <div class="col-sm-2 col-md-2 col-lg-2"></div>
+              <div class="col-sm-8 col-md-8 col-lg-8">
+        <!-- <div ng-show="grid"> -->
+          <!-- style="border:2px solid green;" -->
+                      <div ng-show = "pinnote" ng-include="'./html/pinup.html'"></div>
+                      <div ng-show = "normalnote" ng-include="'./html/gridlistview.html'"></div>
+                      <div ng-show = "archivenote" ng-include="'./html/archive.html'"></div>
+                      <div ng-show = "remindernote" ng-include="'./html/reminder.html'"></div>
+                      <div ng-show = "trashnote" ng-include="'./html/trash.html'"></div>
+                      <div ng-show = "activitynote" ng-include="'./html/activity.html'"></div>
+              </div>
+              <div class="col-sm-2 col-md-2 col-lg-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+<script>
+// this is for closing collapse icon
+  $('#navbar').click('li', function() {
+       $('#navbar').collapse('hide');
+   });
+
+  //this is for sidebar
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+
+
+  $("#wrapper").click(function() {
+    $("#glyList").css("margin-left", "0px");
+    // $("#userMsgBox").show();
+  });
+
+
+</script>
+
+</html>
