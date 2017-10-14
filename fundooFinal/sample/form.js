@@ -62,8 +62,9 @@ function session() {
     }).done(function(data) {
       //debugger;
       var name = data.name;
-      console.log(name);
+      console.log("inside: "+name);
       localStorage.setItem("username", name);
+      localStorage.setItem("uname",name);
       if (data.isLogin) {
         //alert("logged in");
         document.getElementById("status").innerHTML = name + "<br>Online";
@@ -75,7 +76,8 @@ function session() {
         //logout();
         if(window.location.href !== "/") {
           // window.location.href = "index.pug";
-          window.location.href="/chat";
+          // window.location.href="/fundoo";
+          logout();
         }
       }
       resolve(data);
@@ -97,7 +99,7 @@ function logout() {
           console.log(result.data);
           if(result.data == "false")
           {
-            alert("Logging out");
+            // alert("Logging out");
             console.log(result.data);
             // window.location.href = "index.pug";
             window.location.href="/logBack";
