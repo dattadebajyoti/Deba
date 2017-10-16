@@ -67,7 +67,7 @@ function session() {
       localStorage.setItem("uname",name);
       if (data.isLogin) {
         //alert("logged in");
-        document.getElementById("status").innerHTML = name + "<br>Online";
+        // document.getElementById("status").innerHTML = name + "<br>Online";
         //window.location.href = "chatApp.html";
         //database();
       }

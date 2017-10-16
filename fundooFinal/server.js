@@ -33,6 +33,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+// app.use(require('./controller'));
+
 var validators = require("mongoose-validators");
 var mongoose = require('mongoose');
 mongoose.Promise = Promise;
@@ -85,6 +87,9 @@ var cardDataSchema = new Schema({
     type: String
   },
   color: {
+    type: String
+  },
+  trash: {
     type: String
   }
 }, {
@@ -186,7 +191,8 @@ io.on('connection', function(socket) {
       'timeOfCreation': time,
       'note': note,
       'remainder': obj.remainder,
-      'color' : obj.color
+      'color' : obj.color,
+      'trash' : "false"
     });
     console.log(noteData);
     noteData.save(function(err,res) {
@@ -248,7 +254,8 @@ app.post('/getdata', function(req, res) {
     timeOfCreation: true,
     note:true,
     remainder:true,
-    color: true
+    color: true,
+    trash: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -262,8 +269,9 @@ app.post('/getdata', function(req, res) {
 app.post('/deleteCard', function(req, res) {
   console.log("ok+++++++++++");
   console.log("This is: " + req.body.deleteNote);
-  db.collection("cardData").deleteOne(req.body, function(err, res) {
+  cardData.remove({cardId: req.body.deleteNote}, function(err, res) {
     if (err) throw err;
+    console.log(res);
     console.log("Note Deleted");
   });
 });
@@ -338,12 +346,16 @@ app.post('/trash', function(req, res) {
   console.log(x);
   var trashDate = new Date(req.body.year, req.body.month, req.body.date, req.body.hours, req.body.minute, req.body.second);
   console.log(trashDate);
+  cardData.findOneAndUpdate({cardId: req.body.trashnote}, {trash: trashDate}, {upsert:true}, function(err, result) {
+    if (err) throw err;
+    console.log("color updated");
+  })
   var j = schedule.scheduleJob(trashDate, function() {
     trashObj = {
       cardId: req.body.trashnote
     };
     console.log(trashObj);
-    db.collection("noteSchema").deleteOne(trashObj, function(err, result) {
+    cardData.remove(trashObj, function(err, result) {
       if (err) console.log(err);
       console.log("Note Deleted");
       console.log(result.deletedCount);
@@ -469,9 +481,51 @@ app.post('/changeColour',function(req,res) {
 });
 
 
+app.post('/trashData',function(req,res) {
+  var myquery = {
+    userId: req.body.username,
+    trash: "true"
+  };
+  db.collection("noteSchema").find(myquery, {
+    _id: false,
+    cardId: true,
+    userId: true,
+    timeOfCreation: true,
+    note:true,
+    remainder:true,
+    color: true,
+    trash: true
+  }).toArray(function(err, data) {
+    if (err) throw err;
+    console.log("hii");
+    console.log(data);
+    res.send(data);
+  });
+});
 
 
 
+app.post('/remainderData',function(req,res) {
+  var myquery = {
+    userId: req.body.username,
+    remainder: { $ne: "Invalid Date "}
+  };
+  db.collection("noteSchema").find(myquery, {
+    _id: false,
+    cardId: true,
+    userId: true,
+    timeOfCreation: true,
+    note:true,
+    remainder:true,
+    color: true,
+    trash: true
+  }).toArray(function(err, data) {
+    if (err) throw err;
+    console.log("hii");
+    console.log(data);
+    res.send(data);
+  });
+});
 
 
 

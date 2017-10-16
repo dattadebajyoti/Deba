@@ -99,20 +99,22 @@ html
         li#li1
           form#searchForm
             input#search(placeholder='Search')
-            button#b1.btn.btn-default(type='button')
+            button#b1.btn.btn-default(type='button' onclick="elasticSearchNote()")
               span.glyphicon.glyphicon-search
         li#li3
           span.glyphicon.glyphicon-globe
           //- i.fa.fa-bell(style='font-size:24px')
-                
-    #mySidebar.w3-sidebar.w3-light-grey.w3-bar-block.w3-border-right(style='display:block; border:none; overflow-y:auto')
+    ul#trash            
+    #mySidebar.w3-sidebar.w3-light-grey.w3-bar-block.w3-border-right(style='display:block; border:none;margin:0; overflow: scroll; position: fixed')
       ul
         li(style='margin-top:10px')
-          button(style='border:none; background-color:#f1f1f1; font-size:25px; color:#585858').span.glyphicon.glyphicon-trash TRASH
+          button(style='border:none; background-color:#f1f1f1; font-size:25px; color:#585858' onclick="window.location.reload()").span.glyphicon.glyphicon-home Home
         li(style='margin-top:25px')
-          button(style='border:none; background-color:#f1f1f1;font-size:25px;color:#585858').i.material-icons archive ARCHIVED
+          button(style='border:none; background-color:#f1f1f1; font-size:25px; color:#585858' onclick="showTrash()").span.glyphicon.glyphicon-trash TRASH
         li(style='margin-top:25px')
-          button(style='border:none; background-color:#f1f1f1;font-size:25px;color:#585858').a.span.glyphicon.glyphicon-hand-up REMAINDER
+          button(style='border:none; background-color:#f1f1f1;font-size:25px;color:#585858' onclick="showArchive()").i.material-icons archive ARCHIVED
+        li(style='margin-top:25px')
+          button(style='border:none; background-color:#f1f1f1;font-size:25px;color:#585858' onclick="showRemainder()").a.span.glyphicon.glyphicon-hand-up REMAINDER
         //-  a.span.glyphicon.glyphicon-trash Trash
         //-  a.i.material-icons Archive
         //-  a.span.glyphicon.glyphicon-hand-up Remainder
@@ -137,13 +139,15 @@ html
 
 
 
-    button.btn.btn-danger(type='button', onclick='logout()', style='right:50%') Logout
+    button.btn.btn-danger(type='button', onclick='logout()', style='margin-left:95%; margin-top:0%') Logout
     ul#cardId
     script.
       function w3_open() {
         if(document.getElementById("mySidebar").style.display == "none")
            { 
-             document.getElementById("mySidebar").style.display = "block"; 
+             document.getElementById("mySidebar").style.display = "block";
+             /*document.getElementById("cardId").style.left = "0px";
+             document.getElementById("divId").style.left = "0px";*/
            }
         else
         if(document.getElementById("mySidebar").style.display = "none")
@@ -154,6 +158,8 @@ html
       }
       function w3_close() {
       document.getElementById("mySidebar").style.display = "none";
+      /*document.getElementById("cardId").style.left = "150px";
+      document.getElementById("divId").style.right = "150px";*/
       }
     script(src='form.js')
     script(src='card.js')
@@ -162,3 +168,7 @@ html
     script(src='remainder.js')
     script(src='trash.js')
     script(src='changeColor.js')
+    script(src='elasticSearch.js')
+    script(src='showTrash.js')
+    script(src='showRemainder.js')
+    script(src='pin.js')

@@ -27,9 +27,11 @@ $(function() {
       console.log("doing"+data[i].color);
       //document.getElementById('messages').innerHTML += data[i].msg;
       // $('#messages').append($('<li>').text(data[i].userName+":"+data[i].message+"                    "+data[i].timeOfMessage));
-      document.getElementById("cardId").innerHTML += '<div style="margin-left:250px;" class="w3-container"  id=divId>\
+      document.getElementById("cardId").innerHTML += '<div style="margin-left:250px; position:relative" class="w3-container"  id=divId>\
                          <div id="'+data[i].cardId+'" style="width:25%; background-color:'+data[i].color+'" class="w3-card-4">\
                             <div class="w3-container w3-center">\
+                               <a href="#" onclick="pin()">\
+                                  <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px"></span></a>\
                                <h6 id="id">'+data[i].userId+'</h6>\
                                <h2 id ="message">' + data[i].note + '</h2>\
                                   <div class="w3-section">\
@@ -40,7 +42,7 @@ $(function() {
                                   </style>\
                                   <ul class="nav navbar-nav">\
                                    <li class="dropdown">\
-                                     <button type="button" class="btn btn-default btn-sm w3-yellow" style="float: right;border:none;">\
+                                     <button type="button" class="btn btn-default btn-sm" style="float: right;border:none; background-color:'+data[i].color+';">\
                                         <a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical" style="color:black"></span></a> \
                                         <ul class="dropdown-menu">\
                                            <li><a href="#" id="editId" onclick="editNote(\'' +data[i].cardId+ '\',\'' +data[i].note+ '\')">Edit<span class="glyphicon glyphicon-edit"></span></a></li>\
@@ -64,38 +66,38 @@ $(function() {
                                       <a href="#" id="editId" onclick="editNote(\'' +data[i].cardId+ '\',\'' +data[i].note+ '\')"><span class="glyphicon glyphicon-edit" style="font-size:20; color:black"></span></a>\
                                     </li>\
                                     <li class="dropdown">\
-                                      <button type="button" style="border:none; background:yellow">\
+                                      <button type="button" style="border:none; background:'+data[i].color+'">\
                                          <a href="#" data-toggle="dropdown" id="editColor" oncick="editColor()"><image src="./images/color.png" style="width:20; height:20px"></a>\
-                                         <ul class="dropdown-menu">\
+                                         <ul class="dropdown-menu" style="columns:3; -webkit-columns: 3; -moz-columns: 3">\
                                          <li>\
-                                            <a href="#" id="blue" onclick="blue(\'' +data[i].cardId+ '\')"><image src="./images/blue.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="blue" onclick="change(\'' +data[i].cardId+ '\',\'' +"blue"+ '\')"><image src="./images/blue.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="purple" onclick="purple()"><image src="./images/purple.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="purple" onclick="change(\'' +data[i].cardId+ '\',\'' +"purple"+ '\')"><image src="./images/purple.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="lyellow" onclick="moonlyellow()"><image src="./images/moonyellow.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="lyellow" onclick="change(\'' +data[i].cardId+ '\',\'' +"lyellow"+ '\')"><image src="./images/moonyellow.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="white" onclick="moonwhite()"><image src="./images/moonwhite.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="white" onclick="change(\'' +data[i].cardId+ '\',\'' +"white"+ '\')"><image src="./images/moonwhite.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="red" onclick="moonred()"><image src="./images/moonred.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="red" onclick="change(\'' +data[i].cardId+ '\',\'' +"red"+ '\')"><image src="./images/moonred.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="yellow" onclick="moonyellow()"><image src="./images/moonyellow.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="yellow" onclick="change(\'' +data[i].cardId+ '\',\'' +"yellow"+ '\')"><image src="./images/moonyellow.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="grey" onclick="moongrey()"><image src="./images/moongrey.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="grey" onclick="change(\'' +data[i].cardId+ '\',\'' +"grey"+ '\')"><image src="./images/moongrey.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="green" onclick="moongreen()"><image src="./images/moongreen.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="green" onclick="change(\'' +data[i].cardId+ '\',\'' +"green"+ '\')"><image src="./images/moongreen.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="moonblue" onclick="moonblue()"><image src="./images/moonblue.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="moonblue" onclick="change(\'' +data[i].cardId+ '\',\'' +"moonblue"+ '\')"><image src="./images/moonblue.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          <li>\
-                                            <a href="#" id="aqua" onclick="moonaqua()"><image src="./images/moonaqua.png" style="width:20; height:20px"></a>\
+                                            <a href="#" id="aqua" onclick="change(\'' +data[i].cardId+ '\',\'' +"aqua"+ '\')"><image src="./images/moonaqua.png" style="width:20; height:20px"></a>\
                                          </li>\
                                          </ul>\
                                       </button>\
@@ -185,36 +187,36 @@ $(function() {
                                   <li class="dropdown">\
                                     <button type="button" style="border:none; background:yellow">\
                                        <a href="#" data-toggle="dropdown" id="editColor" oncick="editColor()"><image src="./images/color.png" style="width:20; height:20px"></a>\
-                                       <ul class="dropdown-menu">\
+                                       <ul class="dropdown-menu" style="columns:3; -webkit-columns: 3; -moz-columns: 3>\
                                        <li>\
-                                          <a href="#" id="blue" onclick="blue(\'' +cardUid+ '\')"><image src="./images/blue.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="blue" onclick="change(\'' +cardId+ '\',\'' +"blue"+ '\')"><image src="./images/blue.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="purple" onclick="purple()"><image src="./images/purple.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="purple" onclick="change(\'' +cardId+ '\',\'' +"purple"+ '\')"><image src="./images/purple.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="lyellow" onclick="moonlyellow()"><image src="./images/moonyellow.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="lyellow" onclick="change(\'' +cardId+ '\',\'' +"lyellow"+ '\')"><image src="./images/moonyellow.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="white" onclick="moonwhite()"><image src="./images/moonwhite.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="white" onclick="change(\'' +cardId+ '\',\'' +"white"+ '\')"><image src="./images/moonwhite.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="red" onclick="moonred()"><image src="./images/moonred.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="red" onclick="change(\'' +cardId+ '\',\'' +"red"+ '\')"><image src="./images/moonred.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="yellow" onclick="moonyellow()"><image src="./images/moonyellow.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="yellow" onclick="change(\'' +cardId+ '\',\'' +"yellow"+ '\')"><image src="./images/moonyellow.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="grey" onclick="moongrey()"><image src="./images/moongrey.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="grey" onclick="change(\'' +cardId+ '\',\'' +"grey"+ '\')"><image src="./images/moongrey.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="green" onclick="moongreen()"><image src="./images/moongreen.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="green" onclick="change(\'' +cardId+ '\',\'' +"green"+ '\')"><image src="./images/moongreen.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="moonblue" onclick="moonblue()"><image src="./images/moonblue.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="moonblue" onclick="change(\'' +cardId+ '\',\'' +"moonblue"+ '\')"><image src="./images/moonblue.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        <li>\
-                                          <a href="#" id="aqua" onclick="moonaqua()"><image src="./images/moonaqua.png" style="width:20; height:20px"></a>\
+                                          <a href="#" id="aqua" onclick="change(\'' +cardId+ '\',\'' +"blue"+ '\')"><image src="./images/moonaqua.png" style="width:20; height:20px"></a>\
                                        </li>\
                                        </ul>\
                                     </button>\

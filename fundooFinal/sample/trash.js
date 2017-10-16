@@ -4,7 +4,7 @@ function trashNote(trashNote) {
   var datetime = new Date();
   var seconds = datetime.getSeconds();
   // console.log(seconds);
-  var minutes = datetime.getMinutes() + 2;
+  var minutes = datetime.getMinutes() + 30;
   console.log(minutes);
   var hrs = datetime.getHours();
   // console.log(hrs);
