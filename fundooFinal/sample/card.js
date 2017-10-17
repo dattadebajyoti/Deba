@@ -27,11 +27,11 @@ $(function() {
       console.log("doing"+data[i].color);
       //document.getElementById('messages').innerHTML += data[i].msg;
       // $('#messages').append($('<li>').text(data[i].userName+":"+data[i].message+"                    "+data[i].timeOfMessage));
-      document.getElementById("cardId").innerHTML += '<div style="margin-left:250px; position:relative" class="w3-container"  id=divId>\
+      document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px; position:relative" class="w3-container"  id=divId>\
                          <div id="'+data[i].cardId+'" style="width:25%; background-color:'+data[i].color+'" class="w3-card-4">\
                             <div class="w3-container w3-center">\
-                               <a href="#" onclick="pin()">\
-                                  <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px"></span></a>\
+                               <a href="#" onclick="pin(\'' +data[i].cardId+ '\')">\
+                                  <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color:'+data[i].pinColor+'; "></span></a>\
                                <h6 id="id">'+data[i].userId+'</h6>\
                                <h2 id ="message">' + data[i].note + '</h2>\
                                   <div class="w3-section">\
@@ -151,6 +151,8 @@ $(function() {
     document.getElementById("cardId").innerHTML += '<div style="margin-left:250px;" class="w3-container"  id=divId>\
                        <div id="'+cardUid+'" style="width:25%; background-color:white" class="w3-card-4">\
                           <div class="w3-container w3-center">\
+                          <a href="#" onclick="pin(\'' +cardUid+ '\')" id="pinId">\
+                             <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color: black; "></span></a>\
                              <h6 id="id">'+userid+'</h6>\
                              <h2 id ="message">' + note + '</h2>\
                                 <div class="w3-section">\

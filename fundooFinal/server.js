@@ -91,7 +91,11 @@ var cardDataSchema = new Schema({
   },
   trash: {
     type: String
-  }
+  },
+  pin: {
+    type: String
+  },
+  pinColor: String
 }, {
   collection: "noteSchema"
 });
@@ -192,7 +196,9 @@ io.on('connection', function(socket) {
       'note': note,
       'remainder': obj.remainder,
       'color' : obj.color,
-      'trash' : "false"
+      'trash' : "false",
+      'pin' : "false",
+      'pinColor': "black"
     });
     console.log(noteData);
     noteData.save(function(err,res) {
@@ -255,7 +261,9 @@ app.post('/getdata', function(req, res) {
     note:true,
     remainder:true,
     color: true,
-    trash: true
+    trash: true,
+    pin: true,
+    pinColor: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -494,7 +502,9 @@ app.post('/trashData',function(req,res) {
     note:true,
     remainder:true,
     color: true,
-    trash: true
+    trash: true,
+    pin: true,
+    pinColor: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -518,7 +528,9 @@ app.post('/remainderData',function(req,res) {
     note:true,
     remainder:true,
     color: true,
-    trash: true
+    trash: true,
+    pin: true,
+    pinColor: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -526,6 +538,66 @@ app.post('/remainderData',function(req,res) {
     res.send(data);
   });
 });
+
+
+app.post('/checkPin',function(req,res) {
+  var myquery = {
+    cardId: req.body.noteId
+  };
+  db.collection("noteSchema").find(myquery, {
+    _id: false,
+    cardId: true,
+    userId: true,
+    timeOfCreation: true,
+    note:true,
+    remainder:true,
+    color: true,
+    trash: true,
+    pin: true,
+    pinColor: true
+  }).toArray(function(err, data) {
+    if (err) throw err;
+    console.log("status found is:");
+    console.log(data);
+    res.send(data);
+  });
+});
+
+
+
+
+app.post('/pin',function(req,res) {
+  var myquery = {
+    cardId: req.body.noteId
+  };
+  var newvalue = {
+    pin: req.body.pin
+  };
+  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+    if (err) throw err;
+    console.log("note pinned");
+    // console.log(result);
+    res.end("pinned");
+  })
+});
+
+
+
+app.post('/unpin',function(req,res) {
+  var myquery = {
+    cardId: req.body.noteId
+  };
+  var newvalue = {
+    pin: req.body.pin
+  };
+  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+    if (err) throw err;
+    console.log("note unpinned");
+    // console.log(result);
+    res.end("unpinned");
+  })
+})
+
 
 
 
