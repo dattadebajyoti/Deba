@@ -27,6 +27,8 @@ $(function() {
       console.log("doing"+data[i].color);
       //document.getElementById('messages').innerHTML += data[i].msg;
       // $('#messages').append($('<li>').text(data[i].userName+":"+data[i].message+"                    "+data[i].timeOfMessage));
+
+      // document.getElementById("cardPinned").innerHTML+='<br><br>'
       document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px; position:relative" class="w3-container"  id=divId>\
                          <div id="'+data[i].cardId+'" style="width:25%; background-color:'+data[i].color+'" class="w3-card-4">\
                             <div class="w3-container w3-center">\
@@ -51,7 +53,7 @@ $(function() {
                                            <li class="divider"></li>\
                                            <li><a href="#" onclick="trashNote(\'' +data[i].cardId+ '\')" >Move to trash <span class="glyphicon glyphicon-trash"></span></a></li>\
                                            <li class="divider"></li>\
-                                           <li><a href="#">Archive <i class="material-icons">archive</i></a></li>\
+                                           <li><a href="#" onclick="archiveCard(\'' +data[i].cardId+ '\')">Archive <i class="material-icons">archive</i></a></li>\
                                            <li class="divider"></li>\
                                            <li>Remainder<input id="meeting" type="date" value="2011-01-13"/><span class="glyphicon glyphicon-hand-up" onclick="remainder()"></li>\
                                            <li class="divider"></li>\
@@ -60,7 +62,7 @@ $(function() {
                                      </button>\
                                     </li>\
                                     <li>\
-                                      <a href="#"><i class="material-icons w3-black">archive</i></a>\
+                                      <a href="#" ><i class="material-icons w3-black">archive</i></a>\
                                     </li>\
                                     <li>\
                                       <a href="#" id="editId" onclick="editNote(\'' +data[i].cardId+ '\',\'' +data[i].note+ '\')"><span class="glyphicon glyphicon-edit" style="font-size:20; color:black"></span></a>\
@@ -148,7 +150,7 @@ $(function() {
     //$('<br>')
     //  socket.on('username', function(msg2){
     // $('#cardId').append($('<li>'));
-    document.getElementById("cardId").innerHTML += '<div style="margin-left:250px;" class="w3-container"  id=divId>\
+    document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px;" class="w3-container"  id=divId>\
                        <div id="'+cardUid+'" style="width:25%; background-color:white" class="w3-card-4">\
                           <div class="w3-container w3-center">\
                           <a href="#" onclick="pin(\'' +cardUid+ '\')" id="pinId">\

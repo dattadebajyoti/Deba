@@ -5,6 +5,7 @@
   "name": "",
   "version": "",
   "dependencies": {
+    "elasticsearch": "^13.3.1",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "global": "^4.3.2",
@@ -15,8 +16,10 @@
     "mongoose-validators": "^0.1.0",
     "node-notifier": "^5.1.2",
     "node-schedule": "^1.2.5",
+    "nodemailer": "^4.3.0",
     "promise": "^8.0.1",
     "pug": "^2.0.0-rc.4",
+    "redis": "^2.8.0",
     "uniqid": "^4.1.1",
     "validator": "^9.0.0",
     "validators": "^0.3.1"

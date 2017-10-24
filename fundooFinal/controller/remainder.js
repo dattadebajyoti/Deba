@@ -1,6 +1,6 @@
 function remainder(rem,cardid)
 {
-  console.log(form3.m.value);
+  console.log(form3.n.value);
   console.log("in remainder:"+rem);
   $.ajax({
     url: '/remainder',

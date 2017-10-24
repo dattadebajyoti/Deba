@@ -20,6 +20,20 @@ function submithandler() {
 }
 
 
+function change() {
+  $.ajax({
+    url: '/updating',
+    type: 'POST',
+    data: {
+      userName: form.useremail.value,
+      password: form.password.value
+    },
+    sucess: function(data) {
+      console.log(data);
+    }
+  });
+}
+
 
 //function to login
 function login() {

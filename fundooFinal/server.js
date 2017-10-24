@@ -15,12 +15,33 @@ var io = require('socket.io')(http);
 //setting the port to listen
 var PORT = process.env.PORT || 8080;
 //require pug
+var redis = require('redis');
+var client = redis.createClient({
+  host: 'localhost',
+  port: 6379
+});
 var pug = require('pug');
 //app.use(bodyParser.json());
 var ObjectId = require('mongodb').ObjectID;
 var uniqid = require('uniqid');
 var schedule = require('node-schedule');
 const notifier = require('node-notifier');
+var nodemailer = require("nodemailer");
+
+var smtpTransport = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: "debajyoti95datta@gmail.com",
+        pass: "abcde"
+    }
+});
+smtpTransport.verify(function(error, success) {
+   if (error) {
+        console.log(error);
+   } else {
+        console.log('Server is ready to take our messages');
+   }
+});
 //requiring the sesion module
 
 var session = require('express-session');
@@ -33,7 +54,13 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// app.use(require('./controller'));
+const elasticsearch = require('elasticsearch');
+const esClient = new elasticsearch.Client({
+  host: '127.0.0.1:9200',
+  log: 'error'
+});
+
+
 
 var validators = require("mongoose-validators");
 var mongoose = require('mongoose');
@@ -95,7 +122,12 @@ var cardDataSchema = new Schema({
   pin: {
     type: String
   },
-  pinColor: String
+  pinColor: {
+    type: String
+  },
+  isArchive: {
+    type: String
+  }
 }, {
   collection: "noteSchema"
 });
@@ -121,7 +153,7 @@ app.get('/logBack', function(req, res) {
   })
 });
 
-app.use("/", express.static('./sample/'));
+app.use("/", express.static('./controller/'));
 
 app.post("/inserting", (req, res) => {
   var result = {
@@ -198,7 +230,8 @@ io.on('connection', function(socket) {
       'color' : obj.color,
       'trash' : "false",
       'pin' : "false",
-      'pinColor': "black"
+      'pinColor': "black",
+      'isArchive': "false"
     });
     console.log(noteData);
     noteData.save(function(err,res) {
@@ -263,7 +296,8 @@ app.post('/getdata', function(req, res) {
     color: true,
     trash: true,
     pin: true,
-    pinColor: true
+    pinColor: true,
+    isArchive: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -504,7 +538,8 @@ app.post('/trashData',function(req,res) {
     color: true,
     trash: true,
     pin: true,
-    pinColor: true
+    pinColor: true,
+    isArchive: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -530,7 +565,8 @@ app.post('/remainderData',function(req,res) {
     color: true,
     trash: true,
     pin: true,
-    pinColor: true
+    pinColor: true,
+    isArchive: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -554,7 +590,8 @@ app.post('/checkPin',function(req,res) {
     color: true,
     trash: true,
     pin: true,
-    pinColor: true
+    pinColor: true,
+    isArchive: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("status found is:");
@@ -583,6 +620,7 @@ app.post('/pin',function(req,res) {
 
 
 
+
 app.post('/unpin',function(req,res) {
   var myquery = {
     cardId: req.body.noteId
@@ -600,9 +638,99 @@ app.post('/unpin',function(req,res) {
 
 
 
+app.post('/checkArchive',function(req,res) {
+  var myquery = {
+    cardId: req.body.noteId
+  };
+  db.collection("noteSchema").find(myquery, {
+    _id: false,
+    cardId: true,
+    userId: true,
+    timeOfCreation: true,
+    note:true,
+    remainder:true,
+    color: true,
+    trash: true,
+    pin: true,
+    pinColor: true,
+    isArchive: true
+  }).toArray(function(err, data) {
+    if (err) throw err;
+    console.log("status found is:");
+    console.log(data);
+    res.send(data);
+  });
+});
 
 
 
+
+app.post('/archive',function(req,res) {
+  var myquery = {
+    cardId: req.body.noteId
+  };
+  var newvalue = {
+    isArchive: req.body.isArchive
+  };
+  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+    if (err) throw err;
+    console.log("note archived");
+    // console.log(result);
+    res.end("unarchived");
+  })
+})
+
+
+
+app.post('/forgotPassword',function(req,res) {
+  // console.log(req.body.email);
+    var link= "http://localhost:8080/setPwd";
+    var myObj = {
+      'local.email': req.body.email
+    };
+    console.log(myObj);
+    // db.collection("userRegisterSchema").findOne(myObj, (err, res) => {
+      // if (err) console.log(err);
+      var mailOptions={
+        to : req.body.email,
+        subject : "verify link",
+        text : link
+     }
+     smtpTransport.sendMail(mailOptions, (error, response) => {
+        if(error){
+          console.log(error);
+          // response.end("error");
+        } else {
+            console.log("Message sent: " + response);
+            // response.end("sent");
+          }
+     });
+    // })
+})
+
+
+
+app.get('/setPwd', function(req, res) {
+  res.render('setPassword', {
+    "result": ""
+  })
+});
+
+
+app.post('/updating', function(req, res) {
+  var myquery = {
+    'local.email': req.body.useremail
+  };
+  var newvalue = {
+    'local.password': req.body.password
+  }
+  db.collection("userRegisterSchema").updateOne(myquery, newvalue, function(err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+    db.close();
+    // res.send("updated");
+  });
+});
 
 
 //making to listen at port number 3004
