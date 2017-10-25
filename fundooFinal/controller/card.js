@@ -23,8 +23,10 @@ $(function() {
   }).done(function(data) {
     console.log("ok");
     for (var i = 0; i < data.length; i++) {
+      console.log(data[i]);
       console.log("doing");
       console.log("doing"+data[i].color);
+      console.log("title "+data[i].title);
       //document.getElementById('messages').innerHTML += data[i].msg;
       // $('#messages').append($('<li>').text(data[i].userName+":"+data[i].message+"                    "+data[i].timeOfMessage));
 
@@ -35,7 +37,8 @@ $(function() {
                                <a href="#" onclick="pin(\'' +data[i].cardId+ '\')">\
                                   <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color:'+data[i].pinColor+'; "></span></a>\
                                <h6 id="id">'+data[i].userId+'</h6>\
-                               <h2 id ="message">' + data[i].note + '</h2>\
+                               <h6 id ="message">' + data[i].note + '</h6>\
+                               <a href="'+data[i].note+'">'+data[i].title+'</a>\
                                   <div class="w3-section">\
                                   <style>\
                                     ul#ul1  li {\
@@ -104,6 +107,9 @@ $(function() {
                                          </ul>\
                                       </button>\
                                     </li>\
+                                    <li>\
+                                      <a href="#" onclick="locateCard(\'' +data[i].cardId+ '\')"><span class="glyphicon glyphicon-map-marker"></span</a>\
+                                    </li>\
                                    </ul>\
                                   </div>\
                             </div>\
@@ -150,13 +156,15 @@ $(function() {
     //$('<br>')
     //  socket.on('username', function(msg2){
     // $('#cardId').append($('<li>'));
-    document.getElementById("cardId").innerHTML += '<div style="margin-left:250px;" class="w3-container"  id=divId>\
+    document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px;" class="w3-container"  id=divId>\
                        <div id="'+cardUid+'" style="width:25%; background-color:white" class="w3-card-4">\
                           <div class="w3-container w3-center">\
                           <a href="#" onclick="pin(\'' +cardUid+ '\')" id="pinId">\
                              <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color: black; "></span></a>\
+                             <a href="'+note+'">'+note+'</a>\
                              <h6 id="id">'+userid+'</h6>\
-                             <h2 id ="message">' + note + '</h2>\
+                             <h6 id ="message">' + note + '</h6>\
+                             <a href="'+note+'">'+obj.title+'</a>\
                                 <div class="w3-section">\
                                 <style>\
                                   ul#ul1  li {\
@@ -224,6 +232,9 @@ $(function() {
                                        </li>\
                                        </ul>\
                                     </button>\
+                                  </li>\
+                                  <li>\
+                                    <a href="#" onclick="locateCard(\'' +cardUid+ '\')"><span class="glyphicon glyphicon-map-marker"></span</a>\
                                   </li>\
                                  </ul>\
                                 </div>\

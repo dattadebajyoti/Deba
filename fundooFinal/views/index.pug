@@ -25,6 +25,9 @@ html
             .form-group
               label(for='First Name') email-Id:
               input#email.form-control(type='Email', placeholder='Enter your email', name='email')
+            .form-group
+              label(for='Facebook Name') email-Id:
+              input#fbName.form-control(type='name', placeholder='Enter your Fb name', name='name')
             button#insert.btn.btn-default(type='button') Create Account
         // search
         .col-sm-6(style='background-color:lavender;')
@@ -39,5 +42,6 @@ html
             button.btn.btn-danger(type='button', onclick='login()') Login
             a(href='/auth/google') Login with Google
             button.btn.btn-danger(type='button', onclick='forgotPassword()') Forgot Password
+            a(href='/auth/facebook') Login with facebook
     script(src='form.js')
     script(src='forgotPassword.js')

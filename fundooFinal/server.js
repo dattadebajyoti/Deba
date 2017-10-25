@@ -6,6 +6,10 @@ var bodyParser = require("body-parser");
 var path = require("path");
 //creating an object for express
 var app = express();
+
+var request = require('request');
+var cheerio = require('cheerio');
+var validUrl = require('valid-url');
 //requiring the fs module
 var fs = require('fs');
 //requiring the http module to connect to the server
@@ -89,6 +93,9 @@ var userData = Schema({
       minlength: 4,
       maxlength: 100
     },
+    facebookUser: {
+      type: String
+    }
   },
 
 }, {
@@ -126,6 +133,15 @@ var cardDataSchema = new Schema({
     type: String
   },
   isArchive: {
+    type: String
+  },
+  title: {
+    type: String
+  },
+  latitude: {
+    type: String
+  },
+  longitude: {
     type: String
   }
 }, {
@@ -165,7 +181,8 @@ app.post("/inserting", (req, res) => {
     'local.userName': req.body.userName,
     'local.mobileNo': req.body.mobileNo,
     'local.email': req.body.email,
-    'local.password': req.body.password
+    'local.password': req.body.password,
+    'local.facebookUser': req.body.facebookUser
   });
   myData.save()
     .then(item => {
@@ -219,33 +236,102 @@ io.on('connection', function(socket) {
     var username = obj.username;
     var time = obj.time;
     console.log(note);
-    //-------------------------------
-    var id = uniqid();
-    var noteData = new cardData({
-      'cardId': id,
-      'userId': username,
-      'timeOfCreation': time,
-      'note': note,
-      'remainder': obj.remainder,
-      'color' : obj.color,
-      'trash' : "false",
-      'pin' : "false",
-      'pinColor': "black",
-      'isArchive': "false"
-    });
-    console.log(noteData);
-    noteData.save(function(err,res) {
-      if (err) console.log(err);
-      else {
-        console.log("item saved to the database");
-        console.log(res);
+
+
+
+    var Title, release, rating;
+    var getTitle;
+    var json = { Title : "", release : "", rating : ""};
+    if (validUrl.isUri(note)) {
+        console.log('Looks like an URI');
+
+        request(note, function(error, response, html){
+          if(!error){
+            console.log("error");
+            var $ = cheerio.load(html);
+            $('.title_wrapper').filter(function(){
+              var data = $(this);
+              Title = data.children().first().text().trim();
+              release = data.children().last().children().last().text().trim();
+              getTitle = Title;
+              console.log(JSON.stringify(getTitle));
+              json.title = Title;
+              json.release = release;
+            })
+
+            $('.ratingValue').filter(function(){
+              var data = $(this);
+              rating = data.text().trim();
+
+              json.rating = rating;
+            })
+          }
+          fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
+            console.log('File successfully written! - Check your project directory for the output.json file');
+          })
+          var id = uniqid();
+          var noteData = new cardData({
+            'cardId': id,
+            'userId': username,
+            'timeOfCreation': time,
+            'note': note,
+            'remainder': obj.remainder,
+            'color' : obj.color,
+            'trash' : "false",
+            'pin' : "false",
+            'pinColor': "black",
+            'isArchive': "false",
+            'title': getTitle,
+            'latitude': " ",
+            'longitude': " "
+          });
+          console.log(noteData);
+          noteData.save(function(err,res) {
+            if (err) console.log(err);
+            else {
+              console.log("item saved to the database");
+              console.log(res);
+            }
+          });
+          io.sockets.emit('get message', noteData);
+        })
       }
-    });
-    io.sockets.emit('get message', noteData);
-    console.log("/////////////////////////////this is " + obj.time);
+      else {
+        getTitle = " ";
+        console.log("getTitle is: "+getTitle);
+        var id = uniqid();
+        var noteData = new cardData({
+          'cardId': id,
+          'userId': username,
+          'timeOfCreation': time,
+          'note': note,
+          'remainder': obj.remainder,
+          'color' : obj.color,
+          'trash' : "false",
+          'pin' : "false",
+          'pinColor': "black",
+          'isArchive': "false",
+          'title': getTitle,
+          'latitude': " ",
+          'longitude': " "
+        });
+        console.log(noteData);
+        noteData.save(function(err,res) {
+          if (err) console.log(err);
+          else {
+            console.log("item saved to the database");
+            console.log(res);
+          }
+        });
+        io.sockets.emit('get message', noteData);
+      }
   });
 });
-//
+
+
+
+
+
 //api checkUserLogin
 app.get('/checkUserLogin', function(req, res) {
   console.log("this is checkUserLogin");
@@ -297,7 +383,10 @@ app.post('/getdata', function(req, res) {
     trash: true,
     pin: true,
     pinColor: true,
-    isArchive: true
+    isArchive: true,
+    title: true,
+    latitude: true,
+    longitude: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -412,13 +501,19 @@ app.post('/trash', function(req, res) {
 var express = require('express'),
   passport = require('passport'),
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 var authConfig = {
   "google": {
     'clientID': '421900724315-uhqrjtamo1eh1a4mbljargm21ld1bk2h.apps.googleusercontent.com',
     'clientSecret': 'KOsN0_5DH_e5BvT5UHQIs8xf',
     'callbackURL': 'http://localhost:8080/auth/google/callback'
-  }
+  },
+  "facebookAuth" : {
+    'clientID'      : '126273234757977', //App ID
+    'clientSecret'  : 'd1ce9c4e4bcfe41b8d0f651f7c777c7b', //App Secret
+    'callbackURL'   : 'http://localhost:8080/auth/facebook/callback'
+  },
 };
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -432,6 +527,14 @@ passport.use(new GoogleStrategy(
     return done(null, profile);
   }
 ));
+
+passport.use(new FacebookStrategy(
+  authConfig.facebookAuth,
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+  }
+));
+
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 app.use(logger('dev'));
@@ -490,11 +593,6 @@ app.get('/account', ensureAuthenticated, function(req, res) {
   });
 });
 
-// app.get('/logout', function(req, res) {
-//   req.logout();
-//   res.redirect('/');
-// });
-
 
 // Simple route middleware to ensure user is authenticated.
 function ensureAuthenticated(req, res, next) {
@@ -503,6 +601,58 @@ function ensureAuthenticated(req, res, next) {
   }
   res.redirect('/login');
 }
+
+
+
+//=====================================================================
+//login using facebook
+//
+//
+    // route for showing the profile page
+    app.get('/profile', isLoggedIn, function(req, res) {
+        console.log(req.user.displayName);
+        var setUserName;
+        var query = { 'local.facebookUser': req.user.displayName };
+        userData.find(query, function(err, result) {
+          if (err) console.log(err);
+          console.log(result);
+          console.log("inside mongo in ac:  "+result[0].local.userName);
+          setUserName=result[0].local.userName;
+          console.log("session set is:"+setUserName);
+          req.session.name = setUserName;
+          console.log("session set is:"+req.session.name);
+          res.render('fundooNote', {
+            user: req.user
+          });
+        });
+    });
+    // route for facebook authentication and login
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+    // handle the callback after facebook has authenticated the user
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect : '/profile',
+            failureRedirect : '/'
+        }));
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+
+
+
+
+
+
+
 
 
 
@@ -539,7 +689,10 @@ app.post('/trashData',function(req,res) {
     trash: true,
     pin: true,
     pinColor: true,
-    isArchive: true
+    isArchive: true,
+    title: true,
+    latitude: true,
+    longitude: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -566,7 +719,10 @@ app.post('/remainderData',function(req,res) {
     trash: true,
     pin: true,
     pinColor: true,
-    isArchive: true
+    isArchive: true,
+    title: true,
+    latitude: true,
+    longitude: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("hii");
@@ -591,7 +747,8 @@ app.post('/checkPin',function(req,res) {
     trash: true,
     pin: true,
     pinColor: true,
-    isArchive: true
+    isArchive: true,
+    title: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("status found is:");
@@ -653,7 +810,10 @@ app.post('/checkArchive',function(req,res) {
     trash: true,
     pin: true,
     pinColor: true,
-    isArchive: true
+    isArchive: true,
+    title: true,
+    latitude: true,
+    longitude: true
   }).toArray(function(err, data) {
     if (err) throw err;
     console.log("status found is:");
@@ -731,6 +891,26 @@ app.post('/updating', function(req, res) {
     // res.send("updated");
   });
 });
+
+
+
+//api to set location
+app.post('/locate', function(req,res) {
+  var myquery = {
+    cardId: req.body.noteId
+  };
+  var newvalue = {
+    latitude: req.body.latitude,
+    longitude: req.body.longitude
+  };
+  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+    if (err) throw err;
+    console.log("location updated");
+  })
+});
+
+
+
 
 
 //making to listen at port number 3004

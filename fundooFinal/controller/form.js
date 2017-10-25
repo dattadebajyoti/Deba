@@ -10,7 +10,8 @@ function submithandler() {
       userName: form1.userName.value,
       password: form1.password.value,
       mobileNo: form1.mobileNo.value,
-      email   : form1.email.value
+      email   : form1.email.value,
+      facebookUser: form1.fbName.value
     },
     sucess: function(data) {
       console.log("done");
