@@ -4,8 +4,12 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
     link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+    link(rel='stylesheet', href='https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
+    script(src='http://code.jquery.com/jquery-1.10.2.js')
+    script(src='http://code.jquery.com/ui/1.11.4/jquery-ui.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='http://code.jquery.com/jquery-1.9.1.min.js')
 
     script(src='/socket.io.js')
     script(src='https://code.jquery.com/jquery-1.11.1.js')
@@ -98,7 +102,7 @@ html
           h4 FUNDOONOTES
         li#li1
           form#searchForm
-            input#search(placeholder='Search')
+            input#search(type='text', name='search', placeholder='Search', autocomplete='off')
             button#b1.btn.btn-default(type='button' onclick="elasticSearchNote()")
               span.glyphicon.glyphicon-search
         li#li3
@@ -175,3 +179,6 @@ html
     script(src='pin.js')
     script(src='archive.js')
     script(src='location.js')
+    script(src='autocomplete.js')
+    script(src='shareCard.js')
+    script(src='addLevel.js')

@@ -32,13 +32,14 @@ $(function() {
 
       // document.getElementById("cardPinned").innerHTML+='<br><br>'
       document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px; position:relative" class="w3-container"  id=divId>\
-                         <div id="'+data[i].cardId+'" style="width:25%; background-color:'+data[i].color+'" class="w3-card-4">\
+                         <div id="'+data[i].cardId+'" style="width:30%; background-color:'+data[i].color+'" class="w3-card-4">\
                             <div class="w3-container w3-center">\
                                <a href="#" onclick="pin(\'' +data[i].cardId+ '\')">\
                                   <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color:'+data[i].pinColor+'; "></span></a>\
                                <h6 id="id">'+data[i].userId+'</h6>\
                                <h6 id ="message">' + data[i].note + '</h6>\
                                <a href="'+data[i].note+'">'+data[i].title+'</a>\
+                               <h6>' + data[i].label + '</h6>\
                                   <div class="w3-section">\
                                   <style>\
                                     ul#ul1  li {\
@@ -56,11 +57,9 @@ $(function() {
                                            <li class="divider"></li>\
                                            <li><a href="#" onclick="trashNote(\'' +data[i].cardId+ '\')" >Move to trash <span class="glyphicon glyphicon-trash"></span></a></li>\
                                            <li class="divider"></li>\
-                                           <li><a href="#">Archive <i class="material-icons">archive</i></a></li>\
+                                           <li><a href="#" onclick="addLabel(\'' +data[i].cardId+ '\')">Add label</a></li>\
                                            <li class="divider"></li>\
                                            <li>Remainder<input id="meeting" type="date" value="2011-01-13"/><span class="glyphicon glyphicon-hand-up" onclick="remainder()"></li>\
-                                           <li class="divider"></li>\
-                                           <li><a href="#" onclick="changeColour()">change color <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>\
                                         </ul>\
                                      </button>\
                                     </li>\
@@ -72,7 +71,7 @@ $(function() {
                                     </li>\
                                     <li class="dropdown">\
                                       <button type="button" style="border:none; background:'+data[i].color+'">\
-                                         <a href="#" data-toggle="dropdown" id="editColor" oncick="editColor()"><image src="./images/color.png" style="width:20; height:20px"></a>\
+                                         <a href="#" data-toggle="dropdown" id="editColor" oncick="editColor()"><image src="./images/color.png" style="width:10; height:10px"></a>\
                                          <ul class="dropdown-menu" style="columns:3; -webkit-columns: 3; -moz-columns: 3">\
                                          <li>\
                                             <a href="#" id="blue" onclick="change(\'' +data[i].cardId+ '\',\'' +"blue"+ '\')"><image src="./images/blue.png" style="width:20; height:20px"></a>\
@@ -109,6 +108,9 @@ $(function() {
                                     </li>\
                                     <li>\
                                       <a href="#" onclick="locateCard(\'' +data[i].cardId+ '\')"><span class="glyphicon glyphicon-map-marker"></span</a>\
+                                    </li>\
+                                    <li>\
+                                       <a href="#" onclick="shareCard(\'' +data[i].cardId+ '\')"><span class="glyphicon glyphicon-share-alt"></span></a>\
                                     </li>\
                                    </ul>\
                                   </div>\
@@ -157,7 +159,7 @@ $(function() {
     //  socket.on('username', function(msg2){
     // $('#cardId').append($('<li>'));
     document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px;" class="w3-container"  id=divId>\
-                       <div id="'+cardUid+'" style="width:25%; background-color:white" class="w3-card-4">\
+                       <div id="'+cardUid+'" style="width:28%; background-color:white" class="w3-card-4">\
                           <div class="w3-container w3-center">\
                           <a href="#" onclick="pin(\'' +cardUid+ '\')" id="pinId">\
                              <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color: black; "></span></a>\
@@ -182,7 +184,7 @@ $(function() {
                                          <li class="divider"></li>\
                                          <li><a href="#" onclick="trashNote(\'' +cardUid+ '\')" >Move to trash <span class="glyphicon glyphicon-trash"></span></a></li>\
                                          <li class="divider"></li>\
-                                         <li><a href="#">Archive <i class="material-icons">archive</i></a></li>\
+                                         <li><a href="#" onclick="addLabel(\'' +cardUid+ '\')">Add label</a></li>\
                                          <li class="divider"></li>\
                                          <li>Remainder<input id="meeting" type="date" value="2011-01-13"/><span class="glyphicon glyphicon-hand-up" onclick="remainder()"></li>\
                                          <li class="divider"></li>\
@@ -235,6 +237,12 @@ $(function() {
                                   </li>\
                                   <li>\
                                     <a href="#" onclick="locateCard(\'' +cardUid+ '\')"><span class="glyphicon glyphicon-map-marker"></span</a>\
+                                  </li>\
+                                  <li>\
+                                     <a href="#" onclick="shareCard(\'' +cardUid+ '\')"><image src="./images/addicon.png" style="width:10; height:10px"></a>\
+                                  </li>\
+                                  <li>\
+                                     <a href="#" onclick="shareCard(\'' +cardUid+ '\')"><span class="glyphicon glyphicon-share-alt"></span></a>\
                                   </li>\
                                  </ul>\
                                 </div>\
