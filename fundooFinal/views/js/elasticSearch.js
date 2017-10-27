@@ -1,6 +1,7 @@
 function elasticSearchNote()
 {
   var searchValue=searchForm.search.value;
+  document.getElementById("cardId").innerHTML = '<br>';
   var promise = $.ajax({
       url:'/searchByNote',
       type:'POST',
@@ -16,7 +17,7 @@ function elasticSearchNote()
         {
           console.log(data.details[i].cardId);
           // document.write(data.details[i].note+"    "+"<br>");
-          document.getElementById("cardId").innerHTML = '<br><div style="margin-left:250px; position:relative" class="w3-container"  id=divId>\
+          document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px; position:relative" class="w3-container"  id=divId>\
                              <div id="'+data.details[i].cardId+'" style="width:25%; background-color:'+data.details[i].color+'" class="w3-card-4">\
                                 <div class="w3-container w3-center">\
                                    <a href="#" onclick="pin(\'' +data.details[i].cardId+ '\')">\

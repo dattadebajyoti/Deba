@@ -8,8 +8,12 @@ var path = require("path");
 var app = express();
 
 
-// var card=require('./models/user.js')
-// card.fun()
+//requiring the user and card schema
+var userModel = require("./model/userModelSchema");
+var cardModel = require("./model/cardModelSchema");
+//
+
+
 var request = require('request');
 var cheerio = require('cheerio');
 var validUrl = require('valid-url');
@@ -39,7 +43,7 @@ var smtpTransport = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: "debajyoti95datta@gmail.com",
-        pass: "ai3333###"
+        pass: "abcd"
     }
 });
 smtpTransport.verify(function(error, success) {
@@ -75,92 +79,11 @@ mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 mongoose.connect("mongodb://localhost:27017/mydb");
 var db = mongoose.connection;
-var userData = Schema({
-  local: {
-    userName: {
-      type: String,
-      minlength: 2,
-      maxlength: 30,
-      validate: validators.isAlpha()
-    },
-    mobileNo: {
-      type: Number,
-      min: 10
-    },
-    email: {
-      type: String,
-      validate: validators.isEmail()
-    },
-    password: {
-      type: String,
-      minlength: 4,
-      maxlength: 100
-    },
-    facebookUser: {
-      type: String
-    }
-  },
-
-}, {
-  collection: "userRegisterSchema"
-});
-//model creation
-var userData = mongoose.model('userRegisterSchema', userData);
-
-var cardDataSchema = new Schema({
-  cardId: {
-    type: String
-  },
-  userId: {
-    type: String
-  },
-  timeOfCreation: {
-    type: String
-  },
-  note: {
-    type: String
-  },
-  remainder: {
-    type: String
-  },
-  color: {
-    type: String
-  },
-  trash: {
-    type: String
-  },
-  pin: {
-    type: String
-  },
-  pinColor: {
-    type: String
-  },
-  isArchive: {
-    type: String
-  },
-  title: {
-    type: String
-  },
-  latitude: {
-    type: String
-  },
-  longitude: {
-    type: String
-  },
-  collaborate: {
-    type: String
-  },
-  label: {
-    type: String
-  }
-}, {
-  collection: "noteSchema"
-});
-//model creation
-var cardData = mongoose.model(cardData, cardDataSchema,'noteSchema');
 
 
-app.set('views', path.join(__dirname, 'views'));
+
+app.set('views','./views/pug');
+// app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.get('/', function(req, res) {
   res.render('index', {
@@ -178,7 +101,10 @@ app.get('/logBack', function(req, res) {
   })
 });
 
-app.use("/", express.static('./controller/'));
+app.use("/",express.static('./views'));
+// app.use("/",express.static('./js'));
+// app.use("/",express.static('./views/pug'));
+// app.use("/",express.static('./images/js'));
 
 app.post("/inserting", (req, res) => {
   var result = {
@@ -186,7 +112,7 @@ app.post("/inserting", (req, res) => {
     message: "Successfully added"
   };
   res.setHeader('Content-Type', 'application/json');
-  var myData = new userData({
+  var myData = new userModel({
     'local.userName': req.body.userName,
     'local.mobileNo': req.body.mobileNo,
     'local.email': req.body.email,
@@ -251,6 +177,10 @@ io.on('connection', function(socket) {
     var Title, release, rating;
     var getTitle;
     var json = { Title : "", release : "", rating : ""};
+
+    var text=obj.msg;
+
+
     if (validUrl.isUri(note)) {
         console.log('Looks like an URI');
 
@@ -279,7 +209,7 @@ io.on('connection', function(socket) {
             console.log('File successfully written! - Check your project directory for the output.json file');
           })
           var id = uniqid();
-          var noteData = new cardData({
+          var noteData = new cardModel({
             'cardId': id,
             'userId': username,
             'timeOfCreation': time,
@@ -311,7 +241,7 @@ io.on('connection', function(socket) {
         getTitle = " ";
         console.log("getTitle is: "+getTitle);
         var id = uniqid();
-        var noteData = new cardData({
+        var noteData = new cardModel({
           'cardId': id,
           'userId': username,
           'timeOfCreation': time,
@@ -417,7 +347,7 @@ app.post('/getdata', function(req, res) {
 app.post('/deleteCard', function(req, res) {
   console.log("ok+++++++++++");
   console.log("This is: " + req.body.deleteNote);
-  cardData.remove({cardId: req.body.deleteNote}, function(err, res) {
+  cardModel.remove({cardId: req.body.deleteNote}, function(err, res) {
     if (err) throw err;
     console.log(res);
     console.log("Note Deleted");
@@ -444,7 +374,7 @@ var date = new Date(req.body.remainder);
 var myquery={
   cardId: req.body.noteId
 }
-cardData.findOneAndUpdate(myquery, {remainder: date},{upsert:true}, function(err, res) {
+cardModel.findOneAndUpdate(myquery, {remainder: date},{upsert:true}, function(err, res) {
   if (err) throw err;
   console.log("note updated");
 })
@@ -494,7 +424,7 @@ app.post('/trash', function(req, res) {
   console.log(x);
   var trashDate = new Date(req.body.year, req.body.month, req.body.date, req.body.hours, req.body.minute, req.body.second);
   console.log(trashDate);
-  cardData.findOneAndUpdate({cardId: req.body.trashnote}, {trash: trashDate}, {upsert:true}, function(err, result) {
+  cardModel.findOneAndUpdate({cardId: req.body.trashnote}, {trash: trashDate}, {upsert:true}, function(err, result) {
     if (err) throw err;
     console.log("color updated");
   })
@@ -503,7 +433,7 @@ app.post('/trash', function(req, res) {
       cardId: req.body.trashnote
     };
     console.log(trashObj);
-    cardData.remove(trashObj, function(err, result) {
+    cardModel.remove(trashObj, function(err, result) {
       if (err) console.log(err);
       console.log("Note Deleted");
       console.log(result.deletedCount);
@@ -596,7 +526,7 @@ app.get('/account', ensureAuthenticated, function(req, res) {
   // setUserName=req.user.emails[0].value;
   var setUserName;
   var query = { 'local.email': req.user.emails[0].value };
-  userData.find(query, function(err, result) {
+  userModel.find(query, function(err, result) {
     if (err) console.log(err);
     console.log(result);
     console.log("inside mongo in ac:  "+result[0].local.userName);
@@ -630,7 +560,7 @@ function ensureAuthenticated(req, res, next) {
         console.log(req.user.displayName);
         var setUserName;
         var query = { 'local.facebookUser': req.user.displayName };
-        userData.find(query, function(err, result) {
+        userModel.find(query, function(err, result) {
           if (err) console.log(err);
           console.log(result);
           console.log("inside mongo in ac:  "+result[0].local.userName);
@@ -683,7 +613,7 @@ app.post('/changeColour',function(req,res) {
   var newvalue = {
     color: req.body.color
   };
-  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+  cardModel.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
     if (err) throw err;
     console.log("color updated");
   })
@@ -790,7 +720,7 @@ app.post('/pin',function(req,res) {
   var newvalue = {
     pin: req.body.pin
   };
-  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+  cardModel.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
     if (err) throw err;
     console.log("note pinned");
     // console.log(result);
@@ -808,7 +738,7 @@ app.post('/unpin',function(req,res) {
   var newvalue = {
     pin: req.body.pin
   };
-  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+  cardModel.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
     if (err) throw err;
     console.log("note unpinned");
     // console.log(result);
@@ -857,7 +787,7 @@ app.post('/archive',function(req,res) {
   var newvalue = {
     isArchive: req.body.isArchive
   };
-  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+  cardModel.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
     if (err) throw err;
     console.log("note archived");
     // console.log(result);
@@ -928,7 +858,7 @@ app.post('/locate', function(req,res) {
     latitude: req.body.latitude,
     longitude: req.body.longitude
   };
-  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+  cardModel.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
     if (err) throw err;
     console.log("location updated");
   })
@@ -1025,7 +955,7 @@ app.post('/share', function(req,res) {
   var newvalue = {
     collaborate: req.body.userId
   };
-  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+  cardModel.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
     if (err) throw err;
     console.log("collaborated");
   })
@@ -1041,7 +971,7 @@ app.post('/level', function(req,res) {
   var newvalue = {
     label: req.body.label
   };
-  cardData.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
+  cardModel.findOneAndUpdate(myquery, newvalue, {upsert:true}, function(err, result) {
     if (err) console.log(err);
     console.log(result);
     console.log("card labeled");

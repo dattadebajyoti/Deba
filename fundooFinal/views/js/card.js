@@ -1,5 +1,5 @@
 var currentdate = new Date();
-
+var userInput;
 function sessionStart() {
   var name = session();
   //  .done(function (data) {
@@ -29,7 +29,20 @@ $(function() {
       console.log("title "+data[i].title);
       //document.getElementById('messages').innerHTML += data[i].msg;
       // $('#messages').append($('<li>').text(data[i].userName+":"+data[i].message+"                    "+data[i].timeOfMessage));
-
+      var urlPattern=/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/ig;
+      var url = (data[i].note).match(urlPattern);
+      if(url != null)
+  	  {
+        console.log("Its an url");
+        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  	    var text=(data[i].note).replace(exp, "<a href='$1'>$1</a>");
+  	    var urlWithText =/(^|[^\/])(www\.[\S]+(\b|$))/gim;
+  	    data[i].note=text.replace(urlWithText, '$1<a target="_blank" href="http://$2">$2</a>');
+        console.log("url found is: "+userInput);
+      }
+      else{
+        console.log("not an url")
+      }
       // document.getElementById("cardPinned").innerHTML+='<br><br>'
       document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px; position:relative" class="w3-container"  id=divId>\
                          <div id="'+data[i].cardId+'" style="width:30%; background-color:'+data[i].color+'" class="w3-card-4">\
@@ -53,7 +66,7 @@ $(function() {
                                         <ul class="dropdown-menu">\
                                            <li><a href="#" id="editId" onclick="editNote(\'' +data[i].cardId+ '\',\'' +data[i].note+ '\')">Edit<span class="glyphicon glyphicon-edit"></span></a></li>\
                                            <li class="divider"></li>\
-                                           <li><a href="#" onclick="deleteNote(\'' +data[i].cardId+ '\')">Delete forever <span class="glyphicon glyphicon-trash"></span></a></li>\
+                                           <li><a href="#" id="'+data[i].cardId+'" onclick="deleteNote(\'' +data[i].cardId+ '\')">Delete forever <span class="glyphicon glyphicon-trash"></span></a></li>\
                                            <li class="divider"></li>\
                                            <li><a href="#" onclick="trashNote(\'' +data[i].cardId+ '\')" >Move to trash <span class="glyphicon glyphicon-trash"></span></a></li>\
                                            <li class="divider"></li>\
@@ -110,7 +123,7 @@ $(function() {
                                       <a href="#" onclick="locateCard(\'' +data[i].cardId+ '\')"><span class="glyphicon glyphicon-map-marker"></span</a>\
                                     </li>\
                                     <li>\
-                                       <a href="#" onclick="shareCard(\'' +data[i].cardId+ '\')"><span class="glyphicon glyphicon-share-alt"></span></a>\
+                                       <a href="#" onclick="shareCard(\'' +data[i].cardId+ '\',\'' +data[i].userId+ '\',\'' +data[i].collaborate+ '\')"><span class="glyphicon glyphicon-share-alt"></span></a>\
                                     </li>\
                                    </ul>\
                                   </div>\
@@ -155,18 +168,36 @@ $(function() {
     console.log(userid);
 
     remainder($('#n').val(),cardUid);
+
+    var urlPattern=/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/ig;
+    var url = note.match(urlPattern);
+    if(url != null)
+	  {
+      console.log("Its an url");
+      var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	    var text=note.replace(exp, "<a href='$1'>$1</a>");
+	    var urlWithText =/(^|[^\/])(www\.[\S]+(\b|$))/gim;
+	    userInput=text.replace(urlWithText, '$1<a target="_blank" href="http://$2">$2</a>');
+      console.log("url found is: "+userInput);
+    }
+    else{
+      userInput=obj.note;
+      console.log("not an url")
+    }
+
+
     //$('<br>')
     //  socket.on('username', function(msg2){
     // $('#cardId').append($('<li>'));
     document.getElementById("cardId").innerHTML += '<br><div style="margin-left:250px;" class="w3-container"  id=divId>\
-                       <div id="'+cardUid+'" style="width:28%; background-color:white" class="w3-card-4">\
+                       <div id="'+cardUid+'" style="width:30%; background-color:white" class="w3-card-4">\
                           <div class="w3-container w3-center">\
                           <a href="#" onclick="pin(\'' +cardUid+ '\')" id="pinId">\
                              <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color: black; "></span></a>\
-                             <a href="'+note+'">'+note+'</a>\
                              <h6 id="id">'+userid+'</h6>\
-                             <h6 id ="message">' + note + '</h6>\
+                             <h6 id ="message">' + userInput + '</h6>\
                              <a href="'+note+'">'+obj.title+'</a>\
+                             <h6></h6>\
                                 <div class="w3-section">\
                                 <style>\
                                   ul#ul1  li {\
@@ -180,7 +211,7 @@ $(function() {
                                       <ul class="dropdown-menu">\
                                          <li><a href="#" id="editId" onclick="editNote(\'' +cardUid+ '\',\'' +note+ '\')">Edit<span class="glyphicon glyphicon-edit"></span></a></li>\
                                          <li class="divider"></li>\
-                                         <li><a href="#" onclick="deleteNote(\'' +cardUid+ '\')">Delete forever <span class="glyphicon glyphicon-trash"></span></a></li>\
+                                         <li><a href="#" id="cardUid" onclick="deleteNote(\'' +cardUid+ '\')">Delete forever <span class="glyphicon glyphicon-trash"></span></a></li>\
                                          <li class="divider"></li>\
                                          <li><a href="#" onclick="trashNote(\'' +cardUid+ '\')" >Move to trash <span class="glyphicon glyphicon-trash"></span></a></li>\
                                          <li class="divider"></li>\
@@ -242,7 +273,7 @@ $(function() {
                                      <a href="#" onclick="shareCard(\'' +cardUid+ '\')"><image src="./images/addicon.png" style="width:10; height:10px"></a>\
                                   </li>\
                                   <li>\
-                                     <a href="#" onclick="shareCard(\'' +cardUid+ '\')"><span class="glyphicon glyphicon-share-alt"></span></a>\
+                                     <a href="#" onclick="shareCard(\'' +cardUid+ '\',\'' +userid+ '\',\'' +obj.collaborate+ '\')"><span class="glyphicon glyphicon-share-alt"></span></a>\
                                   </li>\
                                  </ul>\
                                 </div>\
