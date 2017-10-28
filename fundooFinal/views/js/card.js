@@ -51,7 +51,7 @@ $(function() {
                                   <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color:'+data[i].pinColor+'; "></span></a>\
                                <h6 id="id">'+data[i].userId+'</h6>\
                                <h6 id ="message">' + data[i].note + '</h6>\
-                               <a href="'+data[i].note+'">'+data[i].title+'</a>\
+                               <a href="'+data[i].note+'" target="_blank">'+data[i].title+'</a>\
                                <h6>' + data[i].label + '</h6>\
                                   <div class="w3-section">\
                                   <style>\
@@ -125,6 +125,28 @@ $(function() {
                                     <li>\
                                        <a href="#" onclick="shareCard(\'' +data[i].cardId+ '\',\'' +data[i].userId+ '\',\'' +data[i].collaborate+ '\')"><span class="glyphicon glyphicon-share-alt"></span></a>\
                                     </li>\
+                                    <li>\
+                                       <a href="#" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-picture"></span></a>\
+                                          <div class="modal fade" id="myModal" role="dialog">\
+                                             <div class="modal-dialog">\
+                                                <div class="modal-content">\
+                                                   <div class="modal-header">\
+                                                      <button type="button" class="close" data-dismiss="modal">&times;</button>\
+                                                         <h4 class="modal-title">Choose files to upload</h4>\
+                                                   </div>\
+                                                   <div class="modal-body">\
+                                                      <form id="uploadForm" enctype="multipart/form-data" action="/api/photo" method="post">\
+                                                         <input id="image" type="file" name="userPhoto" accept="image/*">\
+                                                         <button value="Upload Image" onclick="uploadImage(\'' +data[i].cardId+ '\')">Submit</button>\
+                                                      </form>\
+                                                </div>\
+                                                <div class="modal-footer">\
+                                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
+                                                </div>\
+                                              </div>\
+                                            </div>\
+                                          </div>\
+                                    </li>\
                                    </ul>\
                                   </div>\
                             </div>\
@@ -196,7 +218,7 @@ $(function() {
                              <span class="glyphicon glyphicon-pushpin" style="margin-top:0px; margin-right:-230px; color: black; "></span></a>\
                              <h6 id="id">'+userid+'</h6>\
                              <h6 id ="message">' + userInput + '</h6>\
-                             <a href="'+note+'">'+obj.title+'</a>\
+                             <a href="'+note+'" target="_blank">'+obj.title+'</a>\
                              <h6></h6>\
                                 <div class="w3-section">\
                                 <style>\
@@ -274,6 +296,28 @@ $(function() {
                                   </li>\
                                   <li>\
                                      <a href="#" onclick="shareCard(\'' +cardUid+ '\',\'' +userid+ '\',\'' +obj.collaborate+ '\')"><span class="glyphicon glyphicon-share-alt"></span></a>\
+                                  </li>\
+                                  <li>\
+                                     <a href="#" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-picture"></span></a>\
+                                        <div class="modal fade" id="myModal" role="dialog">\
+                                           <div class="modal-dialog">\
+                                              <div class="modal-content">\
+                                                 <div class="modal-header">\
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>\
+                                                       <h4 class="modal-title">Choose files to upload</h4>\
+                                                 </div>\
+                                                 <div class="modal-body">\
+                                                    <form id="imageUpload">\
+                                                       <input id="image" type="file" name="pic" accept="image/*">\
+                                                       <button onclick="uploadImage(\'' +cardUid+ '\')">Submit</button>\
+                                                    </form>\
+                                              </div>\
+                                              <div class="modal-footer">\
+                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
+                                              </div>\
+                                            </div>\
+                                          </div>\
+                                        </div>\
                                   </li>\
                                  </ul>\
                                 </div>\

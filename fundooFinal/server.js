@@ -12,6 +12,31 @@ var app = express();
 var userModel = require("./model/userModelSchema");
 var cardModel = require("./model/cardModelSchema");
 //
+var fs = require('fs-extra');
+var multer	=	require('multer');
+// var storage	=	multer.diskStorage({
+//   destination: function (req, file, callback) {
+//     console.log("in destination "+file);
+//     var path = './imageUploads';
+//     fs.mkdirSync(path);
+//     callback(null, path);
+//   },
+//   filename:(req, file, callback) => {
+//     console.log("field is"+file.field);
+//     callback(null, file.fieldname + '-' + Date.now());
+//   }
+// });
+// var upload = multer({ storage : storage}).single('userPhoto');
+var storage	=	multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+
 
 
 var request = require('request');
@@ -977,6 +1002,20 @@ app.post('/level', function(req,res) {
     console.log("card labeled");
   })
 })
+
+
+//api to upload images
+app.post('/api/photo',function(req,res){
+  console.log("in upload images");
+	upload(req,res,function(err,result) {
+		if(err) {
+      console.log(err);
+			return res.end("Error uploading file.");
+		}
+    console.log(result);
+		res.end("File is uploaded");
+	});
+});
 
 
 
