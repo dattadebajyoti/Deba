@@ -3,7 +3,7 @@ function forgotPassword()
   var email = prompt("enter your email");
   console.log(email);
   $.ajax({
-    url: '/forgotPassword',
+    url: '/userApi/forgotPassword',
     type: 'POST',
     data: {
       email: email

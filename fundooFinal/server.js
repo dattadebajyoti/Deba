@@ -9,24 +9,11 @@ var app = express();
 
 
 //requiring the user and card schema
-var userModel = require("./model/userModelSchema");
+// var userModel = require("./model/userModelSchema");
 var cardModel = require("./model/cardModelSchema");
 //
 var fs = require('fs-extra');
 var multer	=	require('multer');
-// var storage	=	multer.diskStorage({
-//   destination: function (req, file, callback) {
-//     console.log("in destination "+file);
-//     var path = './imageUploads';
-//     fs.mkdirSync(path);
-//     callback(null, path);
-//   },
-//   filename:(req, file, callback) => {
-//     console.log("field is"+file.field);
-//     callback(null, file.fieldname + '-' + Date.now());
-//   }
-// });
-// var upload = multer({ storage : storage}).single('userPhoto');
 var storage	=	multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, './uploads');
@@ -64,21 +51,8 @@ var schedule = require('node-schedule');
 const notifier = require('node-notifier');
 var nodemailer = require("nodemailer");
 
-var smtpTransport = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: "debajyoti95datta@gmail.com",
-        pass: "abcd"
-    }
-});
-smtpTransport.verify(function(error, success) {
-   if (error) {
-        console.log(error);
-   } else {
-        console.log('Server is ready to take our messages');
-   }
-});
-//requiring the sesion module
+
+//requiring the session module
 
 var session = require('express-session');
 app.use(session({
@@ -105,7 +79,8 @@ var Schema = mongoose.Schema;
 mongoose.connect("mongodb://localhost:27017/mydb");
 var db = mongoose.connection;
 
-
+// var routes = require('./api/routes/useApiRoutes'); //importing route
+// routes(app); //register the route
 
 app.set('views','./views/pug');
 // app.set('views', path.join(__dirname, 'views'));
@@ -131,64 +106,12 @@ app.use("/",express.static('./views'));
 // app.use("/",express.static('./views/pug'));
 // app.use("/",express.static('./images/js'));
 
-app.post("/inserting", (req, res) => {
-  var result = {
-    status: true,
-    message: "Successfully added"
-  };
-  res.setHeader('Content-Type', 'application/json');
-  var myData = new userModel({
-    'local.userName': req.body.userName,
-    'local.mobileNo': req.body.mobileNo,
-    'local.email': req.body.email,
-    'local.password': req.body.password,
-    'local.facebookUser': req.body.facebookUser
-  });
-  myData.save()
-    .then(item => {
-      console.log("data saved to databse");
-      res.send(result);
-    })
-    .catch(err => {
-      res.status(400).send("unable to save to database");
-    });
-});
-
-
-app.post('/signingin', function(req, res) {
-  res.setHeader("Content-Type", "application/json");
-  var result = {
-    status: true,
-    message: "Successfully added"
-  };
-  console.log(req.body.userName);
-  db.collection("userRegisterSchema").find({
-    'local.userName': req.body.userName,
-    'local.password': req.body.password
-  }).toArray(function(err, data) {
-    if (!err)
-      console.log(data.length)
-    if (data.length != 0) {
-      console.log("ok");
-      req.session.name = req.body.userName;
-      user = req.body.name;
-      console.log("hiii");
-      res.json({
-        data: "false"
-      });
-    } else {
-      res.json({
-        data: "true"
-      });
-    }
-  });
-});
+var userRoutes = require('./api/userApi/userRoutes/userRoutes'); //importing route
+app.use('/userApi', userRoutes);//register the route
 
 
 
-
-
-// var url = "mongodb://localhost:27017/mydb";
+// defining the socket functions to listen the data sent from http
 io.on('connection', function(socket) {
   socket.on('chat message', function(obj) {
     // var msg = obj.msg;
@@ -298,41 +221,7 @@ io.on('connection', function(socket) {
 
 
 
-
-
-//api checkUserLogin
-app.get('/checkUserLogin', function(req, res) {
-  console.log("this is checkUserLogin");
-  var session = req.session;
-  console.log(session.name);
-  if (session.name) {
-    console.log("++++++++++ :"+session.name);
-    res.json({
-      name: session.name,
-      isLogin: true
-    });
-  } else {
-    res.json({
-      name: session.name,
-      isLogin: false
-    });
-  }
-});
-// //
-//api to end the session
-app.get('/endSession', function(req, res) {
-  console.log("this is logout");
-  req.session.destroy(function() {
-    res.json({
-      data: "false"
-    })
-    console.log("session ended Successfully");
-  })
-});
-//
-//
-//
-//api to get the user details and chat history fromt the database
+//api to get the user details and chat history from the database
 app.post('/getdata', function(req, res) {
   // console.log(url);
   // MongoClient.connect(url, function(err, db) {
@@ -819,58 +708,6 @@ app.post('/archive',function(req,res) {
     res.end("unarchived");
   })
 })
-
-
-
-app.post('/forgotPassword',function(req,res) {
-  // console.log(req.body.email);
-    var link= "http://localhost:8080/setPwd";
-    var myObj = {
-      'local.email': req.body.email
-    };
-    console.log(myObj);
-    // db.collection("userRegisterSchema").findOne(myObj, (err, res) => {
-      // if (err) console.log(err);
-      var mailOptions={
-        to : req.body.email,
-        subject : "verify link",
-        text : link
-     }
-     smtpTransport.sendMail(mailOptions, (error, response) => {
-        if(error){
-          console.log(error);
-          // response.end("error");
-        } else {
-            console.log("Message sent: " + response);
-            // response.end("sent");
-          }
-     });
-    // })
-})
-
-
-
-app.get('/setPwd', function(req, res) {
-  res.render('setPassword', {
-    "result": ""
-  })
-});
-
-
-app.post('/updating', function(req, res) {
-  var myquery = {
-    'local.email': req.body.useremail
-  };
-  var newvalue = {
-    'local.password': req.body.password
-  }
-  db.collection("userRegisterSchema").updateOne(myquery, newvalue, function(err, res) {
-    if (err) throw err;
-    console.log("1 document updated");
-    db.close();
-    // res.send("updated");
-  });
-});
 
 
 
