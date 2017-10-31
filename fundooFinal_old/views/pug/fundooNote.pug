@@ -1,0 +1,185 @@
+html
+  head
+    link(rel='stylesheet', href='https://www.w3schools.com/w3css/4/w3.css')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+    link(rel='stylesheet', href='https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
+    script(src='http://code.jquery.com/jquery-1.10.2.js')
+    script(src='http://code.jquery.com/ui/1.11.4/jquery-ui.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='http://code.jquery.com/jquery-1.9.1.min.js')
+
+    script(src='./js/socket.io.js')
+    script(src='https://code.jquery.com/jquery-1.11.1.js')
+    // 
+    style.
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      #bodyBackground { background: #f1f1f1; }
+      #form3 { background: white; padding: 3px; position: fixed;left:45%; bottom: 550; width: 50%;}
+      #searchForm { background:rgb(255, 187, 0); padding: 0px; width:300%; margin-top:2px;}
+      #m {  border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      #n {  border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      #b { width: 9%; background: white; border: none; padding: 10px;}
+      #search { border: 0; width:90%; height:5.5%; background:rgb(255, 187, 0) }
+      #b1 { background: rgb(255, 187, 0); border: none; }
+      #b2 { background: rgb(255, 187, 0); border: none; margin-top:7px; }
+      /*#messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }*/
+      /**/
+      
+      #ul1 {
+       list-style-type: none;
+       margin: 0;
+       padding: 0;
+       overflow: hidden;
+       background-color: rgb(255, 187, 0);
+     }
+
+        #li1 {
+         float: left;
+         margin-left:5%;
+         display: inline-block;
+        }
+        
+        #li3 {
+         float: left;
+         margin-left:50%;
+         margin-top:10px;
+         display: inline-block;
+        }
+        
+        #li2 {
+          float: left;
+          margin-left:1%;
+          align:center;
+          display: inline-block;
+        }
+        
+        #li1 form {
+          display: inline-block;
+          margin-left:30%;
+          top: 200px;
+        }
+        /*#li1 input {
+          top: 20px;
+        }*/
+        
+        /*#a a {
+         display: inline-block;
+         color: black;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+         }*/
+       
+        #li1 input:hover {
+         background-color: white;
+         }
+        
+        #li h4 {
+          display: inline-block;
+          margin-right: 15%;
+        }
+        
+        #li form {
+          margin-top: 6.5px;
+        }
+       
+  body#bodyBackground(onload='sessionStart()')
+
+    //- .w3-bar.w3-light-grey.w3-border.w3-padding
+    //-   h4.w3-bar-item.w3-button.w3-mobile Home
+    //-   input.w3-bar-item.w3-input.w3-white.w3-mobile(float='center', type='text', placeholder='Search..')
+    //-   button.w3-bar-item.w3-button.w3-light-blue.w3-mobile Go
+    div
+      ul#ul1
+        li#li2
+          button#b2.w3-bar-item.w3-large(onclick='w3_open()') ☰
+        li#li1
+          h4 FUNDOONOTES
+        li#li1
+          form#searchForm
+            input#search(type='text', name='search', placeholder='Search', autocomplete='off')
+            button#b1.btn.btn-default(type='button' onclick="elasticSearchNote()")
+              span.glyphicon.glyphicon-search
+        li#li3
+          span.glyphicon.glyphicon-globe
+          //- i.fa.fa-bell(style='font-size:24px')
+    ul#trash            
+    #mySidebar.w3-sidebar.w3-light-grey.w3-bar-block.w3-border-right(style='display:block; border:none;margin:0; overflow: scroll; position: fixed')
+      ul
+        li(style='margin-top:10px')
+          button(style='border:none; background-color:#f1f1f1; font-size:25px; color:#585858' onclick="window.location.reload()").span.glyphicon.glyphicon-home Home
+        li(style='margin-top:25px')
+          button(style='border:none; background-color:#f1f1f1; font-size:25px; color:#585858' onclick="showTrash()").span.glyphicon.glyphicon-trash TRASH
+        li(style='margin-top:25px')
+          button(style='border:none; background-color:#f1f1f1;font-size:25px;color:#585858' onclick="showArchive()").i.material-icons archive ARCHIVED
+        li(style='margin-top:25px')
+          button(style='border:none; background-color:#f1f1f1;font-size:25px;color:#585858' onclick="showRemainder()").a.span.glyphicon.glyphicon-hand-up REMAINDER
+        //-  a.span.glyphicon.glyphicon-trash Trash
+        //-  a.i.material-icons Archive
+        //-  a.span.glyphicon.glyphicon-hand-up Remainder
+
+
+
+
+
+    //- div(style='width: 100%; height: 7%; background-color: rgb(255, 187, 0);display:inline-block')
+    //-   h2(style='align:left; vertical-align:middle; display:inline-block') FundooNotes
+    //-      form(action='',style='display:inline-block')
+    //-        input#searchNote(placeholder="Search", style='align:center; width:70%; height:60%; top:50%;display:inline-block')
+    //-        button.btn.btn-default(type='button')
+    //-          span.glyphicon.glyphicon.glyphicon-search
+    #status
+    div
+      form#form3(action='' )
+        input#m(autocomplete='off',placeholder='create note')
+        //- input#n(autocomplete='off',placeholder='set remainder')
+        input#n(placeholder="Set Remainder", type='datetime-local')
+        button#b Create
+
+
+
+    button.btn.btn-danger(type='button', onclick='logout()', style='margin-left:95%; margin-top:0%') Logout
+    
+    ul#cardId
+    script.
+      function w3_open() {
+        if(document.getElementById("mySidebar").style.display == "none")
+           { 
+             document.getElementById("mySidebar").style.display = "block";
+             /*document.getElementById("cardId").style.left = "0px";
+             document.getElementById("divId").style.left = "0px";*/
+           }
+        else
+        if(document.getElementById("mySidebar").style.display = "none")
+           {
+             w3_close();
+           }
+           
+      }
+      function w3_close() {
+      document.getElementById("mySidebar").style.display = "none";
+      /*document.getElementById("cardId").style.left = "150px";
+      document.getElementById("divId").style.right = "150px";*/
+      }
+    script(src='../js/form.js')
+    script(src='../js/card.js')
+    script(src='../js/deleteNote.js')
+    script(src='../js/editNote.js')
+    script(src='../js/remainder.js')
+    script(src='../js/trash.js')
+    script(src='../js/changeColor.js')
+    script(src='../js/elasticSearch.js')
+    script(src='../js/showTrash.js')
+    script(src='../js/showRemainder.js')
+    script(src='../js/pin.js')
+    script(src='../js/archive.js')
+    script(src='../js/location.js')
+    script(src='../js/autocomplete.js')
+    script(src='../js/shareCard.js')
+    script(src='../js/addLevel.js')
+    script(src='../js/uploadImage.js')

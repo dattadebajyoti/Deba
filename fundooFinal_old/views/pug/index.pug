@@ -1,0 +1,47 @@
+html
+  head
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='http://code.jquery.com/jquery-1.9.1.min.js')
+  body
+    .container-fluid
+      h2.text-center LOGIN PAGE
+      p.text-center Please select what you want
+      .row
+        .col-sm-6(style='background-color:lavender;')
+          // add to address book
+          h5 Sign up
+          form#form1
+            .form-group
+              label(for='First Name') Name:
+              input#userName.form-control(type='First Name', placeholder='create your username', name='Name')
+            .form-group
+              label(for='lname') Password:
+              input#password.form-control(type='password', placeholder='create your password', name='password')
+            .form-group
+              label(for='First Name') Mobile NUmber:
+              input#mobileNo.form-control(type='Mobile Number', placeholder='Enter your mobile Number', name='mobNo')
+            .form-group
+              label(for='First Name') email-Id:
+              input#email.form-control(type='Email', placeholder='Enter your email', name='email')
+            .form-group
+              label(for='Facebook Name') email-Id:
+              input#fbName.form-control(type='name', placeholder='Enter your Fb name', name='name')
+            button#insert.btn.btn-default(type='button') Create Account
+        // search
+        .col-sm-6(style='background-color:lavender;')
+          h5 Sign in
+          form#form2
+            .form-group
+              label(for='First Name') Name:
+              input#username.form-control(type='First Name', placeholder='Enter your name', name='Name')
+            .form-group
+              label(for='lname') Password:
+              input#password.form-control(type='password', placeholder='Enter your password', name='password')
+            button.btn.btn-danger(type='button', onclick='login()') Login
+            a(href='/auth/google') Login with Google
+            button.btn.btn-danger(type='button', onclick='forgotPassword()') Forgot Password
+            a(href='/auth/facebook') Login with facebook
+    script(src='./js/form.js')
+    script(src='./js/forgotPassword.js')
