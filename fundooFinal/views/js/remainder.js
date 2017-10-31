@@ -3,7 +3,7 @@ function remainder(rem,cardid)
   console.log(form3.n.value);
   console.log("in remainder:"+rem);
   $.ajax({
-    url: '/remainder',
+    url: '/cardApi/remainder',
     type: 'POST',
     data: {
       noteId: cardid,

@@ -3,7 +3,7 @@ function elasticSearchNote()
   var searchValue=searchForm.search.value;
   document.getElementById("cardId").innerHTML = '<br>';
   var promise = $.ajax({
-      url:'/searchByNote',
+      url:'/cardApi/searchByNote',
       type:'POST',
       data: {
         search: searchValue

@@ -4,7 +4,7 @@ function deleteNote(note)
   var element = document.getElementById("divId");
   element.parentNode.removeChild(element);
   $.ajax({
-    url: '/deleteCard',
+    url: '/cardApi/deleteCard',
     type: 'POST',
     data: {
       deleteNote:note

@@ -2,7 +2,7 @@ function showRemainder()
 {
   console.log("in showremainder");
   var promise = $.ajax({
-    url: '/remainderData',
+    url: '/cardApi/remainderData',
     type: 'POST',
     data: {
       username: localStorage.getItem("uname")

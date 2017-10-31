@@ -16,7 +16,7 @@ function trashNote(trashNote) {
   // console.log(year);
   var date=datetime.getDate();
   $.ajax({
-    url: '/trash',
+    url: '/cardApi/trash',
     type: 'POST',
     data: {
       trashnote: trashNote,

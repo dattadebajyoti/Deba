@@ -1,7 +1,7 @@
 function pin(note)
 {
   $.ajax({
-    url:'/checkPin',
+    url:'/cardApi/checkPin',
     type:'POST',
     data: {
       noteId: note
@@ -22,7 +22,7 @@ function pin(note)
 function pinIt(note)
 {
   $.ajax({
-    url:'/pin',
+    url:'/cardApi/pin',
     type:'POST',
     data: {
       noteId: note,
@@ -37,7 +37,7 @@ function pinIt(note)
 function unPin(note)
 {
   $.ajax({
-    url:'/unpin',
+    url:'/cardApi/unpin',
     type:'POST',
     data: {
       noteId: note,

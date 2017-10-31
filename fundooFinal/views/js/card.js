@@ -15,7 +15,7 @@ $(function() {
   var uname = localStorage.getItem("uname");
   console.log(uname);
   var promise = $.ajax({
-    url: '/getData',
+    url: '/cardApi/getData',
     type: 'POST',
     data: {
       userid: uname
@@ -135,7 +135,7 @@ $(function() {
                                                          <h4 class="modal-title">Choose files to upload</h4>\
                                                    </div>\
                                                    <div class="modal-body">\
-                                                      <form id="uploadForm" enctype="multipart/form-data" action="/api/photo" method="post">\
+                                                      <form id="uploadForm" enctype="multipart/form-data" action="/cardApi/api/photo" method="post">\
                                                          <input id="image" type="file" name="userPhoto" accept="image/*">\
                                                          <button value="Upload Image" onclick="uploadImage(\'' +data[i].cardId+ '\')">Submit</button>\
                                                       </form>\

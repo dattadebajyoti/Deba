@@ -1,7 +1,7 @@
 function archiveCard(note)
 {
   $.ajax({
-    url:'/checkArchive',
+    url:'/cardApi/checkArchive',
     type:'POST',
     data: {
       noteId: note
@@ -22,7 +22,7 @@ function archiveCard(note)
 function archive(note)
 {
   $.ajax({
-    url:'/archive',
+    url:'/cardApi/archive',
     type:'POST',
     data: {
       noteId: note,
@@ -37,7 +37,7 @@ function archive(note)
 function unArchive(note)
 {
   $.ajax({
-    url:'/archive',
+    url:'/cardApi/archive',
     type:'POST',
     data: {
       noteId: note,

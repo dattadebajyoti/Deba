@@ -1,7 +1,7 @@
 $(document).ready(function() {
   console.log("in autocomplete");
   $("#search").autocomplete({
-    source: "/autocomplete",
+    source: "/cardApi/autocomplete",
     minLength: 1
   });
 });

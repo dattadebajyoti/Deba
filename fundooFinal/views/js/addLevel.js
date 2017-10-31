@@ -3,7 +3,7 @@ function addLabel(noteId)
   var label=prompt("Give a label");
   console.log("in add label");
   $.ajax({
-    url:"/level",
+    url:"/cardApi/level",
     type:'POST',
     data: {
       cardId: noteId,

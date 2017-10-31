@@ -27,7 +27,7 @@ function change(card,colorType)
   else
      { div.style.backgroundColor=color[9]; setColor= color[9];}
   $.ajax({
-    url:'changeColour',
+    url:'/cardApi/changeColour',
     type:'POST',
     data: {
       color: setColor,

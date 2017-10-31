@@ -2,7 +2,7 @@ function showTrash()
 {
   console.log("in showtrash");
   var promise = $.ajax({
-    url: '/trashData',
+    url: '/cardApi/trashData',
     type: 'POST',
     data: {
       username: localStorage.getItem("uname")

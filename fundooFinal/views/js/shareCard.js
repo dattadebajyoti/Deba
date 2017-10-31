@@ -7,7 +7,7 @@ function shareCard(noteId,userId,collaborate)
   }
   var user=prompt("Name the person with which u want to share");
   $.ajax({
-    url:'/share',
+    url:'/cardApi/share',
     type:'POST',
     data: {
       userId: user,

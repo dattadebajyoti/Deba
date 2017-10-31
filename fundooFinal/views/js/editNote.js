@@ -11,7 +11,7 @@ function editNote(noteid,note)
     strNote.innerHTML = strNote.innerHTML.replace(note,note);
   }
   $.ajax({
-    url: '/editNote',
+    url: '/cardApi/editNote',
     type: 'POST',
     data: {
       noteId:noteid,

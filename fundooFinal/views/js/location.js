@@ -27,7 +27,7 @@ function showPosition(position) {
     var cardLatitude = position.coords.latitude;
     var cardLongitude = position.coords.longitude;
     $.ajax({
-      url: '/locate',
+      url: '/cardApi/locate',
       type: 'POST',
       data: {
         noteId: card,
